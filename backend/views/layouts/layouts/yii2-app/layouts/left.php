@@ -12,7 +12,7 @@
 
               $session = new Session();
               $session->open(); ?>
-                <p><?php echo $session['username'];?></p>
+                <p><?php echo Yii::$app->user->identity->username?></p>
 
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
