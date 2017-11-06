@@ -12,8 +12,7 @@
 
               $session = new Session();
               $session->open(); ?>
-                <p><?php echo Yii::$app->user->identity->username?></p>
-
+                <p><?php !Yii::$app->user->isGuest? Yii::$app->user->identity->username:''?></p>
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>

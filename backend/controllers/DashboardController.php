@@ -8,6 +8,7 @@ use backend\models\BrandSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use backend\models\ProductSearch;
 
 use backend\models\Sale;
@@ -16,6 +17,32 @@ use common\models\ViewBalanceAmount;
 
 class DashboardController extends Controller
 {
+	public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+              ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            
+        ];
+    }
 	public function actionIndex(){
 		$sdate = '';
         $edate = '';
