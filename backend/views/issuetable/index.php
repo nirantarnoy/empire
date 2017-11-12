@@ -3,15 +3,15 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-use yii\helpers\Url;
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\CustomerSearch */
+/* @var $searchModel backend\models\IssuetableSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'ลูกค้า';
+$this->title = 'ใบเติมสินค้า';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="customer-index">
+<div class="issuetable-index">
+
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel panel-default">
           <div class="panel-heading">
            <div>
-            <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างลูกค้า', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างใบเติมสินค้า', ['create'], ['class' => 'btn btn-success']) ?>
             <div class="btn-group pull-right" style="bottom: 10px">
         <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
       </div>
@@ -30,22 +30,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-      //  'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-         //   'id',
-            'name',
+           // 'id',
+            'issue_no',
+            'request_by',
+            'require_date',
             'description',
-           // 'customer_type',
-            [
-              'attribute' => 'customer_type',
-              'value' => function($data){
-                return \backend\models\Customertype::findCustomerName($data->customer_type);
-              }
-            ],
-            'mobile',
-            //'phone',
             [
                'attribute'=>'status',
                'format' => 'html',
@@ -66,9 +59,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <div class="btn-group" >
                                         <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
                                         <ul class="dropdown-menu" style="right: 0; left: auto;">
-                                        <li><a href="'.Url::toRoute(['/customer/view', 'id'=>$model->id]).'">'.'View'.'</a></li>
-                                        <li><a href="'.Url::toRoute(['/customer/update', 'id'=>$model->id]).'">'.'Update'.'</a></li>
-                                        <li><a onclick="return confirm(\'Confirm ?\')" href="'.Url::to(['/customer/delete', 'id'=>$model->id],true).'">Delete</a></li>
+                                        <li><a href="'.Url::toRoute(['/issuetable/view', 'id'=>$model->id]).'">'.'View'.'</a></li>
+                                        <li><a href="'.Url::toRoute(['/issuetable/update', 'id'=>$model->id]).'">'.'Update'.'</a></li>
+                                        <li><a onclick="return confirm(\'Confirm ?\')" href="'.Url::to(['/issuetable/delete', 'id'=>$model->id],true).'">Delete</a></li>
                                         </ul>
                                     </div>
                                 ';

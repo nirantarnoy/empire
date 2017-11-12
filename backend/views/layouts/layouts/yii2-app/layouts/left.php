@@ -118,6 +118,7 @@
                         'items' => [
                            
                             ['label' => 'คลังสินค้า', 'icon' => 'cubes', 'url' => ['/warehouse'],],
+                            ['label' => 'เติมสินค้า', 'icon' => 'refresh', 'url' => ['/issuetable'],],
                             ['label' => 'สินค้าคงคลัง', 'icon' => 'cube', 'url' => ['/stockbalance'],],
                            
                         ],

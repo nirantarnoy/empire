@@ -1,9 +1,9 @@
 <?php
 namespace backend\models;
 use yii\db\ActiveRecord;
-
 date_default_timezone_set('Asia/Bangkok');
-class Customertype extends \common\models\CustomerType
+
+class Issuetable extends \common\models\IssueTable
 {
   public function behaviors()
 {
@@ -31,8 +31,23 @@ class Customertype extends \common\models\CustomerType
         ],
     ];
  }
- public function findCustomerName($id){
-    $model= Customertype::find()->where(['id'=>$id])->one();
-    return count($model)>0?$model->name:'';
- }
+ 
+public static function getLastNo(){
+    $model = Issuetable::find()->MAX('issue_no');
+    if($model){
+      $prefix = "RQ".substr(date("Y"),2,2);
+      $cnum = substr((string)$model,4,strlen($model));
+      $len = strlen($cnum);
+      $clen = strlen($cnum + 1);
+      $loop = $len - $clen;
+      for($i=1;$i<=$loop;$i++){
+        $prefix.="0";
+      }
+      $prefix.=$cnum + 1;
+      return $prefix;
+    }else{
+        $prefix ="RQ".substr(date("Y"),2,2);
+        return $prefix.'000001';
+    }
+}
 }

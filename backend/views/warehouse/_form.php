@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use toxor88\switchery\Switchery;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Warehouse */
@@ -23,6 +25,14 @@ use toxor88\switchery\Switchery;
                   <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
                   <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+                  
+                  <?= $form->field($model, 'sale_id')->widget(Select2::className(),[
+                      'data' => ArrayHelper::map(\backend\models\Employee::find()->all(),'id','name'),
+                      'options' => ['placeholder'=>'เลือกพนักงานขาย'],
+                      'pluginOptions'=>[
+                        'allowClear' => true,
+                      ]
+                  ]) ?>
 
                   <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
 

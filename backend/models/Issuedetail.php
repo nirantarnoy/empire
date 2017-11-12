@@ -1,9 +1,9 @@
 <?php
 namespace backend\models;
 use yii\db\ActiveRecord;
-
 date_default_timezone_set('Asia/Bangkok');
-class Customertype extends \common\models\CustomerType
+
+class Issuedetail extends \common\models\IssueDetail
 {
   public function behaviors()
 {
@@ -31,8 +31,6 @@ class Customertype extends \common\models\CustomerType
         ],
     ];
  }
- public function findCustomerName($id){
-    $model= Customertype::find()->where(['id'=>$id])->one();
-    return count($model)>0?$model->name:'';
- }
+ 
+
 }
