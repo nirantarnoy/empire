@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use toxor88\switchery\Switchery;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
-use kartik\file\fileInput;
+use kartik\file\FileInput;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
