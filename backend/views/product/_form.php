@@ -24,7 +24,9 @@ $unit = \backend\models\Unit::find()->where(['status'=>1])->all();
 <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab">ข้อมูลสินค้า</a></li>
+              <?php if(!$model->isNewRecord):?>
               <li><a href="#tab_2" data-toggle="tab">สินค้าคงคลังและความเคลื่อนไหว</a></li>
+            <?php endif;?>
             </ul>
 
             <div class="tab-content">
@@ -160,6 +162,7 @@ $unit = \backend\models\Unit::find()->where(['status'=>1])->all();
                             </div>
                           </div>
               </div>
+              <?php if(!$model->isNewRecord):?>
               <div class="tab-pane" id="tab_2">
                 <div class="row">
                   <div class="col-lg-12">
@@ -330,6 +333,7 @@ $unit = \backend\models\Unit::find()->where(['status'=>1])->all();
                   </div>
                 </div>
               </div>
+            <?php endif;?>
             </div>
 </div>
 

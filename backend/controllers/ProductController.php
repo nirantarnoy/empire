@@ -42,9 +42,19 @@ class ProductController extends Controller
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $modelfile = new Modelfile();
+
+        if($modelfile->load(Yii::$app->request->post())){
+           $uploaded = UploadedFile::getInstances($modelfile,"file");
+           if(!empty($uploaded)){
+              echo 'yd';
+           }
+        }
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'modelfile' => $modelfile,
         ]);
     }
 
@@ -221,6 +231,11 @@ class ProductController extends Controller
           echo "<option value='0'>-</option>";
       }
 
+    }
+    public function actionImportproduct(){
+      if(Yii::$app->request->isPost){
+        print_r(Yii::$app->request->post());
+      }
     }
 
 }

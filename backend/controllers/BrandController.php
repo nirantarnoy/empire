@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
-use Yii;
 use backend\models\Brand;
 use backend\models\BrandSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 /**
@@ -22,7 +22,7 @@ class BrandController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -36,11 +36,11 @@ class BrandController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new BrandSearch();
+        $searchModel  = new BrandSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -68,15 +68,15 @@ class BrandController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $uploaded = UploadedFile::getInstance($model, 'photo');
-            if(!empty($uploaded)){
-                        $upfiles = time() . "." . $uploaded->getExtension(); 
-                        if ($uploaded->saveAs('../web/uploads/images/' . $upfiles)) {
-                           $model->photo = $upfiles;
-                        }
+            if (!empty($uploaded)) {
+                $upfiles = time() . "." . $uploaded->getExtension();
+                if ($uploaded->saveAs('../web/uploads/images/' . $upfiles)) {
+                    $model->photo = $upfiles;
                 }
-            if($model->save()){
+            }
+            if ($model->save()) {
                 return $this->redirect(['update', 'id' => $model->id]);
-            }  
+            }
         }
 
         return $this->render('create', [
@@ -95,19 +95,19 @@ class BrandController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            $uploaded = UploadedFile::getInstance($model, 'photo');
+            $uploaded  = UploadedFile::getInstance($model, 'photo');
             $old_photo = Yii::$app->request->post('old_photo');
-            if(!empty($uploaded)){
-                        $upfiles = time() . "." . $uploaded->getExtension(); 
-                        if ($uploaded->saveAs('../web/uploads/images/' . $upfiles)) {
-                           $model->photo = $upfiles;
-                        }
-                }else{
-                    $model->photo = $old_photo;
+            if (!empty($uploaded)) {
+                $upfiles = time() . "." . $uploaded->getExtension();
+                if ($uploaded->saveAs('../web/uploads/images/' . $upfiles)) {
+                    $model->photo = $upfiles;
                 }
-            if($model->save()){
+            } else {
+                $model->photo = $old_photo;
+            }
+            if ($model->save()) {
                 return $this->redirect(['update', 'id' => $model->id]);
-            }  
+            }
         }
 
         return $this->render('update', [

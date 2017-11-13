@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
+use kartik\file\FileInput;
+use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -45,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
           <div class="panel-heading">
            <div>
             <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างผลิตภัณฑ์', ['create'], ['class' => 'btn btn-success']) ?>
-            <div class="btn btn-default btn-import"><i class="fa fa-upload"></i> นำเข้าสินค้า</div>
+            <div class="btn btn-default btn-import" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload"></i> นำเข้าสินค้า</div>
             <div class="btn-group pull-right" style="bottom: 10px">
         <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
       </div>
@@ -119,4 +121,47 @@ $this->params['breadcrumbs'][] = $this->title;
   </div>
   </div>
     <?php Pjax::end(); ?>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><i class="fa fa-download"></i> นำเข้ารหัสสินค้า</h4>
+      </div>
+      <div class="modal-body">
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <?php 
+
+                ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]);
+                echo FileInput::widget([
+                  'name' => 'file',
+                  'model' => $modelfile,
+                  'attribute' => 'file',
+
+                ]);
+                ?>
+                <br />
+                <div class="btn-group">
+                  <input type="submit" class="btn btn-success" value="ตกลง">
+                </div>
+                <?php
+                ActiveForm::end();
+             ?>
+            </div>
+           
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div> -->
+    </div>
+
+  </div>
 </div>
