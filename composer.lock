@@ -454,7 +454,7 @@
             "license": [
                 "MIT"
             ],
-            "time": "2014-02-01 13:14:39"
+            "time": "2014-02-01T13:14:39+00:00"
         },
         {
             "name": "bower-asset/yii2-pjax",
@@ -536,7 +536,7 @@
                 "markdown",
                 "markdown-extra"
             ],
-            "time": "2017-08-22 10:13:04"
+            "time": "2017-08-22T10:13:04+00:00"
         },
         {
             "name": "cebe/yii2-gravatar",
@@ -620,7 +620,7 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2017-09-13 13:08:14"
+            "time": "2017-09-13T13:08:14+00:00"
         },
         {
             "name": "dmstr/yii2-adminlte-asset",
@@ -828,7 +828,7 @@
                 "progress",
                 "upload"
             ],
-            "time": "2017-11-11 12:51:03"
+            "time": "2017-11-11T12:51:03+00:00"
         },
         {
             "name": "kartik-v/yii2-dialog",
@@ -880,7 +880,7 @@
                 "modal",
                 "yii2"
             ],
-            "time": "2017-11-06 16:04:54"
+            "time": "2017-11-06T16:04:54+00:00"
         },
         {
             "name": "kartik-v/yii2-grid",
@@ -933,7 +933,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-11-12 03:10:31"
+            "time": "2017-11-12T03:10:31+00:00"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
@@ -984,7 +984,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-09-29 06:18:14"
+            "time": "2017-09-29T06:18:14+00:00"
         },
         {
             "name": "kartik-v/yii2-mpdf",
@@ -1036,7 +1036,7 @@
                 "utf8",
                 "yii2"
             ],
-            "time": "2017-07-19 09:51:02"
+            "time": "2017-07-19T09:51:02+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-activeform",
@@ -1088,7 +1088,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-11-24 17:29:45"
+            "time": "2016-11-24T17:29:45+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-datepicker",
@@ -1142,7 +1142,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-09-06 06:18:08"
+            "time": "2017-09-06T06:18:08+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-fileinput",
@@ -1197,7 +1197,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-06-24 19:36:32"
+            "time": "2017-06-24T19:36:32+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-select2",
@@ -1250,7 +1250,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-11-09 14:28:09"
+            "time": "2017-11-09T14:28:09+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-typeahead",
@@ -1303,7 +1303,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-08-01 04:05:16"
+            "time": "2017-08-01T04:05:16+00:00"
         },
         {
             "name": "lavrentiev/yii2-toastr",
@@ -1398,7 +1398,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-10-27 13:56:43"
+            "time": "2017-10-27T13:56:43+00:00"
         },
         {
             "name": "mpdf/mpdf",
@@ -1465,7 +1465,7 @@
                 "php",
                 "utf-8"
             ],
-            "time": "2017-11-10 12:39:59"
+            "time": "2017-11-10T12:39:59+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -1562,7 +1562,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-10-25 18:41:32"
+            "time": "2017-10-25T18:41:32+00:00"
         },
         {
             "name": "phpoffice/phpexcel",
@@ -1619,7 +1619,7 @@
                 "xls",
                 "xlsx"
             ],
-            "time": "2015-05-05 00:10:25"
+            "time": "2015-05-05T00:10:25+00:00"
         },
         {
             "name": "psr/log",
@@ -1666,7 +1666,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2016-10-10T12:19:37+00:00"
         },
         {
             "name": "rmrevin/yii2-fontawesome",
@@ -1821,7 +1821,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2017-08-29 20:43:58"
+            "time": "2017-08-29T20:43:58+00:00"
         },
         {
             "name": "toxor88/yii2-widget-switchery",
@@ -1870,7 +1870,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-10-27 17:44:44"
+            "time": "2016-10-27T17:44:44+00:00"
         },
         {
             "name": "yii2mod/yii2-sweet-alert",
@@ -1918,7 +1918,7 @@
                 "yii2 alert",
                 "yii2 sweet alert"
             ],
-            "time": "2017-09-12 08:35:07"
+            "time": "2017-09-12T08:35:07+00:00"
         },
         {
             "name": "yiisoft/yii2",
@@ -2018,7 +2018,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2017-11-11 20:42:41"
+            "time": "2017-11-11T20:42:41+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -2064,7 +2064,7 @@
                 "bootstrap",
                 "yii2"
             ],
-            "time": "2017-10-19 10:18:15"
+            "time": "2017-10-19T10:18:15+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -2114,7 +2114,7 @@
                 "extension installer",
                 "yii2"
             ],
-            "time": "2017-08-01 14:22:25"
+            "time": "2017-08-01T14:22:25+00:00"
         },
         {
             "name": "yiisoft/yii2-jui",
@@ -2160,7 +2160,7 @@
                 "jQuery UI",
                 "yii2"
             ],
-            "time": "2017-08-01 19:29:58"
+            "time": "2017-08-01T19:29:58+00:00"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
@@ -2319,7 +2319,7 @@
                 }
             ],
             "description": "A comprehensive library for generating differences between two hashable objects (strings or arrays).",
-            "time": "2016-04-07 12:29:16"
+            "time": "2016-04-07T12:29:16+00:00"
         },
         {
             "name": "yiisoft/yii2-codeception",
@@ -2365,7 +2365,7 @@
                 "yii2"
             ],
             "abandoned": "codeception/codeception",
-            "time": "2017-05-22 12:08:21"
+            "time": "2017-05-22T12:08:21+00:00"
         },
         {
             "name": "yiisoft/yii2-debug",
@@ -2459,7 +2459,7 @@
                 "faker",
                 "yii2"
             ],
-            "time": "2017-08-02 13:01:06"
+            "time": "2017-08-02T13:01:06+00:00"
         },
         {
             "name": "yiisoft/yii2-gii",
@@ -2512,7 +2512,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2017-10-19 20:56:59"
+            "time": "2017-10-19T20:56:59+00:00"
         }
     ],
     "aliases": [],

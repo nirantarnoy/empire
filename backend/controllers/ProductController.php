@@ -45,9 +45,79 @@ class ProductController extends Controller
         $modelfile = new Modelfile();
 
         if($modelfile->load(Yii::$app->request->post())){
-           $uploaded = UploadedFile::getInstances($modelfile,"file");
+           $uploaded = UploadedFile::getInstance($modelfile,"file");
            if(!empty($uploaded)){
-              echo 'yd';
+              $data = [];
+              $data_save = 0;
+              $data_fail = [];
+              $data_all = 0;
+              $uploaded->saveAs('../web/uploads/files/'.$uploaded);
+                $myfile = '../web/uploads/files/'.$uploaded;
+                $inputFileType = \PHPExcel_IOFactory::identify($myfile);
+                $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
+                $objPHPExcel = $objReader->load($myfile);
+
+                $sheet = $objPHPExcel->getSheet(0);
+                $highestRow = $sheet->getHighestRow();
+                $highestColumn = $sheet->getHighestColumn();
+
+                for($row=1;$row <= $highestRow; $row++){
+                  $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
+
+                  if($row <=1){
+                    continue;
+                  }
+                  if($rowData[0][0] == ''){
+                    $data_all +=1;
+                    continue;
+                  }
+//echo $rowData[0][0]."<br />";
+                          $modelprod = \backend\models\Product::find()->where(['name'=>$rowData[0][1]])->one();
+                          if(count($modelprod)>0){
+                            $data_all +=1;
+                            array_push($data_fail,['name'=>$rowData[0][1]]);
+                            continue;
+                          }
+
+                            $modelx = new \backend\models\Product();
+                            $modelx->product_code = $rowData[0][0];
+                            $modelx->name = $rowData[0][1];
+                            $modelx->description = $rowData[0][2] ;
+                            $modelx->category_id = $rowData[0][3];
+                            $modelx->weight = $rowData[0][4];
+                            $modelx->unit_id = $rowData[0][5];
+                            $modelx->price = $rowData[0][6];
+                            $modelx->cost = $rowData[0][7];
+                            $modelx->qty = $rowData[0][8];
+                            $modelx->min_qty = $rowData[0][9];
+                            $modelx->max_qty = $rowData[0][10];
+                            $modelx->status = 1;
+                        
+                           if($modelx->save(false)){
+                              $data_save += 1;
+                              $data_all +=1;
+                              array_push($data,['product_id'=>$modelx->id,'qty'=>$modelx->qty,'warehouse'=>1]);
+                           }
+                         // }
+                          
+                  //echo $rowData[0][0]."/".$rowData[0][1]."/".$rowData[0][2]."/".$rowData[0][3]."/".$rowData[0][4].'<br />';
+                }
+
+                 
+                 $x = \backend\models\Trans::createTrans($data,0,"import");
+                 $session = Yii::$app->session;
+                    if($x){
+                      if($data_save >0){
+                        $session->setFlash('success','บันทึกรายการสำเร็จ '.$data_save .' จาก '.$data_all);
+                        $session->setFlash('error','บันทึกรายการไม่สำเร็จเนื่องจากมีรหัสซ้ำ'.count($data_fail) .' จาก '.$data_all);
+                      }else{
+                         $session->setFlash('error','บันทึกรายการไม่สำเร็จเนื่องจากมีรหัสซ้ำ'.count($data_fail) .' จาก '.$data_all);
+                      }
+                    
+                      return $this->redirect(['index']);
+                    }else{
+                       $session->setFlash('error','บันทึกรายการไม่สำเร็จเนื่องจากมีรหัสซ้ำ'.count($data_fail) .' จาก '.$data_all);
+                    }
            }
         }
 

@@ -57,7 +57,7 @@ class Product extends \yii\db\ActiveRecord
             'description' => 'รายละเอียด',
             'photo' => 'รูปภาพ',
             'category_id' => 'หมวดผลิตภัณฑ์',
-            'weight' => 'Weight',
+            'weight' => 'น้ำหนัก',
             'unit_id' => 'หน่วย',
             'cost'=>'ราคาทุน',
             'sale_price_1'=>'ราคาขาย',

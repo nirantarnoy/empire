@@ -97,6 +97,8 @@ $unit = \backend\models\Unit::find()->where(['status'=>1])->all();
 
                                                   )->label() ?>
 
+                                    <?= $form->field($model, 'weight')->textInput(['maxlength' => true]) ?>
+                                    
                                     <?= $form->field($model, 'cost')->textInput(['maxlength' => true]) ?>
 
                                     <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
