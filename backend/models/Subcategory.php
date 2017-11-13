@@ -3,7 +3,7 @@ namespace backend\models;
 use yii\db\ActiveRecord;
 
 date_default_timezone_set('Asia/Bangkok');
-class Subcategory extends \common\models\Subcategory
+class Subcategory extends \common\models\SubCategory
 {
   public function behaviors()
 {
