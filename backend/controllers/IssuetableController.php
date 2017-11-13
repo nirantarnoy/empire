@@ -70,15 +70,15 @@ class IssuetableController extends Controller
             if($model->save()){
              return $this->redirect(['view', 'id' => $model->id]);               
             }
-
         }
-
         return $this->render('create', [
             'model' => $model,
             'runno' => $model::getLastNo(),
             'status' => \backend\helpers\IssueStatus::getTypeById(1)
+
+
         ]);
-    }
+}
 
     /**
      * Updates an existing Issuetable model.

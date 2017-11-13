@@ -41,7 +41,11 @@ if ($Sdate === '' && $Edate === '') {
                     จนถึงวันที่ <?php echo date('d-m-Y', strtotime($Edate)) ?></h4></div>
         </div>
         <div class="pull-right">
+<<<<<<< HEAD
             <?php $form = ActiveForm::begin(['id' => 'searchdate', 'type' => ActiveForm::TYPE_INLINE, 'action' => 'index.php?r=dashboard/index']); ?>
+=======
+            <?php $form = ActiveForm::begin(['id' => 'searchdate', 'type' => ActiveForm::TYPE_INLINE, 'action' => 'index.php?r=dashboard']); ?>
+>>>>>>> origin/master
             <?= DatePicker::widget([
                 'name' => 'Startdate',
                 'value' => $Sdate,

@@ -46,6 +46,7 @@ class DashboardController extends Controller
 	public function actionIndex(){
 		$sdate = '';
         $edate = '';
+
 		
         if(Yii::$app->request->isPost){
             $sdate = Yii::$app->request->post("Startdate");
@@ -65,6 +66,11 @@ class DashboardController extends Controller
         
         
 		
+		$model_sum_sale = Sale::find()->sum('sale_amount');
+		$searchModel = new ProductSearch();
+        $model_under_stock = $searchModel->search(Yii::$app->request->queryParams);
+		$model_under_stock->query->where(['<=','qty','min_qty']);
+
 
         
         $model_best = ViewBestSaller::find()->limit(10)->orderby(['sale_qty'=>SORT_DESC])->all();

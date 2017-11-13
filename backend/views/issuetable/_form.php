@@ -2,10 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
 use kartik\typeahead\Typeahead;
 use yii\helpers\Url;
+use kartik\date\DatePicker;
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\Issuetable */
 /* @var $form yii\widgets\ActiveForm */
@@ -45,7 +46,9 @@ use yii\helpers\Url;
                                       ]])->label() ?>
                 </div>
                 <div class="col-lg-4">
+
                   <?= $form->field($model, 'request_by')->textInput(['maxlength' => true,'readonly'=>'readonly','value'=>Yii::$app->user->identity->username]) ?>
+
                 </div>
                 </div>
                <div class="row">
@@ -53,6 +56,7 @@ use yii\helpers\Url;
                 <?= $form->field($model, 'description')->textarea(['maxlength' => true]) ?>
                 </div>
                 <div class="col-lg-4">
+
                   <?= $form->field($model, 'status')->textInput(['maxlength' => true,'readonly'=>'readonly','value'=>$status]) ?>
                 </div>
                
@@ -163,10 +167,13 @@ use yii\helpers\Url;
                 </tfoot>
                </table>
                 </div>
+               
+                </div>
+                </div>
                  </div>
             </div>
           </div>
-         
+
     
     <?php ActiveForm::end(); ?>
 
@@ -208,3 +215,4 @@ use yii\helpers\Url;
   }
 
   ',static::POS_END)?>
+
