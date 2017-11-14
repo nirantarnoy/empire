@@ -89,13 +89,13 @@
                     ],  
                     [
                         'label' => 'ซื้อสินค้า',
-                        'icon' => 'money',
+                        'icon' => 'shopping-cart',
                         'url' => ['#'],
                         'items' => [
                            
-                             ['label' => 'กลุ่มผู้ขาย', 'icon' => 'cubes', 'url' => ['/vendorgroup'],],
-                             ['label' => 'ผู้ขาย', 'icon' => 'cubes', 'url' => ['/vendor'],],
-                             ['label' => 'ใบสั่งซื้อ', 'icon' => 'cube', 'url' => ['/purchaseorder'],],
+                             ['label' => 'กลุ่มผู้ขาย', 'icon' => 'users', 'url' => ['/vendorgroup'],],
+                             ['label' => 'ผู้ขาย', 'icon' => 'user', 'url' => ['/vendor'],],
+                             ['label' => 'ใบสั่งซื้อ', 'icon' => 'shopping-cart', 'url' => ['/purchaseorder'],],
                            
                         ],
                     ],  
@@ -105,10 +105,10 @@
                         'url' => ['/sale'],
                         'items' => [
                            
-                             ['label' => 'ประเภทลูกค้า', 'icon' => 'cubes', 'url' => ['/customertype'],],
-                             ['label' => 'ลูกค้า', 'icon' => 'cubes', 'url' => ['/customer'],],
-                             ['label' => 'ขายสินค้า', 'icon' => 'cube', 'url' => ['/sale'],],
-                             ['label' => 'ตลาด', 'icon' => 'shop', 'url' => ['/market'],],
+                             ['label' => 'ประเภทลูกค้า', 'icon' => 'square-o', 'url' => ['/customertype'],],
+                             ['label' => 'ลูกค้า', 'icon' => 'street-view', 'url' => ['/customer'],],
+                             ['label' => 'ขายสินค้า', 'icon' => 'money', 'url' => ['/sale'],],
+                             ['label' => 'ตลาด', 'icon' => 'map-pin', 'url' => ['/market'],],
                            
                         ],
                     ],  
@@ -118,9 +118,9 @@
                         'url' => '#',
                         'items' => [
                            
-                            ['label' => 'คลังสินค้า', 'icon' => 'cubes', 'url' => ['/warehouse'],],
+                            ['label' => 'คลังสินค้า', 'icon' => 'archive', 'url' => ['/warehouse'],],
                             ['label' => 'เติมสินค้า', 'icon' => 'refresh', 'url' => ['/issuetable'],],
-                            ['label' => 'รายการอนุมัติเติมสินค้า', 'icon' => 'refresh', 'url' => ['/issueapprove'],],
+                            ['label' => 'รายการอนุมัติเติมสินค้า', 'icon' => 'arrow-circle-up', 'url' => ['/issueapprove'],],
                             ['label' => 'สินค้าคงคลัง', 'icon' => 'cube', 'url' => ['/stockbalance'],],
                            
                         ],
