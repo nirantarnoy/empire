@@ -108,6 +108,7 @@
                              ['label' => 'ประเภทลูกค้า', 'icon' => 'cubes', 'url' => ['/customertype'],],
                              ['label' => 'ลูกค้า', 'icon' => 'cubes', 'url' => ['/customer'],],
                              ['label' => 'ขายสินค้า', 'icon' => 'cube', 'url' => ['/sale'],],
+                             ['label' => 'ตลาด', 'icon' => 'shop', 'url' => ['/market'],],
                            
                         ],
                     ],  
@@ -119,6 +120,7 @@
                            
                             ['label' => 'คลังสินค้า', 'icon' => 'cubes', 'url' => ['/warehouse'],],
                             ['label' => 'เติมสินค้า', 'icon' => 'refresh', 'url' => ['/issuetable'],],
+                            ['label' => 'รายการอนุมัติเติมสินค้า', 'icon' => 'refresh', 'url' => ['/issueapprove'],],
                             ['label' => 'สินค้าคงคลัง', 'icon' => 'cube', 'url' => ['/stockbalance'],],
                            
                         ],
@@ -127,7 +129,7 @@
 
                         'label' => 'บันทึกรายการประจำวัน',
                         'icon' => 'folder-open',
-                        'url' => '#',
+                        'url' => ['/transaction'],
                         'items' => [
                            
                             // ['label' => 'ประภทสินค้า', 'icon' => 'cubes', 'url' => ['/category'],],
@@ -172,7 +174,7 @@
                     [
                         'label' => 'บันทึกรายการประจำวัน',
                         'icon' => 'retweet',
-                        'url' => '#',
+                        'url' => ['/transaction'],
                         'items' => [
                           ['label' => 'ประเภทการติดต่อ', 'icon' => 'filter', 'url' => ['/contacttype'],],
                           ['label' => 'ประเภทรถ', 'icon' => 'truck', 'url' => ['/cartype'],],

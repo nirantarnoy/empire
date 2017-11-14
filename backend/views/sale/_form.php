@@ -222,6 +222,7 @@ use yii\helpers\Url;
 $url_to_firm = Url::to(['sale/firmorder'],true);
  $this->registerJs('
   $(function(){
+    sumall();
     $(".btn-sale-confirm").click(function(){
       if($(".add-saleline >tr").length <=0){
         alert("กรุณาเพิ่มรายละเอียดใบสั่งซื้อก่อน");return;

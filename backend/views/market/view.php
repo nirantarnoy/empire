@@ -4,14 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Issuetable */
+/* @var $model backend\models\Market */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Issuetables', 'url' => ['index']];
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'ตลาด', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="issuetable-view">
-
+<div class="market-view">
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -27,10 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'issue_no',
-            'request_by',
-            'require_date',
+           // 'id',
+            'name',
             'description',
             'status',
             'created_at',

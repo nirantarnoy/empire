@@ -5,27 +5,26 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "issue_table".
+ * This is the model class for table "transtable".
  *
  * @property int $id
- * @property string $issue_no
- * @property int $request_by
- * @property int $require_date
- * @property string $description
+ * @property string $transno
+ * @property int $trans_type
+ * @property int $transdate
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
  * @property int $created_by
  * @property int $updated_by
  */
-class IssueTable extends \yii\db\ActiveRecord
+class Transtable extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'issue_table';
+        return 'transtable';
     }
 
     /**
@@ -34,10 +33,10 @@ class IssueTable extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['issue_no'],'required'],
-            [['created_at', 'updated_at', 'updated_by'], 'integer'],
-            [[ 'require_date','status','created_by','request_by'],'safe'],
-            [['issue_no', 'description'], 'string', 'max' => 255],
+        [['transno'],'required'],
+            [['trans_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['transno'], 'string', 'max' => 255],
+            [[ 'transdate'],'safe']
         ];
     }
 
@@ -48,10 +47,9 @@ class IssueTable extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'issue_no' => 'เลขที่ใบเบิก',
-            'request_by' => 'ผู้เบิก',
-            'require_date' => 'วันที่ต้องการ',
-            'description' => 'รายละเอียด',
+            'transno' => 'เลขที่',
+            'trans_type' => 'ประเภท',
+            'transdate' => 'วันที่',
             'status' => 'สถานะ',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

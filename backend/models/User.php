@@ -23,4 +23,8 @@ public function rules(){
   public function getGroup(){
     return $this->hasOne(\backend\models\Usergroup::className(),['id'=>'group_id']);
   }
+  public function findUserName($id){
+    $model = User::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->username:'';
+  }
 }

@@ -35,7 +35,7 @@ use yii\helpers\Url;
                      <?php if($model->isNewRecord){$model->purchase_date = date('d-m-Y');}else{$model->purchase_date = date('d-m-Y',$model->purchase_date);} ?>
                      <?= $form->field($model, 'purchase_date')->widget(DatePicker::className(), [ 'pluginOptions' => [
                                           'format' => 'dd-mm-yyyy',
-                                          //'value' => date('dd-mm-yyyy'),
+                                          //'value' => date('d-m-Y'),
                                           'autoclose' => true,
                                           'todayHighlight' => true
                                       ], 'options' => ['style' => 'width: 100%',
@@ -183,7 +183,7 @@ use yii\helpers\Url;
 </div>
 <?php $this->registerJs('
   $(function(){
-   
+   sumall();
   });
   function sumall(){
     var amount = 0;

@@ -140,6 +140,7 @@ class SaleController extends Controller
         return $this->render('update', [
             'model' => $model,
             'modelline' => $modelline,
+            'status' => \backend\helpers\IssueStatus::getTypeById($model->status),
         ]);
     }
 

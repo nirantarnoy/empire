@@ -13,13 +13,33 @@ use kartik\date\DatePicker;
 ?>
 
 <div class="issuetable-form">
-
+   <div class="row">
+    <div class="col-lg-12">
+      <?php
+      $session = Yii::$app->session;
+       if(!empty($session->getFlash("success"))):?>
+      <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <?php echo $session->getFlash('success'); ?>
+      </div>
+    <?php endif;?>
+    <?php if(!empty($session->getFlash("error"))):?>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <?php echo $session->getFlash('error'); ?>
+      </div>
+    <?php endif;?>
+    </div>
+   </div>
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="row">
         <div class="col-lg-12">
             <div class="form-group">
-                <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton('บันทึก', ['class' => 'btn btn-success']) ?>
+                <?php if($model->isNewRecord && $model->status!=\backend\helpers\IssueStatus::ISSUE_OPEN):?>
+                <div class="btn btn-primary btn-approve">อนุมัติ</div>
+                <?php endif;?>
             </div>
 
         </div>
@@ -94,7 +114,7 @@ use kartik\date\DatePicker;
                                     }else{
                                       $.ajax({
                                         type: 'POST',
-                                        url: '".Url::to(['/sale/addline'])."',
+                                        url: '".Url::to(['/issuetable/addline'])."',
                                         data: {data:s},
                                         success: function(data){
                                           $('.add-saleline').parent().append(data);
@@ -141,7 +161,7 @@ use kartik\date\DatePicker;
                             <input type="text" class="form-control name" name="name[]" value="<?=\backend\models\Product::getProdname($value->product_id)?>" disabled="disabled" /> 
                           </td>
                           <td>
-                            <input type="text" class="form-control qty" name="qty[]" value="<?=$value->qty?>" onkeydown="eventNumber($(this));" onchange="linecal($(this));" /> 
+                            <input type="text" class="form-control qty" name="qty[]" value="<?=$value->req_qty?>" onkeydown="eventNumber($(this));" onchange="linecal($(this));" /> 
                           </td>
                           <td>
                             <input type="text" class="form-control price" name="price[]" value="<?=$value->price?>" onchange="linecal($(this));" />
@@ -178,9 +198,27 @@ use kartik\date\DatePicker;
     <?php ActiveForm::end(); ?>
 
 </div>
-<?php $this->registerJs('
+<?php 
+$url_to_approve = Url::to(['issuetable/approve'],true);
+$mid = $model->isNewRecord?0:$model->id;
+$this->registerJs('
   $(function(){
-   
+    var modelid = "'.$mid.'";
+    sumall();
+
+    $(".btn-approve").click(function(){
+      if(confirm("อนุมัติใบเติมสินค้าใช่หรือไม่")){
+        $.ajax({
+          type: "post",
+          dataType: "html",
+          url: "'.$url_to_approve.'",
+          data: {id:modelid},
+          success: function(data){
+            alert(data);
+          }
+        });
+      }
+    });
   });
   function sumall(){
     var amount = 0;

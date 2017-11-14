@@ -5,12 +5,10 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "issue_table".
+ * This is the model class for table "market".
  *
  * @property int $id
- * @property string $issue_no
- * @property int $request_by
- * @property int $require_date
+ * @property string $name
  * @property string $description
  * @property int $status
  * @property int $created_at
@@ -18,14 +16,14 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class IssueTable extends \yii\db\ActiveRecord
+class Market extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'issue_table';
+        return 'market';
     }
 
     /**
@@ -34,10 +32,9 @@ class IssueTable extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['issue_no'],'required'],
-            [['created_at', 'updated_at', 'updated_by'], 'integer'],
-            [[ 'require_date','status','created_by','request_by'],'safe'],
-            [['issue_no', 'description'], 'string', 'max' => 255],
+        [['name'],'required'],
+            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['name', 'description'], 'string', 'max' => 255],
         ];
     }
 
@@ -48,9 +45,7 @@ class IssueTable extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'issue_no' => 'เลขที่ใบเบิก',
-            'request_by' => 'ผู้เบิก',
-            'require_date' => 'วันที่ต้องการ',
+            'name' => 'ชื่อ',
             'description' => 'รายละเอียด',
             'status' => 'สถานะ',
             'created_at' => 'Created At',
