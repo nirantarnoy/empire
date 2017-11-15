@@ -51,10 +51,10 @@ class Sale extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'sale_no' => 'เลขที่ใบสั่งซื้อ',
-            'sale_date' => 'วันที่สั่งซื้อ',
+            'sale_no' => 'เลขที่ใบขาย',
+            'sale_date' => 'วันที่ขาย',
             'payment_type' => 'วิธีชำระเงิน',
-            'require_ship_date' => 'วันที่ต้องการสินค้า',
+            'require_ship_date' => 'วันที่ส่งสินค้า',
             'note' => 'หมายเหตุ',
             'payment_status' => 'สถานะชำระเงิน',
             'status' => 'สถานะ',

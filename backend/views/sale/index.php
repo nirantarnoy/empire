@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /* @var $searchModel backend\models\SaleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'ใบสั่งซื้อ';
+$this->title = 'ใบขาย';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sale-index">
@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel panel-default">
           <div class="panel-heading">
            <div>
-            <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างใบสั่งซื้อ', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างใบขาย', ['create'], ['class' => 'btn btn-success']) ?>
             <div class="btn-group pull-right" style="bottom: 10px">
         <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
       </div>
