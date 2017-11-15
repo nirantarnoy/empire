@@ -3,7 +3,7 @@ namespace backend\models;
 use yii\db\ActiveRecord;
 date_default_timezone_set('Asia/Bangkok');
 
-class Transactionline extends \common\models\Trnasline
+class Transactionline extends \common\models\Transline
 {
   public function behaviors()
 {

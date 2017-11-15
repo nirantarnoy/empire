@@ -47,7 +47,7 @@ use yii\helpers\Url;
                                       ]])->label() ?>
                 </div>
               <div class="col-lg-3">
-                <?= $form->field($model, 'status')->textInput(['readonly'=>'readonly','value'=>$model->isNewRecord?$status:\backend\helpers\TransactionType::getTypeById($model->statue)]) ?>
+                <?= $form->field($model, 'status')->textInput(['readonly'=>'readonly','value'=>$model->isNewRecord?$status:\backend\helpers\TransactionStatus::getTypeById($model->status)]) ?>
                 </div>
               
                    
@@ -62,15 +62,36 @@ use yii\helpers\Url;
                     <table class="table">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>หัวข้อ</th>
                                 <th>รายละเอียด</th>
                                 <th>จำนวนเงิน</th>
                                 <th></th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody class="line-body">
-                          
+                          <?php if(!$model->isNewRecord):?>
+                              <?php if(count($model_line)>0):?>
+                                 <?php $x = 0;?>
+                                <?php foreach($model_line as $value):?>
+                                  <?php $x += 1;?>
+                                  <tr class="saleline-id-">
+                                    <td><?=$x?></td>
+                                    <td>
+                                      <input type="text" class="form-control product_code" name="expend_tite[]" value="<?=\backend\models\Expense::getTitlecode($value->title_id)?>" disabled="disabled" /> 
+                                      <input type="hidden" class="form-control expend_title_id" name="expend_title_id[]" value="<?=$value->trans_id?>" /> 
+                                    </td>
+                                    <td>
+                                      <input type="text" class="form-control name" name="name[]" value="<?=\backend\models\Expense::getTitlename($value->title_id)?>" disabled="disabled" /> 
+                                    </td>
+                                    <td>
+                                      <input type="text" class="form-control price" name="price[]" value="<?=$value->amount?>" onkeydown="eventNumber($(this));" onchange="linecal($(this));" /> 
+                                    </td>
+                                   <td><div class="btn btn-warning line_remove" onclick="removeline($(this));"><i class="fa fa-minus"></i></div></td>
+                                  </tr>
+                                <?php endforeach;?>
+                              <?php endif;?>
+                             <?php endif;?>
                         </tbody>
                     </table>
                 </div>
@@ -87,8 +108,6 @@ use yii\helpers\Url;
     $url_to_list_product = Url::to(['transaction/listproduct'],true);
     $this->registerJs('
         $(function(){
-         
-
             $(".btn-addline").click(function(){
                 var datax = '.$expendlist.';
                 $.ajax({
@@ -98,7 +117,7 @@ use yii\helpers\Url;
                     data: {id: 1},
                     success: function(data){
                         $(".line-body").append(data);
-                        $(".line-body tr:last td:eq(0) input").val("").autocomplete({
+                        $(".line-body tr:last td:eq(1) input").val("").autocomplete({
                             source: function (request, response) {
                                    var array = $.map(datax, function (value, key) {
                                         return {
@@ -134,5 +153,21 @@ use yii\helpers\Url;
                 });
             });
         });
-   ');
+         
+         function removeline(e){
+          e.parent().parent().remove();
+         }
+
+         function eventNumber(e){
+           var x = e.val().replace(/[^0-9\.]/g,"");
+             e.val(x);
+            if(e.keyCode == 46 || e.keyCode == 8){
+
+            }else{
+              if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)){
+                e.preventDefault();
+              }
+            }
+        }
+   ',static::POS_END);
  ?>

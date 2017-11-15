@@ -33,6 +33,7 @@ class Transline extends \yii\db\ActiveRecord
     {
         return [
             [['trans_id', 'emp_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['amount'],'number'],
         ];
     }
 
@@ -46,6 +47,7 @@ class Transline extends \yii\db\ActiveRecord
             'trans_id' => 'Trans ID',
             'emp_id' => 'Emp ID',
             'status' => 'Status',
+            'amount' => 'Amount',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

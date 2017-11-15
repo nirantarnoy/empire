@@ -12,10 +12,11 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="transaction-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
+        'status' => $status,
+         'expendlist' => $expendlist,
+          'model_line' => $model_line,
     ]) ?>
 
 </div>

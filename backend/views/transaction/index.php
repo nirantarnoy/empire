@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\TransactionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -26,15 +27,46 @@ $this->params['breadcrumbs'][] = $this->title;
 
           //  'id',
             'transno',
-            'trans_type',
-            'transdate',
-            'status',
+            //'trans_type',
+            [
+                'attribute'=>'transdate',
+                'value'=> function($data){
+                    return date('d-m-Y',$data->transdate);
+                }
+            ],
+            [
+                'label'=>'จำนวนเงิน',
+                'value'=> function($data){
+                    return number_format($data->getSum($data->id));
+                }
+            ],
+            
+           //'status',
             //'created_at',
             //'updated_at',
             //'created_by',
             //'updated_by',
 
-            ['class' => 'yii\grid\ActionColumn'],
+           [
+                        'label' => 'Action',
+                        'format' => 'raw',
+                        'value' => function($model){
+                                return '
+                                    <div class="btn-group" >
+                                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                                        <ul class="dropdown-menu" style="right: 0; left: auto;">
+                                        <li><a href="'.Url::toRoute(['/transaction/view', 'id'=>$model->id]).'">'.'View'.'</a></li>
+                                        <li><a href="'.Url::toRoute(['/transaction/update', 'id'=>$model->id]).'">'.'Update'.'</a></li>
+                                        <li><a onclick="return confirm(\'Confirm ?\')" href="'.Url::to(['/transaction/delete', 'id'=>$model->id],true).'">Delete</a></li>
+                                        </ul>
+                                    </div>
+                                ';
+                            // }
+                        },
+                        'headerOptions'=>['class'=>'text-center'],
+                        'contentOptions' => ['class'=>'text-center','style'=>'vertical-align: middle','text-align: center'],
+
+                    ],
         ],
     ]); ?>
     <?php Pjax::end(); ?>

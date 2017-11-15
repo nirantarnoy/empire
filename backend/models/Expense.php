@@ -31,5 +31,12 @@ class Expense extends \common\models\Expense
         ],
     ];
  }
-
+ public function getTitlecode($id){
+    $model= Expense::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->name:'';
+ }
+ public function getTitlename($id){
+    $model= Expense::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->description:'';
+ }
 }

@@ -49,5 +49,9 @@ class Transaction extends \common\models\Transtable
         return $prefix.'000001';
     }
 }
+public function getSum($id){
+  $model = \backend\models\Transactionline::find()->where(['trans_id'=>$id])->sum('amount');
+  return $model;
+}
 
 }

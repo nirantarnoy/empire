@@ -34,9 +34,9 @@ class Transtable extends \yii\db\ActiveRecord
     {
         return [
         [['transno'],'required'],
-            [['trans_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['trans_type', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['transno'], 'string', 'max' => 255],
-            [[ 'transdate'],'safe']
+            [[ 'transdate', 'status'],'safe']
         ];
     }
 

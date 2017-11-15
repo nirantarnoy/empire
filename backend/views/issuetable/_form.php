@@ -135,8 +135,8 @@ use kartik\date\DatePicker;
                   ?>
                 </div>
                </div>
-               <div class="table-responsive">
-                <table class="table table-responsive" id="lineitem">
+               <div class="table-responsive" style="overflow-x: scroll">
+                <table class="table" id="lineitem">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -214,9 +214,8 @@ $this->registerJs('
     $(".total_all").val(amount);
   }
   function eventNumber(e){
-    // var x = e.val().replace(/[^0-9\.]/g,"");
-    //   e.val(x);
-
+     var x = e.val().replace(/[^0-9\.]/g,"");
+       e.val(x);
       if(e.keyCode == 46 || e.keyCode == 8){
 
       }else{

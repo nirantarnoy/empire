@@ -68,8 +68,20 @@ class TransactionController extends Controller
         $expendlist = \backend\models\Expense::find()->all();
 
         if ($model->load(Yii::$app->request->post())) {
+             $title_id = Yii::$app->request->post('expend_title_id');
+             $price = Yii::$app->request->post('price');
+             $model->transdate = strtotime(date('d-m-Y'));
             $model->status = 1;
             if($model->save()){
+                if(count($title_id)>0){
+                    for($i=0;$i<=count($title_id)-1;$i++){
+                        $modelline = new \backend\models\Transline();
+                        $modelline->trans_id = $model->id;
+                        $modelline->title_id = $title_id[$i];
+                        $modelline->amount = $price[$i];
+                        $modelline->save(false);
+                    }
+                }
                 return $this->redirect(['update', 'id' => $model->id]);  
             }
 
@@ -92,13 +104,33 @@ class TransactionController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+         $expendlist = \backend\models\Expense::find()->all();
+         $model_line = \backend\models\Transactionline::find()->where(['trans_id'=>$id])->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+             $title_id = Yii::$app->request->post('expend_title_id');
+             $price = Yii::$app->request->post('price');
+             $model->status = 1;
+             if($model->save()){
+                \backend\models\Transactionline::deleteAll(['trans_id'=>$id]);
+                 if(count($title_id)>0){
+                    for($i=0;$i<=count($title_id)-1;$i++){
+                        $modelline = new \backend\models\Transactionline();
+                        $modelline->trans_id = $model->id;
+                        $modelline->title_id = $title_id[$i];
+                        $modelline->amount = $price[$i];
+                        $modelline->save(false);
+                    }
+                }
+                return $this->redirect(['update', 'id' => $model->id]);
+             }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'status' => \backend\helpers\TransactionStatus::getTypeById($model->status),
+            'expendlist' => Json::encode($expendlist),
+            'model_line' => $model_line,
         ]);
     }
 
