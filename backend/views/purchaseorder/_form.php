@@ -100,7 +100,7 @@ use yii\helpers\Url;
                                     }else{
                                       $.ajax({
                                         type: 'POST',
-                                        url: '".Url::to(['/sale/addline'])."',
+                                        url: '".Url::to(['/purchaseorder/addline'])."',
                                         data: {data:s},
                                         success: function(data){
                                           $('.add-saleline').parent().append(data);
@@ -127,7 +127,8 @@ use yii\helpers\Url;
                     <th>#</th>
                      <th>รหัสสินค้า</th>
                      <th>ชื่อสินค้า</th>
-                     <th>จำนวน</th>
+             <th>จำนวน</th>
+            
                      <th>ราคา</th>
                      <th>รวมเงิน</th>
                     <th></th>

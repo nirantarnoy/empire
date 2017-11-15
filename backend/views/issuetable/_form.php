@@ -135,15 +135,15 @@ use kartik\date\DatePicker;
                   ?>
                 </div>
                </div>
-                <table class="table" id="lineitem">
+               <div class="table-responsive">
+                <table class="table table-responsive" id="lineitem">
                 <thead>
                   <tr>
                     <th>#</th>
                      <th>รหัสสินค้า</th>
                      <th>ชื่อสินค้า</th>
                      <th>จำนวน</th>
-                     <th>ราคา</th>
-                     <th>รวมเงิน</th>
+                    
                     <th></th>
                   </tr>
                 </thead>
@@ -163,36 +163,22 @@ use kartik\date\DatePicker;
                           <td>
                             <input type="text" class="form-control qty" name="qty[]" value="<?=$value->req_qty?>" onkeydown="eventNumber($(this));" onchange="linecal($(this));" /> 
                           </td>
-                          <td>
-                            <input type="text" class="form-control price" name="price[]" value="<?=$value->price?>" onchange="linecal($(this));" />
-                          </td>
-                          <td><input type="text" class="form-control line_amount" name="line_amount[]" value="<?=$value->line_amount?>" /></td>
-                          <td><div class="btn btn-warning line_remove" onclick="removeline($(this));"><i class="fa fa-minus"></i></div></td>
+                         <td><div class="btn btn-warning line_remove" onclick="removeline($(this));"><i class="fa fa-minus"></i></div></td>
                         </tr>
                       <?php endforeach;?>
                     <?php endif;?>
                    <?php endif;?>
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <td></td>
-                     <td></td>
-                     <td></td>
-                     <td></td>
-                     <td style="text-align: right;"><h4>รวม</h4></td>
-                     <td>
-                        <input type="text" value="" class="form-control total_all" readonly /> 
-                     </td>
-                  </tr>
-                </tfoot>
+                
                </table>
+               </div>
+                
                 </div>
                
                 </div>
                 </div>
                  </div>
-            </div>
-          </div>
+    
 
     
     <?php ActiveForm::end(); ?>

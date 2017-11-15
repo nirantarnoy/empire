@@ -27,7 +27,7 @@ use yii\helpers\ArrayHelper;
                   <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
                   
                   <?= $form->field($model, 'sale_id')->widget(Select2::className(),[
-                      'data' => ArrayHelper::map(\backend\models\Employee::find()->all(),'id','name'),
+                      'data' => ArrayHelper::map(\backend\models\Employee::find()->all(),'id','first_name'),
                       'options' => ['placeholder'=>'เลือกพนักงานขาย'],
                       'pluginOptions'=>[
                         'allowClear' => true,

@@ -242,4 +242,8 @@ class PurchaseorderController extends Controller
             }
         }
     }
+    public function actionAddline(){
+    $data = Yii::$app->request->post('data');
+    return $this->renderPartial('_addline',['data'=>$data]);
+}
 }
