@@ -5,22 +5,23 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\WarehouseSearch */
+/* @var $searchModel backend\models\ExpenseSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'คลังสินค้า';
+$this->title = 'ค่าใช้จ่าย';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="warehouse-index">
+<div class="expense-index">
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-<div class="row">
+
+    <div class="row">
       <div class="col-lg-12">
         <div class="panel panel-default">
           <div class="panel-heading">
            <div>
-            <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างคลังสินค้า', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างค่าใช้จ่าย', ['create'], ['class' => 'btn btn-success']) ?>
             <div class="btn-group pull-right" style="bottom: 10px">
         <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
       </div>
@@ -34,21 +35,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-           // 'id',
+            //'id',
             'name',
             'description',
-            'is_default',
             [
-               'attribute'=>'market_id',
-               'value'=>function($data){
-                  return \backend\models\Market::findName($data->market_id);
-               }
-            ],
-             [
                'attribute'=>'status',
                'format' => 'html',
                'value'=>function($data){
-                 return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
+                  if($data->status == 1){
+                    return '<div class="label label-success">'.\backend\helpers\IssueStatus::getTypeById($data->status).'</div>';
+                  }else if($data->status == 2){
+                    return '<div class="label label-primary">'.\backend\helpers\IssueStatus::getTypeById($data->status).'</div>';
+                  }
+                 
                }
              ],
             //'created_at',
@@ -64,9 +63,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <div class="btn-group" >
                                         <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
                                         <ul class="dropdown-menu" style="right: 0; left: auto;">
-                                        <li><a href="'.Url::toRoute(['/warehouse/view', 'id'=>$model->id]).'">'.'View'.'</a></li>
-                                        <li><a href="'.Url::toRoute(['/warehouse/update', 'id'=>$model->id]).'">'.'Update'.'</a></li>
-                                        <li><a onclick="return confirm(\'Confirm ?\')" href="'.Url::to(['/warehouse/delete', 'id'=>$model->id],true).'">Delete</a></li>
+                                        <li><a href="'.Url::toRoute(['/expense/view', 'id'=>$model->id]).'">'.'View'.'</a></li>
+                                        <li><a href="'.Url::toRoute(['/expense/update', 'id'=>$model->id]).'">'.'Update'.'</a></li>
+                                        <li><a onclick="return confirm(\'Confirm ?\')" href="'.Url::to(['/expense/delete', 'id'=>$model->id],true).'">Delete</a></li>
                                         </ul>
                                     </div>
                                 ';

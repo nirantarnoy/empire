@@ -3,7 +3,7 @@ namespace backend\models;
 use yii\db\ActiveRecord;
 date_default_timezone_set('Asia/Bangkok');
 
-class Market extends \common\models\Market
+class Expense extends \common\models\Expense
 {
   public function behaviors()
 {
@@ -31,9 +31,5 @@ class Market extends \common\models\Market
         ],
     ];
  }
- public static function findName($id){
-    $model = Market::find()->where(['id'=>$id])->one();
-    return count($model)>0?$model->name:'';
-}
 
 }

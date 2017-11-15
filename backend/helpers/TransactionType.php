@@ -8,14 +8,14 @@ class TransactionType
     const EXPEND = 2;
     
     private static $data = [
-        1 => 'รายรับ',
-        2 => 'รายจ่าย'
+        1 => 'รายจ่าย'
+     //   2 => 'รายรับ'
     
     ];
 
 	private static $dataobj = [
-        ['id'=>1,'name' => 'รายรับ'],
-        ['id'=>2,'name' => 'รายจ่าย'],
+        ['id'=>1,'name' => 'รายจ่าย'],
+      //  ['id'=>2,'name' => 'รายรับ'],
 
     ];
     public static function asArray()

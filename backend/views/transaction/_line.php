@@ -1,59 +1,17 @@
 <?php
 use kartik\typeahead\Typeahead;
 use yii\helpers\Url;
+use yii\jui\AutoComplete;
 ?>
 <tr id="line_trans">
 	<td>
-		<?php
-                    echo Typeahead::widget([
-                          'name' => 'country',
-                          'options' => ['placeholder' => 'ค้นหารหัสสินค้า...'],
-                          'pluginOptions' => ['highlight'=>true],
-                          'dataset' => [
-                              [
-                                  'datumTokenizer' => "Bloodhound.tokenizers.obj.whitespace('value')",
-                                  'display' => 'value',
-                                  'limit' => '100',
-                                  'templates'=>[
-                                    'notFound' => '<div class="text-danger" style="padding:0 8px">ไม่พบสินค้า</div>',
-                                    'suggestion' => new \yii\web\JsExpression("Handlebars.compile('<div><span class=\'fa fa-picture-o\' style=\'font-size:1.5em;\'></span> {{product_code}} {{name}}</div>')"),
-                                  ],
-                                  //'prefetch' => '/samples/countries.json',
-                                  'remote' => [
-                                      'url' => 'index.php?r=sale%2Fproductlist'.'&q=%QUERY',
-                                      'wildcard' => '%QUERY'
-                                  ]
-                              ]
-                              ],
-                              'pluginEvents'=>[
-                                "typeahead:select" => "
-                                  function(e,s){
-                                    if($(document).find('.saleline-id-'+s.id).length >=1){
-
-                                    }else{
-                                      $.ajax({
-                                        type: 'POST',
-                                        url: '".Url::to(['/sale/addline'])."',
-                                        data: {data:s},
-                                        success: function(data){
-                                          $('.add-saleline').parent().append(data);
-                                          var cnt =0;
-                                          $('#lineitem >tbody >tr').each(function(){
-                                            cnt+=1;
-                                            $(this).find('td:first-child').text(cnt);
-                                          });
-                                            sumall();
-                                        }
-                                      });
-                                    }
-                                  }
-                                "
-                              ]
-                          
-                      ]);
-                  ?>
+    <input type="text" placeholder="ค้นหารหัส..." class="form-control" name="expend_tite[]" id="prodid" value="">
+    <input type="hidden" name="expend_tite_id[]" id="expend_title_id" value="">
 	</td>		
-	<td><input type="text" class="form-control"></td>		
-	<td><input type="text" class="form-control"></td>		
-	<td><input type="text" class="form-control"></td>		
+	<td><input type="text" class="form-control name" value=""></td>		
+	<td><input type="text" class="form-control price"></td>		
+  <td><input type="text" class="form-control"></td>   
+  <td>
+    <div class="btn btn-danger btn-del"><i class="fa fa-bin"></i> ลบ</div>
+  </td>   
 </tr>

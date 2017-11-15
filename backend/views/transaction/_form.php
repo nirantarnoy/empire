@@ -62,14 +62,15 @@ use yii\helpers\Url;
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>ชื่อ</th>
-                                <th></th>
-                                <th></th>
+                                <th>หัวข้อ</th>
+                                <th>รายละเอียด</th>
+                                <th>จำนวนเงิน</th>
                                 <th></th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody class="line-body">
+                          
                         </tbody>
                     </table>
                 </div>
@@ -83,9 +84,13 @@ use yii\helpers\Url;
 </div>
 <?php
     $url_to_add_line = Url::to(['transaction/addline'],true);
+    $url_to_list_product = Url::to(['transaction/listproduct'],true);
     $this->registerJs('
         $(function(){
+         
+
             $(".btn-addline").click(function(){
+                var datax = '.$expendlist.';
                 $.ajax({
                     type: "post",
                     dataType: "html",
@@ -93,6 +98,38 @@ use yii\helpers\Url;
                     data: {id: 1},
                     success: function(data){
                         $(".line-body").append(data);
+                        $(".line-body tr:last td:eq(0) input").val("").autocomplete({
+                            source: function (request, response) {
+                                   var array = $.map(datax, function (value, key) {
+                                        return {
+                                            label: value.name,
+                                            value: value.id,
+                                            name: value.description,
+                                           // price: value.price
+                                        }
+                                    });
+                                  response($.ui.autocomplete.filter(array, request.term));
+                                
+                            }, 
+                            minLength: 0,
+                            focus: function( event, ui ) {
+                            $(this).val( ui.item.label);
+                                return false;
+                            },
+                            select: function( event, ui ) {
+                                $( this ).val( ui.item.label );
+                                // $( "#project-id" ).val( ui.item.value );
+                                // $( "#project-description" ).html( ui.item.desc );
+                                // $( "#project-icon" ).attr( "src", "images/" + ui.item.icon );
+
+                                $(this).closest("tr").find(".name").val(ui.item.name);
+                                //$(this).closest("tr").find(".price").val(ui.item.price);
+                                $(this).closest("tr").find(".expend_title_id").val(ui.item.id);
+                         
+                                return false;
+                              }
+                        });
+                      
                     }   
                 });
             });

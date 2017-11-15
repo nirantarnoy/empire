@@ -129,11 +129,10 @@
 
                         'label' => 'บันทึกรายการประจำวัน',
                         'icon' => 'folder-open',
-                        'url' => ['/transaction'],
+                        'url' => '#',
                         'items' => [
-                           
-                            // ['label' => 'ประภทสินค้า', 'icon' => 'cubes', 'url' => ['/category'],],
-                            // ['label' => 'รหัสสินค้า', 'icon' => 'cube', 'url' => ['/product'],],
+                            ['label' => 'หัวข้อรายจ่าย', 'icon' => 'cubes', 'url' => ['/expense'],],
+                            ['label' => 'บันทึกรายจ่าย', 'icon' => 'cube', 'url' => ['/transaction'],],
                            
                         ],
                     ],  

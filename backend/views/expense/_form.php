@@ -3,15 +3,12 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use toxor88\switchery\Switchery;
-use kartik\select2\Select2;
-use yii\helpers\ArrayHelper;
-
 /* @var $this yii\web\View */
-/* @var $model backend\models\Warehouse */
+/* @var $model backend\models\Expense */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="warehouse-form">
+<div class="expense-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -25,22 +22,6 @@ use yii\helpers\ArrayHelper;
                   <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
                   <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
-                  
-                  <?= $form->field($model, 'sale_id')->widget(Select2::className(),[
-                      'data' => ArrayHelper::map(\backend\models\Employee::find()->all(),'id','name'),
-                      'options' => ['placeholder'=>'เลือกพนักงานขาย'],
-                      'pluginOptions'=>[
-                        'allowClear' => true,
-                      ]
-                  ]) ?>
-
-                  <?= $form->field($model, 'market_id')->widget(Select2::className(),[
-                      'data' => ArrayHelper::map(\backend\models\Market::find()->all(),'id','name'),
-                      'options' => ['placeholder'=>'เลือกตลาด'],
-                      'pluginOptions'=>[
-                        'allowClear' => true,
-                      ]
-                  ]) ?>
 
                   <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
 

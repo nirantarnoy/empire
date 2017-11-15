@@ -3,17 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Transaction;
-use backend\models\TransactionSearch;
+use backend\models\Expense;
+use backend\models\ExpenseSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\Json;
 
 /**
- * TransactionController implements the CRUD actions for Transaction model.
+ * ExpenseController implements the CRUD actions for Expense model.
  */
-class TransactionController extends Controller
+class ExpenseController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,12 +30,12 @@ class TransactionController extends Controller
     }
 
     /**
-     * Lists all Transaction models.
+     * Lists all Expense models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TransactionSearch();
+        $searchModel = new ExpenseSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +45,7 @@ class TransactionController extends Controller
     }
 
     /**
-     * Displays a single Transaction model.
+     * Displays a single Expense model.
      * @param integer $id
      * @return mixed
      */
@@ -58,33 +57,25 @@ class TransactionController extends Controller
     }
 
     /**
-     * Creates a new Transaction model.
+     * Creates a new Expense model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Transaction();
-        $expendlist = \backend\models\Expense::find()->all();
+        $model = new Expense();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->status = 1;
-            if($model->save()){
-                return $this->redirect(['update', 'id' => $model->id]);  
-            }
-
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
-            'runno'=> $model->getLastNo(),
-            'status' => \backend\helpers\TransactionStatus::getTypeById(1),
-            'expendlist' => Json::encode($expendlist),
         ]);
     }
 
     /**
-     * Updates an existing Transaction model.
+     * Updates an existing Expense model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -103,7 +94,7 @@ class TransactionController extends Controller
     }
 
     /**
-     * Deletes an existing Transaction model.
+     * Deletes an existing Expense model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -116,33 +107,18 @@ class TransactionController extends Controller
     }
 
     /**
-     * Finds the Transaction model based on its primary key value.
+     * Finds the Expense model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Transaction the loaded model
+     * @return Expense the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Transaction::findOne($id)) !== null) {
+        if (($model = Expense::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-    public function actionAddline(){
-        if(Yii::$app->request->isAjax){
-            return $this->renderPartial('_line');
-        }
-    }
-    public function actionListproduct(){
-        $model = \backend\models\Product::find()->all();
-        if($model){
-            $data = [];
-             $data[] = ["product_id"=>"niran"];
-             //return Json::encode($data);
-            print_r(Json::encode($data));
-           //return Json::encode($model,JSON_NUMERIC_CHECK);
-        }
     }
 }
