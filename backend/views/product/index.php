@@ -90,7 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
                'attribute'=>'category_id',
                'format' => 'html',
                'value'=>function($data){
-                 return $data->category_id !== Null ? $data->category->name:'';
+                 return $data->category_id !== Null ? \backend\models\Category::getCategorycode($data->category_id):'';
                }
              ],
             // 'weight',
