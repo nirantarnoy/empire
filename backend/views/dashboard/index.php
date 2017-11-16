@@ -188,7 +188,7 @@ if ($Sdate === '' && $Edate === '') {
                                             ],
                                             'credits' => ['enabled' => false],
                                             'chart' => [
-                                                'type' => 'area',
+                                                'type' => 'line',
                                             ],
                                         ]
                                     ]);
@@ -304,3 +304,4 @@ if ($Sdate === '' && $Edate === '') {
 		</div>
 	</div>
 </div>
+

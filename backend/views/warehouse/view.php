@@ -7,12 +7,10 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\Warehouse */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Warehouses', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'คลังสินค้า', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="warehouse-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -28,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+         //   'id',
             'name',
             'description',
             'is_default',

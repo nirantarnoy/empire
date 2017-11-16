@@ -15,8 +15,8 @@
   	<input type="text" class="form-control qty" name="qty[]" value="1" onkeydown="eventNumber($(this));" onchange="linecal($(this));" /> 
   </td>
   <td>
-  	<input type="text" class="form-control price" name="price[]" value="<?=$data["price"]?>" onchange="linecal($(this));" />
+  	<input type="text" class="form-control price" name="price[]" value="<?=$data["cost"]?>" onchange="linecal($(this));" />
   </td>
-  <td><input type="text" class="form-control line_amount" name="line_amount[]" value="<?=$data["price"] * 1?>" /></td>
+  <td><input type="text" class="form-control line_amount" name="line_amount[]" value="<?=$data["cost"] * 1?>" /></td>
   <td><div class="btn btn-warning line_remove" onclick="removeline($(this));"><i class="fa fa-minus"></i></div></td>
 </tr>

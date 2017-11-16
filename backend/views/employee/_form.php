@@ -10,7 +10,7 @@ use toxor88\switchery\Switchery;
 /* @var $model backend\models\Employee */
 /* @var $form yii\widgets\ActiveForm */
 $pos = backend\models\Position::find()->where(['status'=>1])->all();
-$user = backend\models\User::find()->where(['status'=>10])->all();
+$user = backend\models\User::find()->where(['status'=>1])->all();
 $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
 ?>
 

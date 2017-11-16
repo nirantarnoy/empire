@@ -143,7 +143,7 @@
                         'url' => '#',
                         'items' => [
                            
-                            // ['label' => 'ประภทสินค้า', 'icon' => 'cubes', 'url' => ['/category'],],
+                             ['label' => 'สรุปรายรับ-จ่าย', 'icon' => 'line-chart', 'url' => ['/transsummary'],],
                             // ['label' => 'รหัสสินค้า', 'icon' => 'cube', 'url' => ['/product'],],
                            
                         ],

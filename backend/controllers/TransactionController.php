@@ -82,6 +82,7 @@ class TransactionController extends Controller
                         $modelline->save(false);
                     }
                 }
+                $this->updateAmount($model->id);
                 return $this->redirect(['update', 'id' => $model->id]);  
             }
 
@@ -122,6 +123,7 @@ class TransactionController extends Controller
                         $modelline->save(false);
                     }
                 }
+                $this->updateAmount($model->id);
                 return $this->redirect(['update', 'id' => $model->id]);
              }
         }
@@ -132,6 +134,17 @@ class TransactionController extends Controller
             'expendlist' => Json::encode($expendlist),
             'model_line' => $model_line,
         ]);
+    }
+
+      public function updateAmount($id){
+        $model = \backend\models\Transactionline::find()->where(['trans_id'=>$id])->sum('amount');
+        if($model){
+            $model_order = \backend\models\Transaction::find()->where(['id'=>$id])->one();
+            if($model_order){
+                $model_order->amount = $model;
+                $model_order->save(false);
+            }
+        }
     }
 
     /**
