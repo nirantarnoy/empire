@@ -83,9 +83,9 @@ class ProductController extends Controller
                             $modelx->product_code = $rowData[0][0];
                             $modelx->name = $rowData[0][1];
                             $modelx->description = $rowData[0][2] ;
-                            $modelx->category_id = 0;//$rowData[0][3];
+                            $modelx->category_id = $this->checkCat($rowData[0][3]);
                             $modelx->weight = $rowData[0][4];
-                            $modelx->unit_id = 0;//$rowData[0][5];
+                            $modelx->unit_id = $this->checkUnit($rowData[0][5]);
                             $modelx->price = $rowData[0][6];
                             $modelx->cost = $rowData[0][7];
                             $modelx->qty = $rowData[0][8];
@@ -126,6 +126,32 @@ class ProductController extends Controller
             'dataProvider' => $dataProvider,
             'modelfile' => $modelfile,
         ]);
+    }
+    public function checkCat($name){
+      $model = \backend\models\Category::find()->where(['name'=>$name])->one();
+      if(count($model)>0){
+        return $model->id;
+      }else{
+        $model_new = new \backend\models\Category();
+        $model_new->name = $name;
+        $model_new->status = 1;
+        if($model_new->save(false)){
+          return $model_new->id;
+        }
+      }
+    }
+  public function checkUnit($name){
+      $model = \backend\models\Unit::find()->where(['name'=>$name])->one();
+      if(count($model)>0){
+        return $model->id;
+      }else{
+        $model_new = new \backend\models\Unit();
+        $model_new->name = $name;
+        $model_new->status = 1;
+        if($model_new->save(false)){
+          return $model_new->id;
+        }
+      }
     }
 
     /**
