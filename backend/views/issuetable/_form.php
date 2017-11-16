@@ -37,7 +37,7 @@ use kartik\date\DatePicker;
         <div class="col-lg-12">
             <div class="form-group">
                 <?= Html::submitButton('บันทึก', ['class' => 'btn btn-success']) ?>
-                <?php if($model->isNewRecord && $model->status!=\backend\helpers\IssueStatus::ISSUE_OPEN):?>
+                <?php if($model->isNewRecord || $model->status==\backend\helpers\IssueStatus::ISSUE_OPEN):?>
                 <div class="btn btn-primary btn-approve">อนุมัติ</div>
                 <?php endif;?>
             </div>
