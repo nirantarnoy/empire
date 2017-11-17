@@ -72,12 +72,7 @@ if ($Sdate === '' && $Edate === '') {
           <h4>Preventive maintenence Dashboard</h4>
           <!-- <p>แสดงภาพรวมของระบบกิจกรรม PM ของฝ่ายวิศวกรรม</p> -->
         <!-- </div>  -->
-        <div class="pull-left">
-            <!-- <h4>Preventive Maintenence Infomation Dashboard</h4> -->
-            <div id="show_date_scope" style="display: none"><h4 class="label label-primary" style=" font-size: large">
-                    แสดงข้อมูลระหว่างวันที่ <?php echo date('d-m-Y', strtotime($Sdate)) ?>
-                    จนถึงวันที่ <?php echo date('d-m-Y', strtotime($Edate)) ?></h4></div>
-        </div>
+        
         <div class="pull-right">
             <?php $form = ActiveForm::begin(['id' => 'searchdate', 'type' => ActiveForm::TYPE_INLINE, 'action' => 'index.php?r=transsummary/index','method'=>'get']); ?>
             <span>วันที่ </span>

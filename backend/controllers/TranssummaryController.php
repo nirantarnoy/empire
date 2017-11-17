@@ -20,10 +20,11 @@ class TranssummaryController extends Controller
         if(Yii::$app->request->isGet){
             $Sdate = Yii::$app->request->get('Startdate');
             $Edate = Yii::$app->request->get('Enddate');
-
+ //echo date_format($Sdate2,'d-m-Y');return;
+            $x = "STR_TO_DATE(".$Sdate.",%d-%m-%Y)";
 
             if($Sdate != "" || $Edate != ""){
-                $dataProvider->query->where(['>=','STR_TO_DATE(create_date,"%d-%m-%Y")',$Sdate])->orderby(['create_date'=>SORT_DESC]);
+                $dataProvider->query->where(['>=','CAST(sale_date as CHAR(50))',$Sdate])->orderby(['create_date'=>SORT_DESC]);
                // $income = \backend\models\Transactionsum::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['>=','STR_TO_DATE(sale_date,"%d-%m-%Y")',$Sdate])->sum('in_amount');
                // $expense = \backend\models\Transactionsum::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['>=','sale_date',$Sdate])->sum('out_amount');
             }else{
