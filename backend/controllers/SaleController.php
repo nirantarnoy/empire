@@ -73,7 +73,7 @@ class SaleController extends Controller
             $lineamt = Yii::$app->request->post('line_amount');
 
             $model->sale_date = strtotime($model->sale_date);
-        
+             $model->created_by = Yii::$app->user->identity->id;
             if( $model->save()){
                 if(count($prodid)>0){
                     for($i=0;$i<=count($prodid)-1;$i++){
