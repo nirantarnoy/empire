@@ -18,18 +18,17 @@ class TranssummaryController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         if(Yii::$app->request->isGet){
-            $Sdate = Yii::$app->request->get('Startdate');
-            $Edate = Yii::$app->request->get('Enddate');
+            $Sdate = date('Y-m-d',strtotime(Yii::$app->request->get('Startdate')));
+            $Edate = date('Y-m-d',strtotime(Yii::$app->request->get('Enddate')));
  //echo date_format($Sdate2,'d-m-Y');return;
-            $x = "STR_TO_DATE(".$Sdate.",%d-%m-%Y)";
-
+          
             if($Sdate != "" || $Edate != ""){
-                $dataProvider->query->where(['>=','CAST(sale_date as CHAR(50))',$Sdate])->orderby(['create_date'=>SORT_DESC]);
-               // $income = \backend\models\Transactionsum::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['>=','STR_TO_DATE(sale_date,"%d-%m-%Y")',$Sdate])->sum('in_amount');
-               // $expense = \backend\models\Transactionsum::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['>=','sale_date',$Sdate])->sum('out_amount');
+                $dataProvider->query->where(['>=','sale_date',$Sdate])->andFilterWhere(['<=','sale_date',$Edate])->orderby(['create_date'=>SORT_DESC]);
+               $income = \backend\models\Transactionsum::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','sale_date',$Sdate],['<=','sale_date',$Edate]])->sum('in_amount');
+               $expense = \backend\models\Transactionsum::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','sale_date',$Sdate],['<=','sale_date',$Edate]])->sum('out_amount');
             }else{
-               // $income = \backend\models\Transactionsum::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('in_amount');
-               // $expense = \backend\models\Transactionsum::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('out_amount');
+               $income = \backend\models\Transactionsum::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('in_amount');
+               $expense = \backend\models\Transactionsum::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('out_amount');
             }
         }
 

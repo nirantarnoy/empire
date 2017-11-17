@@ -80,24 +80,24 @@ if ($Sdate === '' && $Edate === '') {
                 'name' => 'Startdate',
                 'value' => $Sdate,
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'readonly' => true,
+                'readonly' => false,
                 'layout' => '{picker}{input}',
                 'options' => [
                     'id' => 'sdate',
                     'placeholder' => 'วันที่เริ่ม',
-                    'autocomplete' => 'off'
+                    'autocomplete' => 'on'
                 ],
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
-                    'format' => 'dd-mm-yyyy'
+                    'format' => 'yyyy-mm-dd'
                 ]
             ]); ?>
             <?= DatePicker::widget([
                 'name' => 'Enddate',
                 'value' => $Edate,
                 'type' => DatePicker::TYPE_COMPONENT_APPEND,
-                'readonly' => true,
+                'readonly' => false,
                 'options' => [
                     'id' => 'edate',
                     'placeholder' => 'วันที่สิ้นสุด',
@@ -107,7 +107,7 @@ if ($Sdate === '' && $Edate === '') {
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
-                    'format' => 'dd-mm-yyyy'
+                    'format' => 'yyyy-mm-dd'
                 ]
             ]); ?>
             <?= Html::submitButton('ค้นหา', ['id' => 'searchbutton', 'class' => 'btn btn-primary']) ?>
