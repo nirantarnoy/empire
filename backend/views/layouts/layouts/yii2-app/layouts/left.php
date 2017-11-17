@@ -38,6 +38,7 @@
                     //['label' => '', 'options' => ['class' => 'header']],
                     ['label' => 'หน้าแรก','icon'=>'dashboard', 'url' => ['/dashboard']],
                     ['label' => 'ตั้งค่าร้าน','icon'=>'cogs', 'url' => ['/shop']],
+                   ['label' => 'แจ้งเตือนรายจ่าย','icon'=>'commenting-o', 'url' => ['/task']],
                   // [
                   //       'label' => 'ตั้งค่าระบบ',
                   //       'icon' => 'cog',

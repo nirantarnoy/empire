@@ -7,7 +7,7 @@ use yii\helpers\BaseUrl;
 /* @var $content string */
 Yii::$app->name = 'Gate Tracker';
 
-use backend\models\Notification;
+use common\models\Notification;
 use yii\web\Session;
 use yii\helpers\Url;
 
@@ -15,9 +15,8 @@ use yii\helpers\Url;
 $session = new Session();
 $session->open();
 
-// $noti = Notification::find()->where(['!=','status',1])->all();
+$noti = Notification::find()->where(['status'=>1])->all();
 // $img_logo = $directoryAsset.'/img/blue.png';
-
 
 ?>
 
@@ -37,20 +36,20 @@ $session->open();
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
-                        <span class="label label-warning cnt-noti"></span>
+                        <span class="label label-warning cnt-noti"><?=count($noti)?></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header"> <i class="fa fa-bell"></i> ข่าวสาร</li>
+                        <li class="header">คุณมี <?=count($noti)?> การแจ้งเตือน</li>
                         <li class="noti-msg-list">
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
-                              <?php if(1>6):?>
+                              <?php foreach($noti as $data):?>
                                 <li>
                                     <a href="index.php?r=notification/index">
-                                        <i class="fa fa-car text-green"></i> <span class="noti-message"> </span><span class="label label-success"> <small class="cnt-msg"></small></span>
+                                        <i class="fa fa-warning text-yellow"></i> <?=$data->title?>
                                     </a>
                                 </li>
-                              <?php endif;?>
+                              <?php endforeach;?>
                             </ul>
                         </li>
                         <!-- <li class="footer"><a href="#">View all</a></li> -->
