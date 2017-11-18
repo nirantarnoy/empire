@@ -64,6 +64,20 @@ if ($Sdate === '' && $Edate === '') {
 			          <!-- /.info-box -->
  					</div>
  				</div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="info-box">
+                        <span class="info-box-icon bg-green"><i class="fa fa-dollar"></i></span>
+
+                        <div class="info-box-content">
+                          <span class="info-box-text"><h4>คงเหลือ</h4></span>
+                          <span class="info-box-number"><?=number_format($income - $expense)?></span>
+                        </div>
+                        <!-- /.info-box-content -->
+                      </div>
+                      <!-- /.info-box -->
+                    </div>
+                </div>
 	 			</div>
  			<div class="col-lg-9">
  				<div class="row">
@@ -147,6 +161,13 @@ if ($Sdate === '' && $Edate === '') {
 				            		return number_format($data->out_amount);
 				            	}
 				            ],
+                              [
+                                //'attribute'=>'out_amount',
+                                'label' => 'คงเหลือ',
+                                'value' => function($data){
+                                    return number_format($data->in_amount - $data->out_amount);
+                                }
+                            ],
 				            //'description',
 				            //'menu_type_id',
 				            //'status',
