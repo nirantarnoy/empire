@@ -201,8 +201,14 @@ class PurchaseorderController extends Controller
             
             if(count($poid)>0){
                 for($i=0;$i<=count($product_id)-1;$i++){
+                    $prodid = 0;
+                    $recqty = 0;
+                    $recwh = 0;
                     $data = [];
                     if($qty[$i] > 0){
+                         $prodid = isset($product_id[$i])?$product_id[$i]:continue;
+                         $recqty = isset($qty[$i])?$qty[$i]:continue;
+                         $recwh = isset($wh[$i])?$wh[$i]:continue;
                          array_push($data,['product_id'=>$product_id[$i],'qty'=>$qty[$i],'warehouse'=>$wh[$i]]);
                     }
                    
