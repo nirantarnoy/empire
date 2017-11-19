@@ -101,7 +101,27 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'updated_at',
             // 'created_by',
             // 'updated_by',
-
+            [
+               'attribute'=>'qty',
+               'format' => 'html',
+               'value'=>function($data){
+                 return number_format($data->qty);
+               }
+             ],
+              [
+               'attribute'=>'cost',
+               'format' => 'html',
+               'value'=>function($data){
+                 return number_format($data->cost);
+               }
+             ],
+              [
+               'attribute'=>'price',
+               'format' => 'html',
+               'value'=>function($data){
+                 return number_format($data->price);
+               }
+             ],
            [
                'attribute'=>'status',
                'format' => 'html',
