@@ -52,8 +52,15 @@ $this->registerJsFile(
                         //'product_id',
                         [
                             'attribute'=>'product_id',
+                            'format'=>'html',
                             'value' => function($data){
-                                return \backend\models\Product::getProdCode($data->product_id);
+                                return "<a href='index.php?r=product/update&id=$data->product_id'>".\backend\models\Product::getProdCode($data->product_id)."</a>";
+                            }
+                        ],
+                        [
+                            'label'=>'ชื่อสินค้า',
+                            'value' => function($data){
+                                return \backend\models\Product::getProdname($data->product_id);
                             }
                         ],
                         [
