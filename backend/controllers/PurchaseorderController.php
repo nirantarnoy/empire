@@ -199,21 +199,21 @@ class PurchaseorderController extends Controller
             $qty = Yii::$app->request->post("qty");
             $wh = Yii::$app->request->post("warehouseid");
             
-            print_r($wh);return;
+           // print_r($wh);return;
             if(count($poid)>0){
                 for($i=0;$i<=count($product_id)-1;$i++){
-                    $prodid = 0;
-                    $recqty = 0;
-                    $recwh = 0;
+                    // $prodid = 0;
+                    // $recqty = 0;
+                    // $recwh = 0;
                     $data = [];
                     if($qty[$i] > 0){
-                         $prodid = isset($product_id[$i])?$product_id[$i]:0;
-                         $recqty = isset($qty[$i])?$qty[$i]:0;
-                         $recwh = isset($wh[$i])?$wh[$i]:0;
-                         if($prodid == 0 || $recqty == 0 || $recwh == 0){
-                            continue;
-                         }
-                         array_push($data,['product_id'=>$product_id[$i],'qty'=>$qty[$i],'warehouse'=>$wh[$i]]);
+                         // $prodid = isset($product_id[$i])?$product_id[$i]:0;
+                         // $recqty = isset($qty[$i])?$qty[$i]:0;
+                         // $recwh = isset($wh[$i])?$wh[$i]:0;
+                         // if($prodid == 0 || $recqty == 0 || $recwh == 0){
+                         //    continue;
+                         // }
+                         array_push($data,['product_id'=>$product_id[$i],'qty'=>$qty[$i],'warehouse'=>$wh);
                     }
                    
                    // echo $data['product_id'];return;
