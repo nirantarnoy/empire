@@ -225,6 +225,8 @@ class PurchaseorderController extends Controller
                         $session = Yii::$app->session;
                         $session->setFlash('msg','บันทึกรายการเรียบร้อย');
                         return $this->redirect(['index']);
+                    }else{
+                        echo "error";
                     }
             }
          }
