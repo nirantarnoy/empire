@@ -199,7 +199,7 @@ class PurchaseorderController extends Controller
             $qty = Yii::$app->request->post("qty");
             $wh = Yii::$app->request->post("warehouseid");
             
-            print_r($qty);return;
+            print_r($wh);return;
             if(count($poid)>0){
                 for($i=0;$i<=count($product_id)-1;$i++){
                     $prodid = 0;
