@@ -201,12 +201,13 @@ class PurchaseorderController extends Controller
             
            // print_r($wh);return;
             if(count($poid)>0){
+                $data = [];
                 for($i=0;$i<=count($product_id)-1;$i++){
                     // $prodid = 0;
                     // $recqty = 0;
                     // $recwh = 0;
-                    $data = [];
-                    if($qty[$i] > 0){
+                    
+                    if((int)$qty[$i] > 0){
                          // $prodid = isset($product_id[$i])?$product_id[$i]:0;
                          // $recqty = isset($qty[$i])?$qty[$i]:0;
                          // $recwh = isset($wh[$i])?$wh[$i]:0;
@@ -219,7 +220,7 @@ class PurchaseorderController extends Controller
                    // echo $data['product_id'];return;
                    
                 }
-                echo print_r($data);return;
+                //echo print_r($data);return;
                  $x =Trans::createTrans($data,0,$this->getPono($poid[0]));
                     if($x){
                         $this->updatePostatus($poid[0]);
