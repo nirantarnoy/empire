@@ -21,10 +21,12 @@ $js = <<<JS
     // });
 JS;
 $this->registerJs($js, static::POS_END);
-if ($Sdate === '' && $Edate === '') {
-    $Sdate = date('Y-m-d');
-    $Edate = date('Y-m-d');
+if ($Sdate=='1970-01-01') {
+    $Sdate = date('d-m-Y');
+    $Edate = date('d-m-Y');
 }
+//echo date($Sdate);
+
  ?>
 <div class="row">
 	<div class="col-lg-12">
@@ -88,6 +90,7 @@ if ($Sdate === '' && $Edate === '') {
         <!-- </div>  -->
         
         <div class="pull-right">
+         
             <?php $form = ActiveForm::begin(['id' => 'searchdate', 'type' => ActiveForm::TYPE_INLINE, 'action' => 'index.php?r=transsummary/index','method'=>'get']); ?>
             <span>วันที่ </span>
             <?= DatePicker::widget([
