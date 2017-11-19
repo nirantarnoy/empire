@@ -26,8 +26,7 @@ $(function(){
                           $(".icheckbox_square-green input[name='selection[]']:checked").each(function(i,e){
                               orderList.push(e.value);
                           });
-                           console.log(orderList);
-
+                           //console.log(orderList);
                           orderStatusList = [];
                           $(".icheckbox_square-green input[name='selection[]']:checked").each(function(i,e){
                               orderStatusList.push($(e).parents("tr").attr("data-status"));
@@ -53,7 +52,7 @@ $(function(){
                               });
                           }
 
-                          // console.log(orderList);
+                           console.log(orderList);
                       }
                       // console.log(orderList);
                     //  alert(orderList[0]);
@@ -61,10 +60,16 @@ $(function(){
                         $(".btn-trasfer").attr("disabled",false);
                         $(".btn-trasfer").removeClass("btn-default");
                         $(".btn-trasfer").addClass("btn-primary");
+                        $(".remove_item").html("["+orderList.length+"]");
+                        $(".btn-bulk-remove").attr('disabled',false);
+                       // console.log("niran");
                       }else{
                         $(".btn-trasfer").attr("disabled",true);
                         $(".btn-trasfer").removeClass("btn-primary");
                         $(".btn-trasfer").addClass("btn-default");
+                        $(".remove_item").html("["+orderList.length+"]");
+                        $(".btn-bulk-remove").attr('disabled',true);
+                        //console.log("ddfdfdfd");
                       }
                   });
               });

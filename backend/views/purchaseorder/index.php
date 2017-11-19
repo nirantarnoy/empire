@@ -8,12 +8,20 @@ use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
+use backend\assets\ICheckAsset;
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\PurchaseorderSearch */
+/* @var $searchModel backend\models\StockbalanceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+ICheckAsset::register($this);
 
 $this->title = 'ใบสั่งซื้อ';
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->registerJsFile(
+    '@web/js/stockbalancejs.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]],
+    static::POS_END
+);
 ?>
 <div class="purchaseorder-index">
     <?php Pjax::begin(); ?>
@@ -25,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
           <div class="panel-heading">
            <div>
             <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างใบสั่งซื้อ', ['create'], ['class' => 'btn btn-success']) ?>
+            <div class="btn btn-warning btn-bulk-remove" disabled>ลบ <span class="remove_item">[0]</span></div>
             <div class="btn-group pull-right" style="bottom: 10px">
         <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
       </div>
@@ -37,6 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
       //  'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\CheckboxColumn'],
 
            // 'id',
             'purchase_order',
@@ -182,7 +192,15 @@ $this->params['breadcrumbs'][] = $this->title;
      });
 
     });
-
+    
+    $(".btn-bulk-remove").click(function(e){
+      if($(this).attr("disabled")){
+        return;
+      }
+      if(confirm("คุณต้องการลบรายการที่เลือกใช่หรือไม่")){
+        //alert(orderList.lenght);
+      }
+    });
     function recline(e){
       var poid = e.closest("tr").find("td:eq(1)").text();
         //alert(poid);
