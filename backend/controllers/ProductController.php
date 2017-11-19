@@ -211,6 +211,7 @@ class ProductController extends Controller
         $model = $this->findModel($id);
         $searchModel = new StockbalanceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->where(['product_id'=>$id]);
 
         $searchModel2 = new ViewStockSearch();
         $dataProvider2 = $searchModel2->search(Yii::$app->request->queryParams);
