@@ -213,7 +213,7 @@ class PurchaseorderController extends Controller
                          // if($prodid == 0 || $recqty == 0 || $recwh == 0){
                          //    continue;
                          // }
-                         array_push($data,['product_id'=>$product_id[$i],'qty'=>$qty[$i],'warehouse'=>$wh);
+                         array_push($data,['product_id'=>$product_id[$i],'qty'=>$qty[$i],'warehouse'=>$wh]);
                     }
                    
                    // echo $data['product_id'];return;
