@@ -219,6 +219,7 @@ class PurchaseorderController extends Controller
                    // echo $data['product_id'];return;
                    
                 }
+                echo count($data);return;
                  $x =Trans::createTrans($data,0,$this->getPono($poid[0]));
                     if($x){
                         $this->updatePostatus($poid[0]);
