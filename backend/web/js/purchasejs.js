@@ -62,7 +62,6 @@ $(function(){
                         $(".btn-trasfer").addClass("btn-primary");
                         $(".remove_item").html("["+orderList.length+"]");
                         $(".btn-bulk-remove").attr('disabled',false);
-                        $(".listid").val(orderList);
                        // console.log("niran");
                       }else{
                         $(".btn-trasfer").attr("disabled",true);
@@ -70,14 +69,19 @@ $(function(){
                         $(".btn-trasfer").addClass("btn-default");
                         $(".remove_item").html("["+orderList.length+"]");
                         $(".btn-bulk-remove").attr('disabled',true);
-                        $(".listid").val(orderList);
                         //console.log("ddfdfdfd");
                       }
                   });
               });
+          
 
-
-
-         
+          $(".btn-bulk-remove").click(function(e){
+            if($(this).attr("disabled")){
+              return;
+            }
+            if(confirm("คุณต้องการลบรายการที่เลือกใช่หรือไม่")){
+              alert(orderList.length);
+            }
+    });
 
     });

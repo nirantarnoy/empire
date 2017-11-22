@@ -9,21 +9,20 @@ use kartik\select2\Select2;
 use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
 use backend\assets\ICheckAsset;
-/* @var $this yii\web\View */
-/* @var $searchModel backend\models\StockbalanceSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+
 ICheckAsset::register($this);
 
 $this->title = 'ใบสั่งซื้อ';
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->registerJsFile(
-    '@web/js/stockbalancejs.js',
+    '@web/js/stockbalancejs.js?V=001',
     ['depends' => [\yii\web\JqueryAsset::className()]],
     static::POS_END
 );
 ?>
 <div class="purchaseorder-index">
+  <input type="hidden" name="listid" class="listid" value="">
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -165,6 +164,7 @@ $this->registerJsFile(
 <?php 
     $url_to_receive = Url::to(['purchaseorder/receivelist'],true);
     $url_to_recpo = Url::to(['purchaseorder/receivepurchase'],true);
+    $url_to_delete =  Url::to(['purchaseorder/bulkdelete'],true);
     $this->registerJs('
     $(function(){
       // $(".line-status").on("click",function(){
@@ -191,16 +191,29 @@ $this->registerJsFile(
         $("form#form-receive").submit();
      });
 
+    $(".btn-bulk-remove").click(function(e){
+      //alert($(".listid").val());
+            if($(this).attr("disabled")){
+              return;
+            }
+            if(confirm("คุณต้องการลบรายการที่เลือกใช่หรือไม่")){
+              if($(".listid").length >0){
+                $.ajax({
+                  type: "post",
+                  dataType: "html",
+                  url: "'.$url_to_delete.'",
+                  data: {id: $(".listid").val()},
+                  success: function(data){
+
+                  }
+                });
+              }
+            }
+    });
+
     });
     
-    $(".btn-bulk-remove").click(function(e){
-      if($(this).attr("disabled")){
-        return;
-      }
-      if(confirm("คุณต้องการลบรายการที่เลือกใช่หรือไม่")){
-        //alert(orderList.lenght);
-      }
-    });
+    
     function recline(e){
       var poid = e.closest("tr").find("td:eq(1)").text();
         //alert(poid);

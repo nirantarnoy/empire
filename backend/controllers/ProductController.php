@@ -51,8 +51,9 @@ class ProductController extends Controller
               $data_save = 0;
               $data_fail = [];
               $data_all = 0;
-              $uploaded->saveAs('../web/uploads/files/'.$uploaded);
-                $myfile = '../web/uploads/files/'.$uploaded;
+                if($uploaded->saveAs('../web/uploads/files/'.$uploaded)){
+
+                  $myfile = '../web/uploads/files/'.$uploaded;
                 $inputFileType = \PHPExcel_IOFactory::identify($myfile);
                 $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
                 $objPHPExcel = $objReader->load($myfile);
@@ -71,7 +72,6 @@ class ProductController extends Controller
                     $data_all +=1;
                     continue;
                   }
-//echo $rowData[0][0]."<br />";
                           $modelprod = \backend\models\Product::find()->where(['name'=>$rowData[0][1]])->one();
                           if(count($modelprod)>0){
                             $data_all +=1;
@@ -118,6 +118,9 @@ class ProductController extends Controller
                     }else{
                        $session->setFlash('error','บันทึกรายการไม่สำเร็จเนื่องจากมีรหัสซ้ำ'.count($data_fail) .' จาก '.$data_all);
                     }
+
+                }
+                
            }
         }
 

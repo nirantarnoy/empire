@@ -151,6 +151,17 @@ class PurchaseorderController extends Controller
 
         return $this->redirect(['index']);
     }
+     public function actionBulkdelete()
+    {
+        if(Yii::$app->request->isAjax){
+            $id = Yii::$app->request->post('id');
+            if(count($id)>0){
+                Purchaseorder::deleteAll(['id'=>$id]);
+            }
+        }
+    
+        return $this->redirect(['index']);
+    }
 
     /**
      * Finds the Purchaseorder model based on its primary key value.
