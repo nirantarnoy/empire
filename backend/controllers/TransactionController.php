@@ -76,7 +76,7 @@ class TransactionController extends Controller
             if($model->save()){
                 if(count($title_id)>0){
                     for($i=0;$i<=count($title_id)-1;$i++){
-                        $modelline = new \backend\models\Transline();
+                        $modelline = new \backend\models\Transactionline();
                         $modelline->trans_id = $model->id;
                         $modelline->title_id = $title_id[$i];
                         $modelline->amount = $price[$i];
