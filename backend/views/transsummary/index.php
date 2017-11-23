@@ -152,6 +152,8 @@ if ($Sdate=='1970-01-01') {
 				            ],
 				             [
 				            	'attribute'=>'in_amount',
+                                'headerOptions'=>['style'=>'text-align: right;'],
+                                'contentOptions'=>['style'=>'text-align: right;'],
 				            	'label' => 'รายรับ',
 				            	'value' => function($data){
 				            		return number_format($data->in_amount);
@@ -159,6 +161,8 @@ if ($Sdate=='1970-01-01') {
 				            ],
 				             [
 				            	'attribute'=>'out_amount',
+                                 'headerOptions'=>['style'=>'text-align: right;'],
+                                'contentOptions'=>['style'=>'text-align: right;'],
 				            	'label' => 'รายจ่าย',
 				            	'value' => function($data){
 				            		return number_format($data->out_amount);
@@ -167,6 +171,8 @@ if ($Sdate=='1970-01-01') {
                               [
                                 //'attribute'=>'out_amount',
                                 'label' => 'คงเหลือ',
+                                 'headerOptions'=>['style'=>'text-align: right;'],
+                                'contentOptions'=>['style'=>'text-align: right;'],
                                 'value' => function($data){
                                     return number_format($data->in_amount - $data->out_amount);
                                 }
