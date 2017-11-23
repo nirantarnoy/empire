@@ -9,7 +9,9 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+use backend\assets\ICheckAsset;
 
+ICheckAsset::register($this);
 $this->title = 'ผลิตภัณฑ์';
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -36,9 +38,14 @@ $this->params['breadcrumbs'][] = $this->title;
 //       'events'=> $events,
 //   ));
 
-
+$this->registerJsFile(
+    '@web/js/stockbalancejs.js?V=001',
+    ['depends' => [\yii\web\JqueryAsset::className()]],
+    static::POS_END
+);
 ?>
 <div class="product-index">
+  <input type="hidden" name="listid" class="listid" value="">
    <div class="row">
     <div class="col-lg-12">
       <?php
@@ -68,6 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
            <div>
             <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างผลิตภัณฑ์', ['create'], ['class' => 'btn btn-success']) ?>
             <div class="btn btn-default btn-import" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload"></i> นำเข้าสินค้า</div>
+            <div class="btn btn-warning btn-bulk-remove" disabled>ลบ <span class="remove_item">[0]</span></div>
             <div class="btn-group pull-right" style="bottom: 10px">
         <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
       </div>
@@ -80,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
         //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
+            ['class' => 'yii\grid\CheckboxColumn'],
             //'id',
             'product_code',
             'name',
@@ -205,3 +213,29 @@ $this->params['breadcrumbs'][] = $this->title;
 
   </div>
 </div>
+<?php 
+  $url_to_delete =  Url::to(['product/bulkdelete'],true);
+  $this->registerJs('
+    $(function(){
+      $(".btn-bulk-remove").click(function(e){
+      //alert($(".listid").val());
+            if($(this).attr("disabled")){
+              return;
+            }
+            if(confirm("คุณต้องการลบรายการที่เลือกใช่หรือไม่")){
+              if($(".listid").length >0){
+                $.ajax({
+                  type: "post",
+                  dataType: "html",
+                  url: "'.$url_to_delete.'",
+                  data: {id: $(".listid").val()},
+                  success: function(data){
+
+                  }
+                });
+              }
+            }
+    });
+    });
+    ',static::POS_END);
+?>
