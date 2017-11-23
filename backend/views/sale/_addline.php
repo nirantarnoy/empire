@@ -11,7 +11,7 @@
   	<input type="text" class="form-control name" name="name[]" value="<?=$data["name"]?>" disabled="disabled" /> 
   </td>
    <td>
-    <select class="form-control" name="warehouse[]">
+    <select id="whid" class="form-control" name="warehouse[]">
       <?php foreach($wh as $value):?>
       <option value="<?=$value->id?>">
         <?=$value->name?>
@@ -20,7 +20,7 @@
     </select>
   </td>
   <td>
-  	<input type="text" class="form-control qty" name="qty[]" value="1" onkeydown="eventNumber($(this));" onchange="linecal($(this));" /> 
+  	<input type="text" class="form-control qty" name="qty[]" value="1" onkeydown="eventNumber($(this));" onchange="changeQty($(this));" /> 
   </td>
   <td>
   	<input type="text" class="form-control price" name="price[]" value="<?=$data["price"]?>" onchange="linecal($(this));" />

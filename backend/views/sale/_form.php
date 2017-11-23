@@ -168,7 +168,7 @@ use yii\helpers\Url;
                             <input type="text" class="form-control name" name="name[]" value="<?=\backend\models\Product::getProdname($value->product_id)?>" disabled="disabled" /> 
                           </td>
                           <td>
-                            <select class="form-control" name="warehouse[]">
+                            <select id="whid" class="form-control" name="warehouse[]">
                               <?php foreach($wh as $values):?>
                               <?php 
                                    $select = '';
@@ -220,6 +220,7 @@ use yii\helpers\Url;
 </div>
 <?php 
 $url_to_firm = Url::to(['sale/firmorder'],true);
+$url_to_check_onhand = Url::to(['sale/checkonhand'],true);
  $this->registerJs('
   $(function(){
     sumall();
@@ -242,6 +243,9 @@ $url_to_firm = Url::to(['sale/firmorder'],true);
       }
 
       });
+
+    
+
   });
   function sumall(){
     var amount = 0;
@@ -262,9 +266,41 @@ $url_to_firm = Url::to(['sale/firmorder'],true);
         }
       }
   }
+  function changeQty(e){
+    var pdid = e.closest("tr").find(".product_id").val();
+    var whid = e.closest("tr").find("#whid").val();
+    var qty = e.val();
+    var price = e.closest("tr").find(".price").val();
+
+    if(qty > 0){
+      $.ajax({
+        type: "post",
+        dataType: "html",
+        url: "'.$url_to_check_onhand.'",
+        data:{wh: whid,pd: pdid},
+        success: function(data){
+         // alert(data);
+          if(parseInt(data) < parseInt(qty)){
+             alert("จำนวนในสต๊อกน้อยกว่าที่ต้องการ");
+             e.val(0);
+             e.closest("tr").find(".line_amount").val(parseFloat(e.val() * price));
+          }else{
+              e.closest("tr").find(".line_amount").val(parseFloat(qty * price));
+          }
+        
+          sumall();
+        }
+      });
+    }
+    
+    
+  }
   function linecal(e){
+    var whid = e.closest("tr").find("#whid").val();
     var qty = e.closest("tr").find(".qty").val();
     var price = e.closest("tr").find(".price").val();
+    
+
     e.closest("tr").find(".line_amount").val(parseFloat(qty * price));
     sumall();
   }

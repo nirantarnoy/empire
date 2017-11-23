@@ -230,8 +230,24 @@ public function actionFirmorder(){
                    
     }
 }
-public function getSaleno($id){
+  public function getSaleno($id){
         $model = Sale::find()->where(['id'=>$id])->one();
         return count($model)>0?$model->sale_no:'';
+    }
+    public function actionCheckonhand(){
+      if(Yii::$app->request->isAjax){
+        $pdid = Yii::$app->request->post("pd");
+        $whid = Yii::$app->request->post("wh");
+        if($pdid !='' && $whid !=''){
+           $model = \backend\models\Stockbalance::find()->where(['product_id'=>$pdid,'warehouse_id'=>$whid])->one();
+           if(count($model)>0){
+            return $model->qty;
+           }else{
+            return 0;
+           }
+        }else{
+          return "Not found";
+        }
+      }
     }
 }
