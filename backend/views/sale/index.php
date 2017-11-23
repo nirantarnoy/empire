@@ -49,7 +49,15 @@ $this->registerJsFile(
                 return date('d-m-Y',$data->sale_date);
               }
             ],
-            'sale_amount',
+             [
+                      'attribute'=>'sale_amount',
+                                 'headerOptions'=>['style'=>'text-align: right;'],
+                                'contentOptions'=>['style'=>'text-align: right;'],
+                      'label' => 'รายจ่าย',
+                      'value' => function($data){
+                        return number_format($data->sale_amount);
+                      }
+                    ],
             //'payment_type',
             //'require_ship_date',
             //'note',

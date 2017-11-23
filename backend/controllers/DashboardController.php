@@ -66,7 +66,7 @@ class DashboardController extends Controller
         
         
 		
-		$model_sum_sale = Sale::find()->sum('sale_amount');
+		//$model_sum_sale = Sale::find()->sum('sale_amount');
 		$searchModel = new ProductSearch();
         $model_under_stock = $searchModel->search(Yii::$app->request->queryParams);
 		$model_under_stock->query->where(['<=','qty','min_qty']);

@@ -156,7 +156,7 @@ if ($Sdate=='1970-01-01') {
                                 'contentOptions'=>['style'=>'text-align: right;'],
 				            	'label' => 'รายรับ',
 				            	'value' => function($data){
-				            		return number_format($data->in_amount);
+				            		return number_format($data->sale_amount);
 				            	}
 				            ],
 				             [
@@ -165,7 +165,7 @@ if ($Sdate=='1970-01-01') {
                                 'contentOptions'=>['style'=>'text-align: right;'],
 				            	'label' => 'รายจ่าย',
 				            	'value' => function($data){
-				            		return number_format($data->out_amount);
+				            		return number_format($data->purchase_amount);
 				            	}
 				            ],
                               [
@@ -174,7 +174,7 @@ if ($Sdate=='1970-01-01') {
                                  'headerOptions'=>['style'=>'text-align: right;'],
                                 'contentOptions'=>['style'=>'text-align: right;'],
                                 'value' => function($data){
-                                    return number_format($data->in_amount - $data->out_amount);
+                                    return number_format($data->sale_amount - $data->purchase_amount);
                                 }
                             ],
 				            //'description',

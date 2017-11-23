@@ -67,6 +67,8 @@ $this->registerJsFile(
             //'purchase_amount',
              [
               'attribute'=>'purchase_amount',
+              'headerOptions'=>['style'=>'text-align: right;'],
+              'contentOptions'=>['style'=>'text-align: right;'],
               'value' => function($data){
                 return number_format($data->purchase_amount);
               }
