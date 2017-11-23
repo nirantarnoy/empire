@@ -107,7 +107,7 @@ if ($Sdate=='1970-01-01') {
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
+                    'format' => 'dd-mm-yyyy'
                 ]
             ]); ?>
             <?= DatePicker::widget([
@@ -124,7 +124,7 @@ if ($Sdate=='1970-01-01') {
                 'pluginOptions' => [
                     'todayHighlight' => true,
                     'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
+                    'format' => 'dd-mm-yyyy'
                 ]
             ]); ?>
             <?= Html::submitButton('ค้นหา', ['id' => 'searchbutton', 'class' => 'btn btn-primary']) ?>
