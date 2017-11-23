@@ -36,8 +36,12 @@ class StockbalanceController extends Controller
      */
     public function actionIndex()
     {
+       // $param = Yii::$app->request->queryParams['StockbalanceSearch']['globalSearch'];
         $searchModel = new StockbalanceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        // if($param!=''){
+        //     $dataProvider->query->where(['']);
+        // }
 
         return $this->render('index', [
             'searchModel' => $searchModel,

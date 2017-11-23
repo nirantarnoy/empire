@@ -31,5 +31,10 @@ class Stockbalance extends \common\models\Stockbalance
         ],
     ];
  }
-
+ public function getProductinfo(){
+    return $this->hasOne(\backend\models\Product::className(),['id'=>'product_id']);
+ }
+ public function getWarehouseinfo(){
+    return $this->hasOne(\backend\models\Warehouse::className(),['id'=>'warehouse_id']);
+ }
 }

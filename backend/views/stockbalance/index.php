@@ -30,6 +30,9 @@ $this->registerJsFile(
     <div class="row">
         <div class="col-lg-12">
             <div class="btn btn-default btn-trasfer"><i class="fa fa-"></i> โอนสินค้า</div>
+            <div class="btn-group pull-right" style="bottom: 10px">
+        <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+      </div>
         </div>
     </div><br />
 

@@ -12,6 +12,7 @@ use backend\models\Stockbalance;
  */
 class StockbalanceSearch extends Stockbalance
 {
+    public $globalSearch;
     /**
      * @inheritdoc
      */
@@ -19,6 +20,7 @@ class StockbalanceSearch extends Stockbalance
     {
         return [
             [['id', 'product_id', 'qty', 'warehouse_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['globalSearch'],'string'],
         ];
     }
 
@@ -47,6 +49,9 @@ class StockbalanceSearch extends Stockbalance
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        
+        $query->joinWith('productinfo');
+        $query->joinWith('warehouseinfo');
 
         $this->load($params);
 
@@ -69,6 +74,10 @@ class StockbalanceSearch extends Stockbalance
             'updated_by' => $this->updated_by,
         ]);
 
+         $query->orFilterWhere(['like', 'product_id', $this->globalSearch])
+            ->orFilterWhere(['like', 'warehouse_id', $this->globalSearch])
+            ->orFilterWhere(['like', 'warehouse.name', $this->globalSearch])
+            ->orFilterWhere(['like', 'product.product_code', $this->globalSearch]);
         return $dataProvider;
     }
 }
