@@ -21,7 +21,7 @@ $js = <<<JS
     // });
 JS;
 $this->registerJs($js, static::POS_END);
-if ($Sdate=='1970-01-01') {
+if ($Sdate=='01-01-1970') {
     $Sdate = date('d-m-Y');
     $Edate = date('d-m-Y');
 }
