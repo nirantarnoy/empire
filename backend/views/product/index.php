@@ -79,7 +79,8 @@ $this->registerJsFile(
             <div class="btn btn-default btn-import" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload"></i> นำเข้าสินค้า</div>
             <div class="btn btn-warning btn-bulk-remove" disabled>ลบ <span class="remove_item">[0]</span></div>
             <div class="btn-group pull-right" style="bottom: 10px">
-        <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+            <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+            <!-- <div class="label">ค้นหาขั้นสูง</div> -->
       </div>
       </div>
       </div>

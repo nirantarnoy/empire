@@ -217,8 +217,8 @@ $this->registerJsFile(
     
     
     function recline(e){
-      var poid = e.closest("tr").find("td:eq(1)").text();
-        //alert(poid);
+      var poid = e.closest("tr").find("td:eq(2)").text();
+       // alert(poid);
         if(poid!=""){
           $.ajax({
             type: "post",
