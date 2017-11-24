@@ -199,7 +199,9 @@ $this->registerJsFile(
               return;
             }
             if(confirm("คุณต้องการลบรายการที่เลือกใช่หรือไม่")){
+             // alert($(".listid").val());return;
               if($(".listid").length >0){
+
                 $.ajax({
                   type: "post",
                   dataType: "html",

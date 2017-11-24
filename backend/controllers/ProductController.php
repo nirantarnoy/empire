@@ -286,7 +286,7 @@ class ProductController extends Controller
     public function actionBulkdelete()
     {
         if(Yii::$app->request->isAjax){
-            $id = Yii::$app->request->post('id');
+            $id = explode(",",Yii::$app->request->post('id'));
             if(count($id)>0){
                 Product::deleteAll(['id'=>$id]);
             }
