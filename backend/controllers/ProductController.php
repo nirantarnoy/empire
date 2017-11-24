@@ -18,6 +18,7 @@ use backend\models\ViewStockSearch;
  */
 class ProductController extends Controller
 {
+ public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -39,8 +40,13 @@ class ProductController extends Controller
      */
     public function actionIndex()
     {
+        $perpage = Yii::$app->request->post('perpage');
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if($perpage!=''){
+          //echo $perpage;
+          $dataProvider->pagination->pageSize = (int)$perpage;
+        }
 
         $modelfile = new Modelfile();
 
@@ -58,7 +64,7 @@ class ProductController extends Controller
               $data_all = 0;
                 if($uploaded->saveAs('../web/uploads/files/'.$uploaded)){
 
-                  $myfile = '../web/uploads/files/'.$uploaded;
+                $myfile = '../web/uploads/files/'.$uploaded;
                 $inputFileType = \PHPExcel_IOFactory::identify($myfile);
                 $objReader = \PHPExcel_IOFactory::createReader($inputFileType);
                 $objPHPExcel = $objReader->load($myfile);

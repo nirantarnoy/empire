@@ -171,13 +171,27 @@ $this->registerJsFile(
   </div>
   </div>
   </div>
+  <div class="row">
+    <div class="col-lg-2">
+      <form id="form-perpage" class="form-inline" action="<?=Url::to(['product/index'],true)?>" method="post">
+        <div class="form-group">
+         <label>จำนวนรายการ</label>
+          <select class="form-control" name="perpage" id="perpage">
+             <option value="20">20</option>
+             <option value="50">50</option>
+             <option value="100">100</option>
+          </select>
+      </div>
+      </form>
+      
+    </div>
+  </div>
     <?php Pjax::end(); ?>
 </div>
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg">
-
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -249,6 +263,9 @@ $this->registerJsFile(
               }
             }
     });
+      $("#perpage").change(function(){
+          $("#form-perpage").submit();
+      });
     });
     ',static::POS_END);
 ?>
