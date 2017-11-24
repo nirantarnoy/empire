@@ -40,9 +40,28 @@ class ProductController extends Controller
      */
     public function actionIndex()
     {
+        $name_search = '';
+        $cat_search = '';
+        $cost_start = '';
+        $cost_end = '';
+        
+        $name_search = Yii::$app->request->post("name_search");
+        $cat_search = Yii::$app->request->post("cat_id");
+        $cost_start = Yii::$app->request->post("cost_start");
+        $cost_end = Yii::$app->request->post("cost_end");
+
         $perpage = Yii::$app->request->post('perpage');
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        $dataProvider->query->where(['or',['like','product_code',$name_search],['like','name',$name_search]]);
+        if($cat_search > 0){
+          $dataProvider->query->andFilterWhere(['=','category_id',$cat_search]);
+        }
+        
+        $dataProvider->query->andFilterWhere(['and',['>=','cost',$cost_start],['<=','cost',$cost_end]]);
+
+
         if($perpage!=''){
           //echo $perpage;
           $dataProvider->pagination->pageSize = (int)$perpage;
@@ -140,6 +159,10 @@ class ProductController extends Controller
             'dataProvider' => $dataProvider,
             'modelfile' => $modelfile,
             'perpage'=>$perpage,
+            'name_search' => $name_search,
+            'cat_search' => $cat_search,
+            'cost_start' => $cost_start,
+            'cost_end' => $cost_end,
         ]);
     }
     public function checkCat($name){

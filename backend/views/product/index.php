@@ -40,6 +40,19 @@ $this->params['breadcrumbs'][] = $this->title;
 //       'events'=> $events,
 //   ));
 
+$cat = \backend\models\Category::find()->all();
+$name = $name_search;
+$cats = $cat_search;
+$cost_s = $cost_start;
+$cost_e = $cost_end;
+
+$use_advance = 0;
+
+
+if($name !='' || $cats !='' || $cost_s !='' || $cost_e !='' ){
+  $use_advance = 1;
+}
+
 $this->registerJsFile(
     '@web/js/stockbalancejs.js?V=001',
     ['depends' => [\yii\web\JqueryAsset::className()]],
@@ -78,10 +91,35 @@ $this->registerJsFile(
             <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างผลิตภัณฑ์', ['create'], ['class' => 'btn btn-success']) ?>
             <div class="btn btn-default btn-import" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload"></i> นำเข้าสินค้า</div>
             <div class="btn btn-warning btn-bulk-remove" disabled>ลบ <span class="remove_item">[0]</span></div>
-            <div class="btn-group pull-right" style="bottom: 10px">
-            <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
-            <!-- <div class="label">ค้นหาขั้นสูง</div> -->
-      </div>
+            <div class="btn-group pull-right" style="bottom: 0px">
+                 <?php  //echo $this->render('_search', ['model' => $searchModel]); ?>
+                  <div class="label babel-default"><a href="#" class="show-adv"><i class="fa fa-caret-down i-icon"></i> ค้นหา</a></div>
+            </div>
+      </div> <br />
+      <div class="row advance-search" style="display: none">
+        <div class="col-lg-12">
+          <form id="search-form" action="<?=Url::to(['product/index'],true);?>" method="post">
+          <div class="form-inline">
+            <input type="text" placeholder="รหัสสินค้า , ชื่อสินค้า" name="name_search" class="form-control" value="<?=$name?>">
+            <select name="cat_id" class="form-control">
+              <option>กลุ่มสินค้า</option>
+              <?php foreach($cat as $value):?>
+                   <?php 
+                          $selected = '';
+                          if($value->id == $cats){
+                            $selected = 'selected';
+                          }
+                    ?>
+                 <option value="<?=$value->id?>" <?=$selected;?>><?=$value->name?></option>
+              <?php endforeach;?>
+            </select>
+           <input type="text" placeholder="ช่วงทุนเริ่ม" class="form-control" name="cost_start" value="<?=$cost_s?>">
+            <input type="text" placeholder="ช่วงทุนสิ้นสุด" class="form-control" name="cost_end" value="<?=$cost_e?>">
+            <div class="btn btn-default btn-search-submit"> ค้นหา</div>
+            <div class="btn btn-default btn-search-clear"> ล้างข้อมูล</div>
+          </div>
+        </form>
+        </div>
       </div>
       </div>
       <div class="panel-body">
@@ -244,6 +282,27 @@ $this->registerJsFile(
   $url_to_delete =  Url::to(['product/bulkdelete'],true);
   $this->registerJs('
     $(function(){
+      var use_advance = "'.$use_advance.'";
+      if(use_advance == 1){
+        if($(".advance-search").css("display")=="none"){
+            $(".advance-search").fadeIn(300);
+            $(".i-icon").removeClass("fa-caret-down");
+            $(".i-icon").addClass("fa-caret-up");
+          }else{
+            // $(".advance-search").fadeOut(300);
+            //  $(".i-icon").removeClass("fa-caret-up");
+            // $(".i-icon").addClass("fa-caret-down");
+          }
+      }
+      $(".btn-search-submit").click(function(){
+        //alert();return;
+        $("#search-form").submit();
+      });
+      $(".btn-search-clear").click(function(){
+          $("form#search-form :input").each(function(){
+              $(this).val("");
+          });
+      });
       $(".btn-bulk-remove").click(function(e){
       //alert($(".listid").val());
             if($(this).attr("disabled")){
@@ -266,6 +325,18 @@ $this->registerJsFile(
       $("#perpage").change(function(){
           $("#form-perpage").submit();
       });
-    });
+       $(".show-adv").click(function(){
+          if($(".advance-search").css("display")=="none"){
+            $(".advance-search").fadeIn(300);
+            $(".i-icon").removeClass("fa-caret-down");
+            $(".i-icon").addClass("fa-caret-up");
+          }else{
+            $(".advance-search").fadeOut(300);
+             $(".i-icon").removeClass("fa-caret-up");
+            $(".i-icon").addClass("fa-caret-down");
+          }
+          
+       });
+      });
     ',static::POS_END);
 ?>
