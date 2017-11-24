@@ -7,6 +7,7 @@ use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use kartik\file\FileInput;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Product */
@@ -14,6 +15,7 @@ use yii\grid\GridView;
 $cat = \backend\models\Category::find()->where(['status'=>1])->all();
 $sub_cat = \backend\models\Subcategory::find()->where(['status'=>1])->all();
 $unit = \backend\models\Unit::find()->where(['status'=>1])->all();
+$wh = \backend\models\Warehouse::find()->all();
 ?>
 
 <div class="product-form">
@@ -24,6 +26,7 @@ $unit = \backend\models\Unit::find()->where(['status'=>1])->all();
 <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab">ข้อมูลสินค้า</a></li>
+              <li><a href="#tab_3" data-toggle="tab">กำหนดขั้นต่ำตามคลังสินค้า</a></li>
               <?php if(!$model->isNewRecord):?>
               <li><a href="#tab_2" data-toggle="tab">สินค้าคงคลังและความเคลื่อนไหว</a></li>
             <?php endif;?>
@@ -335,7 +338,69 @@ $unit = \backend\models\Unit::find()->where(['status'=>1])->all();
                   </div>
                 </div>
               </div>
+
             <?php endif;?>
+            <div class="tab-pane" id="tab_3">
+                <div class="row">
+                  <div class="col-lg-6">
+                     <div class="row">
+                      <div class="col-lg-12">
+                        <div class="btn btn-primary" id="addline"><i class="fa fa-plus"></i></div>
+                      </div>
+                     </div>
+                     <div class="row">
+                      <div class="col-lg-12">
+                        <table class="table table-striped table-hover">
+                          <thead>
+                            <tr>
+                              <th style="width: 60%">
+                                คลังสินค้า
+                              </th>
+                                <th style="width: 40%">
+                                ขั้นต่ำ
+                              </th>
+                               <th>
+                                
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody id="min-body">
+                            <?php 
+                              if(!$model->isNewRecord):?>
+                               <?php foreach($minline as $value):?>
+                                <tr>
+                                    <td>
+                                      <input type="hidden" name="product_id[]" value="<?=$value->product_id?>">
+                                    <select id="whid" class="form-control" name="warehouse[]">
+                                        <?php foreach($wh as $data):?>
+                                         <?php 
+                                             $select = '';
+                                             if($value->warehouse_id == $data->id){
+                                              $select = 'selected';
+                                             }
+                                        ?>
+                                        <option value="<?=$data->id?>" <?=$select?>>
+                                          <?=$data->name?>
+                                        </option>
+                                      <?php endforeach;?>
+                                      </select>
+                                    </td>
+                                    <td>
+                                      <input type="text" name="min_qty[]" class="form-control" value="<?=$value->minstock?>">
+                                    </td>
+                                    <td>
+                                      <div class="btn btn-warning line_remove" onclick="removeline($(this));"><i class="fa fa-minus"></i></div>
+                                    </td>
+                                  </tr>
+                                <?php endforeach;?>
+                              <?php endif;?>
+                          </tbody>
+                        </table>
+                      </div>
+                     </div>
+                  </div>
+                </div>
+              </div>
             </div>
 </div>
 
@@ -347,3 +412,28 @@ $unit = \backend\models\Unit::find()->where(['status'=>1])->all();
     <?php ActiveForm::end(); ?>
 
 </div>
+<?php
+$url_to_addline = Url::to(['product/addminline'],true);
+$this->registerJs('
+  $(function(){
+    $("#addline").click(function(){
+      $.ajax({
+        type: "post",
+        dataType: "html",
+        url: "'.$url_to_addline.'",
+        data: {id:0},
+        success: function(data){
+          $("#min-body").append(data);
+        }
+      });
+    });
+
+  });
+ function removeline(e){
+    if(confirm("ต้องการลบรายการนี้ใช่หรือไม่")){
+      e.parent().parent().remove();
+    }
+    
+  }
+  ',static::POS_END);
+ ?>

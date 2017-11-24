@@ -226,11 +226,16 @@ class ProductController extends Controller
         $dataProvider2->query->where(['product_id'=>$id])->orderby(['created_at'=>SORT_DESC]);
 
         $model_trans = \common\models\ViewTrans::find()->where(['product_id'=>$id])->all();
+        $minline = \backend\models\Productmin::find()->where(['product_id'=>$id])->all();
 
         $imagelist = Productimage::find()->where(['product_id'=>$id])->all();
          $modelfile = new Modelfile();
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
            // $oldlogo = Yii::$app->request->post('old_photo');
+            $warehouseid = Yii::$app->request->post('warehouse');
+            $minqty = Yii::$app->request->post('min_qty');
+
+
             $uploaded = UploadedFile::getInstances($modelfile, 'file');
             // if(!empty($uploaded)){
             //       $upfiles = time() . "." . $uploaded->getExtension();
@@ -257,6 +262,17 @@ class ProductController extends Controller
                 }else{
                     //$model->photo = $oldlogo;
                 }
+                \backend\models\Productmin::deleteAll(['product_id'=>$id]);
+                if(count($warehouseid)>0){
+                  for($i=0;$i<=count($warehouseid)-1;$i++){
+                    $min = new \backend\models\Productmin();
+                    $min->product_id = $model->id;
+                    $min->warehouse_id = $warehouseid[$i];
+                    $min->minstock = $minqty[$i];
+                    $min->status = 1;
+                    $min->save(false);
+                  }
+                }
                 return $this->redirect(['update', 'id' => $model->id]);
             }
         } else {
@@ -267,6 +283,7 @@ class ProductController extends Controller
                 'dataProvider' => $dataProvider,
                 'dataProvider2' => $dataProvider2,
                 'model_trans' => $model_trans,
+                'minline' => $minline,
             ]);
         }
     }
@@ -350,6 +367,11 @@ class ProductController extends Controller
     public function actionImportproduct(){
       if(Yii::$app->request->isPost){
         print_r(Yii::$app->request->post());
+      }
+    }
+    public function actionAddminline(){
+      if(Yii::$app->request->isAjax){
+        return $this->renderPartial('_addline');
       }
     }
 
