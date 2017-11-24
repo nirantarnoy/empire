@@ -15,6 +15,7 @@ use backend\models\Trans;
  */
 class PurchaseorderController extends Controller
 {
+  public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -36,12 +37,17 @@ class PurchaseorderController extends Controller
      */
     public function actionIndex()
     {
+       $perpage = Yii::$app->request->post('perpage');
         $searchModel = new PurchaseorderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+         if($perpage!=''){
+          //echo $perpage;
+          $dataProvider->pagination->pageSize = (int)$perpage;
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'perpage' => $perpage,
         ]);
     }
 

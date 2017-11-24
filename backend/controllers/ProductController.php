@@ -139,6 +139,7 @@ class ProductController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'modelfile' => $modelfile,
+            'perpage'=>$perpage,
         ]);
     }
     public function checkCat($name){

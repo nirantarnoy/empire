@@ -15,6 +15,7 @@ use backend\models\Trans;
  */
 class StockbalanceController extends Controller
 {
+     public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -36,16 +37,17 @@ class StockbalanceController extends Controller
      */
     public function actionIndex()
     {
-       // $param = Yii::$app->request->queryParams['StockbalanceSearch']['globalSearch'];
+       $perpage = Yii::$app->request->post('perpage');
         $searchModel = new StockbalanceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        // if($param!=''){
-        //     $dataProvider->query->where(['']);
-        // }
-
+         if($perpage!=''){
+          //echo $perpage;
+          $dataProvider->pagination->pageSize = (int)$perpage;
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'perpage' => $perpage,
         ]);
     }
 

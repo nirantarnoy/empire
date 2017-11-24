@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use backend\assets\ICheckAsset;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\StockbalanceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -89,11 +90,28 @@ $this->registerJsFile(
             
         </div>
     </div>
+    <div class="row">
+    <div class="col-lg-3">
+      <form id="form-perpage" class="form-inline" action="<?=Url::to(['stockbalance/index'],true)?>" method="post">
+        <div class="form-group">
+         <label>จำนวนรายการ</label>
+          <select class="form-control" name="perpage" id="perpage">
+             <option value="20" <?=$perpage=='20'?'selected':''?>>20</option>
+             <option value="50" <?=$perpage=='50'?'selected':''?> >50</option>
+             <option value="100" <?=$perpage=='100'?'selected':''?>>100</option>
+          </select>
+      </div>
+      </form>
+      
+    </div>
     
 </div>
 <?php 
 $url_to_transfer = \yii\helpers\Url::to(['/stockbalance/transfer'],true);
 $this->registerJs('
+     $("#perpage").change(function(){
+          $("#form-perpage").submit();
+      });
         $(".btn-trasfer").click(function(){
             var keys = $("#grid-stock").yiiGridView("getSelectedRows");
             if(keys.length > 0){

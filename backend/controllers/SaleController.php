@@ -14,6 +14,7 @@ use yii\helpers\Json;
  */
 class SaleController extends Controller
 {
+  public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -35,12 +36,17 @@ class SaleController extends Controller
      */
     public function actionIndex()
     {
+      $perpage = Yii::$app->request->post('perpage');
         $searchModel = new SaleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        if($perpage!=''){
+          //echo $perpage;
+          $dataProvider->pagination->pageSize = (int)$perpage;
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'perpage' => $perpage,
         ]);
     }
 
