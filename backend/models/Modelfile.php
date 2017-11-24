@@ -10,12 +10,12 @@ class Modelfile extends Model
     /**
      * @inheritdoc
      */
-   public $file,$filecategory;
+   public $file,$filecategory,$warehouseid;
     public function rules()
     {
         return [
             [['file'],'string'],
-            [['filecategory'],'integer'],
+            [['filecategory','warehouseid'],'integer'],
         ];
     }
 
@@ -27,6 +27,7 @@ class Modelfile extends Model
         return [
             'file' => 'ไฟล์แนบ',
            'filecategory' => 'ชื่อกลุ่มไฟล์',
+           'warehouseid' => 'คลังสินค้า',
         ];
     }
 }

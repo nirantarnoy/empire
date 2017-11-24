@@ -46,6 +46,11 @@ class ProductController extends Controller
 
         if($modelfile->load(Yii::$app->request->post())){
            $uploaded = UploadedFile::getInstance($modelfile,"file");
+           $warehouseid = 1;
+           if($modelfile->warehouseid !=''){
+              $warehouseid = $modelfile->warehouseid;
+           }
+          // echo $warehouseid;return;
            if(!empty($uploaded)){
               $data = [];
               $data_save = 0;
@@ -96,7 +101,7 @@ class ProductController extends Controller
                            if($modelx->save(false)){
                               $data_save += 1;
                               $data_all +=1;
-                              array_push($data,['product_id'=>$modelx->id,'qty'=>$modelx->qty,'warehouse'=>1]);
+                              array_push($data,['product_id'=>$modelx->id,'qty'=>$modelx->qty,'warehouse'=>$warehouseid]);
                            }
                          // }
                           

@@ -6,6 +6,8 @@ use yii\widgets\Pjax;
 use yii\helpers\Url;
 use kartik\file\FileInput;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -184,7 +186,7 @@ $this->registerJsFile(
       <div class="modal-body">
         
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <?php 
 
                 ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]);
@@ -195,6 +197,16 @@ $this->registerJsFile(
 
                 ]);
                 ?>
+                <br />
+                <?php
+                echo "<label>เลือกคลังสินค้า</label>";
+                  echo Select2::widget([
+                    'name'=>'warehouseid',
+                    'model'=>$modelfile,
+                    'attribute'=>'warehouseid',
+                    'data'=> ArrayHelper::map(\backend\models\Warehouse::find()->all(),'id','name'),
+                    ]);
+                 ?>
                 <br />
                 <div class="btn-group">
                   <input type="submit" class="btn btn-success" value="ตกลง">
