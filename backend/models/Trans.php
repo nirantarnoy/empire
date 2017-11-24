@@ -93,11 +93,26 @@ class Trans extends Model
 			if($model_prod){
 				$model_prod->qty = $model_sum;
 				if($model_prod->save(false)){
+					self::checkLowstock($data[0]['product_id'],$data[0]['warehouse']);
 					return true;
 				}else{
 					return false;
 				}
 			}
 		}
+	}
+	public static function checkLowstock($product_id,$warehouse_id){
+              $model = \backend\models\Productmin::find()->where(['product_id'=>$product_id,'warehouse_id'=>$warehouse_id])->one();
+              $modelstock = \backend\models\Stockbalance::find()->where(['product_id'=>$product_id,'warehouse_id'=>$warehouse_id])->one();
+              if($model){
+              	   if((int)$model->minstock < (int)$modelstock->qty){
+              	   		$modelnoti = new \common\models\Notification();
+						$modelnoti->title = "สินค้า ".$model->product_id." ต่ำกว่ากำหนด";
+						$modelnoti->description = "สินค้า ".$model->product_id." คลังสินค้า ".$model->warehouse_id. " ขั้นตำ่ =".$model->minstock. " จำนวนปัจจุบัน= ".$modelstock->qty;
+						$modelnoti->status = 1;
+						$modelnoti->save(false);
+              	   }
+              }
+		
 	}
 }
