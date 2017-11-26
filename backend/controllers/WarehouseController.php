@@ -8,7 +8,7 @@ use backend\models\WarehouseSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use backend\models\StockbalanceSearch;
 /**
  * WarehouseController implements the CRUD actions for Warehouse model.
  */
@@ -51,8 +51,12 @@ class WarehouseController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new StockbalanceSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->where(['warehouse_id'=>$id]);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'dataProvider' => $dataProvider,
         ]);
     }
 
