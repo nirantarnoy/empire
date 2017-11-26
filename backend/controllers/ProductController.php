@@ -109,10 +109,11 @@ class ProductController extends Controller
                                   $data_all +=1;
                                   array_push($data_fail,['name'=>$rowData[0][1]]);
                                   continue;
+                              }else{
+                                 array_push($data,['product_id'=>$modelprod->id,'qty'=>$rowData[0][8],'warehouse'=>$warehouseid]);
                               }
                            
-                          }
-
+                          }else{
                             $modelx = new \backend\models\Product();
                             $modelx->product_code = $rowData[0][0];
                             $modelx->name = $rowData[0][1];
@@ -132,6 +133,9 @@ class ProductController extends Controller
                               $data_all +=1;
                               array_push($data,['product_id'=>$modelx->id,'qty'=>$modelx->qty,'warehouse'=>$warehouseid]);
                            }
+                          }
+
+                            
                          // }
                           
                   //echo $rowData[0][0]."/".$rowData[0][1]."/".$rowData[0][2]."/".$rowData[0][3]."/".$rowData[0][4].'<br />';
