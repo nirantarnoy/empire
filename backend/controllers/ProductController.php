@@ -104,9 +104,13 @@ class ProductController extends Controller
                   }
                           $modelprod = \backend\models\Product::find()->where(['name'=>$rowData[0][1]])->one();
                           if(count($modelprod)>0){
-                            $data_all +=1;
-                            array_push($data_fail,['name'=>$rowData[0][1]]);
-                            continue;
+                              $checkBalance = $this->checkBal($rowData[0][1],$warehouseid);
+                              if($checkBalance == 1){
+                                  $data_all +=1;
+                                  array_push($data_fail,['name'=>$rowData[0][1]]);
+                                  continue;
+                              }
+                           
                           }
 
                             $modelx = new \backend\models\Product();
@@ -191,6 +195,10 @@ class ProductController extends Controller
         }
       }
     }
+  public function checkBal($prodid,$whid){
+    $model = \backend\models\Stockbalance::find()->where(['product_id'=>$prodid,'warehouse_id'=>$whid])->one();
+    return count($model)>0?1:0;
+  }
 
     /**
      * Displays a single Product model.
