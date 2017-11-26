@@ -104,10 +104,10 @@ class ProductController extends Controller
                   }
                           $modelprod = \backend\models\Product::find()->where(['name'=>$rowData[0][1]])->one();
                           if(count($modelprod)>0){
-                              $checkBalance = $this->checkBal($rowData[0][1],$warehouseid);
+                              $checkBalance = $this->checkBal($modelprod->id,$warehouseid);
                               if($checkBalance == 1){
-                                  $data_all +=1;
-                                  array_push($data_fail,['name'=>$rowData[0][1]]);
+                                  //$data_all +=1;
+                                 // array_push($data_fail,['name'=>$rowData[0][1]]);
                                   continue;
                               }else{
                                  array_push($data,['product_id'=>$modelprod->id,'qty'=>$rowData[0][8],'warehouse'=>$warehouseid]);
