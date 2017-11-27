@@ -74,7 +74,7 @@ use yii\helpers\Url;
                   <?php
                     echo Typeahead::widget([
                           'name' => 'country',
-                          'options' => ['placeholder' => 'ค้นหารหัสสินค้า...'],
+                          'options' => ['placeholder' => 'ค้นหารหัสสินค้า...','id'=>'type_prod'],
                           'pluginOptions' => ['highlight'=>true],
                           'dataset' => [
                               [
@@ -103,13 +103,56 @@ use yii\helpers\Url;
                                         url: '".Url::to(['/purchaseorder/addline'])."',
                                         data: {data:s},
                                         success: function(data){
-                                          $('.add-saleline').parent().append(data);
-                                          var cnt =0;
-                                          $('#lineitem >tbody >tr').each(function(){
-                                            cnt+=1;
-                                            $(this).find('td:first-child').text(cnt);
+
+
+                                          var prodcode = '';
+                                          $('.table-tmp').empty();
+                                          $('.table-tmp').append(data);
+                                          $('.table-tmp tr').each(function(){
+                                            prodcode = $(this).closest('tr').find('.product_code').val(); 
                                           });
-                                            sumall();
+
+                                          if(prodcode != ''){
+                                             if($('.add-saleline >tr').length == 0){
+                                                  var cnt =0;
+                                                  $('.add-saleline').append(data);
+                                                  $('#lineitem >tbody >tr').each(function(){
+                                                    cnt+=1;
+                                                    $(this).find('td:first-child').text(cnt);
+                                                  });
+                                                  sumall();
+                                             }else{
+                                                var countline = 0;
+                                                $('.add-saleline >tr').each(function(){
+                                                   if($(this).closest('tr').find('.product_code').val() == prodcode){
+                                                      countline +=1;
+                                                      var old_qty = $(this).closest('tr').find('.qty').val();
+                                                      var prc = $(this).closest('tr').find('.price').val();
+                                                      $(this).closest('tr').find('.qty').val(parseInt(old_qty)+1);
+                                                      $(this).closest('tr').find('.line_amount').val((parseInt(old_qty)+1) * parseInt(prc) );
+                                                      sumall();
+                                                   }
+                                                 });
+                                                 if(countline == 0){
+                                                      $('.add-saleline').append(data);
+                                                       var cnt =0;
+                                                        $('#lineitem >tbody >tr').each(function(){
+                                                          cnt+=1;
+                                                          $(this).find('td:first-child').text(cnt);
+                                                        });
+                                                      sumall();
+                                                 }
+                                             }
+                                             
+                                          }else{
+                                              var cnt =0;
+                                              $('#lineitem >tbody >tr').each(function(){
+                                                cnt+=1;
+                                                $(this).find('td:first-child').text(cnt);
+                                              });
+                                          }
+
+                                          
                                         }
                                       });
                                     }
@@ -173,6 +216,8 @@ use yii\helpers\Url;
                   </tr>
                 </tfoot>
                </table>
+                <table class="table-tmp" style="display: none;">
+               </table>
         </div>
     </div>
     
@@ -184,6 +229,25 @@ use yii\helpers\Url;
 </div>
 <?php $this->registerJs('
   $(function(){
+     $(window).keydown(function(event){ 
+       if(event.keyCode == 13 && event.target !== document.getElementById("type_prod")) {
+         if(event.keyCode == 13) {
+           event.preventDefault();
+           return false;
+          }
+      }
+    });
+    $("#type_prod ,.typeahead").keypress(function(e){
+      if(e.keyCode == 13){
+        e.preventDefault();
+        $(".tt-suggestion:first-child").trigger("click");
+        $("#sale-form").on("submit",function(){
+            return false;
+        });
+        //return false;
+
+      }
+    });
    sumall();
   });
   function sumall(){
@@ -214,6 +278,7 @@ use yii\helpers\Url;
   function removeline(e){
     if(confirm("ต้องการลบรายการนี้ใช่หรือไม่")){
       e.parent().parent().remove();
+      sumall();
     }
     
   }

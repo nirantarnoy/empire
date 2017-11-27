@@ -15,7 +15,7 @@ use yii\helpers\Url;
 
 <div class="sale-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id'=>'form-sale']); ?>
     <div class="row">
         <div class="col-lg-12">
             <div class="form-group">
@@ -94,7 +94,7 @@ use yii\helpers\Url;
                   <?php
                     echo Typeahead::widget([
                           'name' => 'country',
-                          'options' => ['placeholder' => 'ค้นหารหัสสินค้า...'],
+                          'options' => ['placeholder' => 'ค้นหารหัสสินค้า...','id'=>'type_prod'],
                           'pluginOptions' => ['highlight'=>true],
                           'dataset' => [
                               [
@@ -123,12 +123,53 @@ use yii\helpers\Url;
                                         url: '".Url::to(['/sale/addline'])."',
                                         data: {data:s},
                                         success: function(data){
-                                          $('.add-saleline').parent().append(data);
-                                          var cnt =0;
-                                          $('#lineitem >tbody >tr').each(function(){
-                                            cnt+=1;
-                                            $(this).find('td:first-child').text(cnt);
+                                          var prodcode = '';
+                                          $('.table-tmp').empty();
+                                          $('.table-tmp').append(data);
+                                          $('.table-tmp tr').each(function(){
+                                            prodcode = $(this).closest('tr').find('.product_code').val(); 
                                           });
+                                         
+                                          if(prodcode != ''){
+                                             if($('.add-saleline >tr').length == 0){
+                                                  var cnt =0;
+                                                  $('.add-saleline').append(data);
+                                                  $('#lineitem >tbody >tr').each(function(){
+                                                    cnt+=1;
+                                                    $(this).find('td:first-child').text(cnt);
+                                                  });
+                                                  sumall();
+                                             }else{
+                                                var countline = 0;
+                                                $('.add-saleline >tr').each(function(){
+                                                   if($(this).closest('tr').find('.product_code').val() == prodcode){
+                                                      countline +=1;
+                                                      var old_qty = $(this).closest('tr').find('.qty').val();
+                                                      var prc = $(this).closest('tr').find('.price').val();
+                                                      $(this).closest('tr').find('.qty').val(parseInt(old_qty)+1);
+                                                      $(this).closest('tr').find('.line_amount').val((parseInt(old_qty)+1) * parseInt(prc) );
+                                                      sumall();
+                                                   }
+                                                 });
+                                                 if(countline == 0){
+                                                      $('.add-saleline').append(data);
+                                                       var cnt =0;
+                                                        $('#lineitem >tbody >tr').each(function(){
+                                                          cnt+=1;
+                                                          $(this).find('td:first-child').text(cnt);
+                                                        });
+                                                      sumall();
+                                                 }
+                                             }
+                                             
+                                          }else{
+                                              var cnt =0;
+                                              $('#lineitem >tbody >tr').each(function(){
+                                                cnt+=1;
+                                                $(this).find('td:first-child').text(cnt);
+                                              });
+                                          }
+                                          
                                             sumall();
                                         }
                                       });
@@ -208,7 +249,8 @@ use yii\helpers\Url;
                   </tr>
                 </tfoot>
                </table>
-      
+               <table class="table-tmp" style="display: none;">
+               </table>
         </div>    
     </div>
 
@@ -224,6 +266,17 @@ $url_to_check_onhand = Url::to(['sale/checkonhand'],true);
  $this->registerJs('
   $(function(){
     sumall();
+
+    $(window).keydown(function(event){ 
+       if(event.keyCode == 13 && event.target !== document.getElementById("type_prod")) {
+         if(event.keyCode == 13) {
+           event.preventDefault();
+           return false;
+          }
+      }
+    });
+
+
     $(".btn-sale-confirm").click(function(){
       if($(".add-saleline >tr").length <=0){
         alert("กรุณาเพิ่มรายละเอียดใบสั่งซื้อก่อน");return;
@@ -244,7 +297,17 @@ $url_to_check_onhand = Url::to(['sale/checkonhand'],true);
 
       });
 
-    
+    $("#type_prod ,.typeahead").keypress(function(e){
+      if(e.keyCode == 13){
+        e.preventDefault();
+        $(".tt-suggestion:first-child").trigger("click");
+        $("#sale-form").on("submit",function(){
+            return false;
+        });
+        //return false;
+
+      }
+    });
 
   });
   function sumall(){
@@ -299,14 +362,13 @@ $url_to_check_onhand = Url::to(['sale/checkonhand'],true);
     var whid = e.closest("tr").find("#whid").val();
     var qty = e.closest("tr").find(".qty").val();
     var price = e.closest("tr").find(".price").val();
-    
-
     e.closest("tr").find(".line_amount").val(parseFloat(qty * price));
     sumall();
   }
   function removeline(e){
     if(confirm("ต้องการลบรายการนี้ใช่หรือไม่")){
       e.parent().parent().remove();
+      sumall();
     }
     
   }
