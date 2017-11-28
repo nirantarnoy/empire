@@ -59,7 +59,7 @@ if ($Sdate=='01-01-1970') {
 
 			            <div class="info-box-content">
 			              <span class="info-box-text"><h4>รายจ่าย</h4></span>
-			              <span class="info-box-number"><?=number_format($expense)?></span>
+			              <span class="info-box-number"><?=number_format($expense + $purch)?></span>
 			            </div>
 			            <!-- /.info-box-content -->
 			          </div>
@@ -73,7 +73,7 @@ if ($Sdate=='01-01-1970') {
 
                         <div class="info-box-content">
                           <span class="info-box-text"><h4>คงเหลือ</h4></span>
-                          <span class="info-box-number"><?=number_format($income - $expense)?></span>
+                          <span class="info-box-number"><?=number_format($income - ($expense + $purch))?></span>
                         </div>
                         <!-- /.info-box-content -->
                       </div>
@@ -144,10 +144,10 @@ if ($Sdate=='01-01-1970') {
 				           // 'id',
 				            //'name',
 				            [
-				            	'attribute'=>'sale_date',
+				            	'attribute'=>'created_at',
 				            	'label' => 'วันที่',
 				            	'value' => function($data){
-				            		return $data->sale_date;
+				            		return $data->created_at;
 				            	}
 				            ],
 				             [
@@ -165,7 +165,7 @@ if ($Sdate=='01-01-1970') {
                                 'contentOptions'=>['style'=>'text-align: right;'],
 				            	'label' => 'รายจ่าย',
 				            	'value' => function($data){
-				            		return number_format($data->purchase_amount);
+				            		return number_format($data->purchase_amount + $data->expense_amount);
 				            	}
 				            ],
                               [
@@ -174,7 +174,7 @@ if ($Sdate=='01-01-1970') {
                                  'headerOptions'=>['style'=>'text-align: right;'],
                                 'contentOptions'=>['style'=>'text-align: right;'],
                                 'value' => function($data){
-                                    return number_format($data->sale_amount - $data->purchase_amount);
+                                    return number_format($data->sale_amount - ($data->purchase_amount + $data->expense_amount));
                                 }
                             ],
 				            //'description',

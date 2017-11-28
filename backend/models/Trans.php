@@ -9,19 +9,32 @@ use backend\models\Stockbalance;
 class Trans extends Model
 {
 	public static function createTrans($data=[],$transtype=0,$transref=''){
-		if(count($data)>0){
-			$model = new Journal();
-			$model->journal_no = $model->getLastNo();
-			$model->transdate = strtotime(date('d-m-Y'));
-			$model->reference = $transref;
-			$model->status = 1;
-			if($model->save(false)){
-				return self::createTransline($model->id,$data,$transtype,$transref);
+		if($transtype != 10){
+			if(count($data)>0){
+				$model = new Journal();
+				$model->journal_no = $model->getLastNo();
+				$model->transdate = strtotime(date('d-m-Y'));
+				$model->reference = $transref;
+				$model->status = 1;
+				$model->created_by = Yii::$app->user->identity->id;
+				if($model->save(false)){
+					return self::createTransline($model->id,$data,$transtype,$transref);
+				}
 			}
+		}else{
+				$model = new Journal();
+				$model->journal_no = $model->getLastNo();
+				$model->transdate = strtotime(date('d-m-Y'));
+				$model->reference = $transref;
+				$model->status = 1;
+				$model->created_by = Yii::$app->user->identity->id;
+				if($model->save(false)){
+					//return self::createTransline($model->id,$data,$transtype,$transref);
+				}
 		}
 	}
 	public static function createTransline($journal_id,$data,$transtype,$transref){
-		if(count($data)>0){
+			if(count($data)>0){
 			$res = false;
 			
 			for($i=0;$i<=count($data)-1;$i++){
@@ -38,9 +51,8 @@ class Trans extends Model
 					$res = self::stockbalance($data2,$transtype,$transref);
 				}
 			}
-			return $res;
-		}
-		
+				return $res;
+			}	
 	}
 	public static function stockbalance($data,$transtype,$transref){
 

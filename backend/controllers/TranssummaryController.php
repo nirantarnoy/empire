@@ -16,6 +16,7 @@ class TranssummaryController extends Controller
         $Edate = "";
         $income = 0;
         $expense = 0;
+        $purch = 0;
     	$searchModel = new SummarydaySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -27,12 +28,14 @@ class TranssummaryController extends Controller
 
           
             if(($Sdate != "" && $checkdate !='1970') || ($Edate != "" && $checkdate !='1970')){
-                $dataProvider->query->where(['>=','sale_date',$Sdate])->andFilterWhere(['<=','sale_date',$Edate])->orderby(['sale_date'=>SORT_DESC]);
-               $income = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','sale_date',$Sdate],['<=','sale_date',$Edate]])->sum('sale_amount');
-               $expense = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','sale_date',$Sdate],['<=','sale_date',$Edate]])->sum('purchase_amount');
+                $dataProvider->query->where(['>=','created_at',$Sdate])->andFilterWhere(['<=','created_at',$Edate])->orderby(['created_at'=>SORT_DESC]);
+               $income = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','created_at',$Sdate],['<=','created_at',$Edate]])->sum('sale_amount');
+               $purch = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','created_at',$Sdate],['<=','created_at',$Edate]])->sum('purchase_amount');
+               $expense = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','created_at',$Sdate],['<=','created_at',$Edate]])->sum('expense_amount');
             }else{
                $income = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('sale_amount');
-               $expense = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('purchase_amount');
+               $purch = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('purchase_amount');
+               $expense = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('expense_amount');
             }
         }
 
@@ -43,6 +46,7 @@ class TranssummaryController extends Controller
             'Edate' => $Edate,
             'income' => $income,
             'expense' => $expense,
+            'purch' => $purch,
         ]);
 	}
 	

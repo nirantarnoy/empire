@@ -27,8 +27,9 @@ class VSummaryDay extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sale_amount', 'purchase_amount'], 'number'],
-            [['sale_date'], 'string', 'max' => 10],
+            [['sale_amount', 'purchase_amount','expense_amount'], 'number'],
+            [['created_by'],'integer'],
+            [['created_at'], 'string', 'max' => 10],
         ];
     }
 
@@ -38,8 +39,9 @@ class VSummaryDay extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'sale_date' => 'Sale Date',
+            'created_at' => 'Sale Date',
             'sale_amount' => 'Sale Amount',
+            'expense_amount' => 'Expense Amount',
             'purchase_amount' => 'Purchase Amount',
         ];
     }

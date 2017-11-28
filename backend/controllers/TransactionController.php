@@ -73,14 +73,24 @@ class TransactionController extends Controller
              $model->transdate = strtotime(date('d-m-Y'));
              $model->created_by = Yii::$app->user->identity->id;
             $model->status = 1;
-            if($model->save()){
+            if($model->save()){ 
                 if(count($title_id)>0){
+                    $data = [];
                     for($i=0;$i<=count($title_id)-1;$i++){
                         $modelline = new \backend\models\Transactionline();
                         $modelline->trans_id = $model->id;
                         $modelline->title_id = $title_id[$i];
                         $modelline->amount = $price[$i];
-                        $modelline->save(false);
+                        if($modelline->save(false)){
+                             
+                        }
+                    }
+                    array_push($data,['product_id'=>'','qty'=>0,'warehouse'=>0]);
+                    $x = \backend\models\Trans::createTrans($data,10,$model->id); //บันทึกรายจ่าย
+                    if($x){
+                        // $session = Yii::$app->session;
+                        // $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                        // return $this->redirect(['index']);
                     }
                 }
                 $this->updateAmount($model->id);
@@ -106,8 +116,8 @@ class TransactionController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-         $expendlist = \backend\models\Expense::find()->all();
-         $model_line = \backend\models\Transactionline::find()->where(['trans_id'=>$id])->all();
+        $expendlist = \backend\models\Expense::find()->all();
+        $model_line = \backend\models\Transactionline::find()->where(['trans_id'=>$id])->all();
 
         if ($model->load(Yii::$app->request->post())) {
              $title_id = Yii::$app->request->post('expend_title_id');
