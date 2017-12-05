@@ -127,8 +127,7 @@ use yii\helpers\Url;
                                            // price: value.price
                                         }
                                     });
-                                  response($.ui.autocomplete.filter(array, request.term));
-                                
+                                  response($.ui.autocomplete.filter(array, request.term));                               
                             }, 
                             minLength: 0,
                             focus: function( event, ui ) {

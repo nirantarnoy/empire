@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Trans;
-
+use yii\helpers\Json;
 /**
  * StockbalanceController implements the CRUD actions for Stockbalance model.
  */
@@ -44,11 +44,51 @@ class StockbalanceController extends Controller
           //echo $perpage;
           $dataProvider->pagination->pageSize = (int)$perpage;
         }
+        if(Yii::$app->request->post('hasEditable')){
+            $rowid = Yii::$app->request->post('editableKey');
+            $stock = Stockbalance::findOne($rowid);
+            $out = Json::encode(['output'=>'','message'=>'']);
+            $oldqty = $this->findOldqty($rowid);
+
+            $newqty = 0;
+            $dataupdate = [];
+            $stocktype = 0;
+
+            $post = [];
+            $posted = current($_POST['Stockbalance']);
+            $post['Stockbalance']= $posted;
+            if($stock->load($post)){
+                if($stock->qty > 0){
+                    $newqty = $stock->qty - $oldqty;
+                }else{
+                    $newqty = $oldqty* -1;
+                }
+                if($stock->qty > $oldqty){
+                    $stocktype = 0; // in
+                }else{
+                    $stocktype = 1; // out
+                }
+                if($stock->qty != $oldqty){
+                     array_push($dataupdate,['product_id'=>$stock->product_id,'qty'=>$newqty,'warehouse'=>$stock->warehouse_id]);
+                }
+                
+            }
+            if(count($dataupdate)>0){
+                 $x =\backend\models\Trans::createTrans($dataupdate,$stocktype,'ADJUST');
+            }
+            
+            echo $out;
+            return;
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'perpage' => $perpage,
         ]);
+    }
+    public function findOldqty($id){
+        $model = Stockbalance::findOne($id);
+        return count($model)>0?$model->qty:0;
     }
 
     /**

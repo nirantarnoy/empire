@@ -1,7 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+//use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use backend\assets\ICheckAsset;
 use yii\helpers\Url;
@@ -67,13 +68,42 @@ $this->registerJsFile(
                                 return \backend\models\Product::getProdname($data->product_id);
                             }
                         ],
+                       
+                      //  'qty',
                         [
+                            'class'=>'kartik\grid\EditableColumn',
+                            'attribute'=>'qty',
+                            'contentOptions'=>['class'=>'text-center','style'=>'vertical-align: middle;text-align: center'],
+                            'value'=>function($data){
+                                return $data->qty == null?0:$data->qty;
+                            },
+                            'editableOptions'=>[
+                                'preHeader'=>'<i class="glyphicon glyphicon-edit"></i>',
+                                'header'=>'แก้ไขจำนวน',
+                                'inputType'=>\kartik\editable\Editable::INPUT_SPIN,
+                                'resetButton'=>[
+                                    'icon'=>'<i class="fa fa-close"></i>',
+                                    'class'=>'btn btn-sm btn-default',
+                                    'label'=>Yii::t('app','Save'),
+                                ],
+                                'submitButton'=>[
+                                    'icon'=>'<i class="fa fa-check"></i>',
+                                    'class'=>'btn btn-sm btn-primary',
+                                    'label'=>Yii::t('app','Save'),
+                                ],
+                                'options'=>['pluginOptions'=>['min'=>0,'max'=>100000]]
+                            ],
+                            'hAlign'=>'right',
+                            'vAlign'=>'middle',
+                            'width'=>'100px',
+                            'format'=>['decimal',0],
+                        ],
+                         [
                             'attribute'=>'warehouse_id',
                             'value' => function($data){
                                 return \backend\models\Warehouse::findName($data->warehouse_id);
                             }
                         ],
-                        'qty',
                         
                        // 'status',
                         //'created_at',
