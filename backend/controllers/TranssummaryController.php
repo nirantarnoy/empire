@@ -52,11 +52,13 @@ class TranssummaryController extends Controller
 	}
   
   public function actionShowreport(){
-    $model = \common\models\VProductSum::find()->select(['product_code','name'])->distinct()->all();
+   // $model = \common\models\VProductSum::find()->select(['v_product_sum.product_code','v_product_sum.name','t1.total_qty','t1.total_amount'])->innerJoin('v_product_sum_all t1','v_product_sum.id=t1.id')->distinct()->orderby(['v_product_sum.id'=>SORT_ASC])->all();
+    $model = \common\models\VProductSumAll::find()->orderby(['id'=>SORT_ASC])->all();
     $model_wh = \common\models\VProductSum::find()->select(['warhouse_name'])->distinct()->all();
     $model2 = \common\models\VProductSum::find()->all();
+    $model_sumall = \common\models\VProductSumAll::find()->orderby(['id'=>SORT_DESC])->all();
     //print_r($model);return;
-    return $this->render('_test',['model'=>$model,'model2'=>$model2,'model_wh'=>$model_wh]);
+    return $this->render('_test',['model'=>$model,'model2'=>$model2,'model_wh'=>$model_wh,'model_sumall'=>$model_sumall]);
        //  $from_date = '';
        //  $to_date = '';
 

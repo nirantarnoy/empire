@@ -22,8 +22,8 @@
 			 		<tr>
 			 			<th>รหัสสินค้า</th>
 			 			<th>ชื่อสินค้า</th>
-			 			<th>จำนวนรวม</th>
-			 			<th>มูลค่ารวม</th>
+			 			<th style="text-align: right;">จำนวนรวม</th>
+			 			<th style="text-align: right;">มูลค่ารวม</th>
 			 			<?php foreach($model_wh as $value2):?>
 				 			<th>
 				 				<table width="100%">
@@ -41,8 +41,8 @@
 			 			<tr>
 			 				<td><?=$value->product_code?></td>
 			 			    <td><?=$value->name?></td>
-			 			    <td>0</td>
-			 			    <td>0</td>
+			 			    <td style="text-align: right;"><?=$value->total_qty?></td>
+			 			    <td style="text-align: right;"><?=$value->total_amount?></td>
 			 				<?php foreach($model2 as $value2):?>
 			 				    <?php if($value2->product_code == $value->product_code):?>
 			 						 <td>
