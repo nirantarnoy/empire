@@ -9,7 +9,7 @@
  			<table class="table  table-bordered table-striped">
 			 	<thead>
 			 		<tr>
-			 			<th colspan="4" style="text-align: center;">สรุปมูลค่าสินค้าทั้งหมด</th>
+			 			<th colspan="5" style="text-align: center;">สรุปมูลค่าสินค้าทั้งหมด</th>
 			 		<!-- 	<th></th>
 			 			<th></th>
 			 			<th></th> -->
@@ -23,6 +23,7 @@
 			 			<th>รหัสสินค้า</th>
 			 			<th>ชื่อสินค้า</th>
 			 			<th style="text-align: right;">จำนวนรวม</th>
+			 			<th style="text-align: right;">ทุนสินค้า</th>
 			 			<th style="text-align: right;">มูลค่ารวม</th>
 			 			<?php foreach($model_wh as $value2):?>
 				 			<th>
@@ -42,17 +43,18 @@
 			 				<td><?=$value->product_code?></td>
 			 			    <td><?=$value->name?></td>
 			 			    <td style="text-align: right;"><?=$value->total_qty?></td>
-			 			    <td style="text-align: right;"><?=$value->total_amount?></td>
+			 			    <td style="text-align: right;"><?=number_format($value->cost,0)?></td>
+			 			    <td style="text-align: right;"><?=number_format($value->total_amount,0)?></td>
 			 				<?php foreach($model2 as $value2):?>
 			 				    <?php if($value2->product_code == $value->product_code):?>
 			 						 <td>
 			 						 	<table width="100%">
 			 						 		<tr>
 			 						 			<td style="width: 50%;text-align: right;">
-			 						 				<?=number_format($value2->warehouse_qty)?>
+			 						 				<?=number_format($value2->warehouse_qty,0)?>
 			 						 			</td>
 			 						 			<td style="width: 50%;text-align: right;">
-			 						 				<?=number_format($value2->warehouse_qty * $value2->cost)?>
+			 						 				<?=number_format($value2->warehouse_qty * $value2->cost,0)?>
 			 						 			</td>
 			 						 		</tr>
 			 						 		
