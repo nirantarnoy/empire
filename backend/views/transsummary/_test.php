@@ -49,10 +49,10 @@
 			 						 	<table width="100%">
 			 						 		<tr>
 			 						 			<td style="width: 50%;text-align: right;">
-			 						 				<?=$value2->warehouse_qty?>
+			 						 				<?=number_format($value2->warehouse_qty)?>
 			 						 			</td>
 			 						 			<td style="width: 50%;text-align: right;">
-			 						 				100
+			 						 				<?=number_format($value2->warehouse_qty * $value2->cost)?>
 			 						 			</td>
 			 						 		</tr>
 			 						 		
