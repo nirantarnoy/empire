@@ -10,6 +10,7 @@ use kartik\mpdf\Pdf;
 
 class TranssummaryController extends Controller
 {
+  public $enableCsrfValidation = false;
 	public function actionIndex()
     {
         $checkdate = "";
@@ -52,13 +53,31 @@ class TranssummaryController extends Controller
 	}
   
   public function actionShowreport(){
+    $product_group = '';
+    $product = '';
+    $warehouse = '';
+    if(Yii::$app->request->isPost){
+      $product_group = Yii::$app->request->post('product_group');
+      $product = Yii::$app->request->post('product');
+      $warehouse = Yii::$app->request->post('warehouse');
+    }
    // $model = \common\models\VProductSum::find()->select(['v_product_sum.product_code','v_product_sum.name','t1.total_qty','t1.total_amount'])->innerJoin('v_product_sum_all t1','v_product_sum.id=t1.id')->distinct()->orderby(['v_product_sum.id'=>SORT_ASC])->all();
-    $model = \common\models\VProductSumAll::find()->orderby(['id'=>SORT_ASC])->all();
-    $model_wh = \common\models\VProductSum::find()->select(['warhouse_name'])->distinct()->all();
-    $model2 = \common\models\VProductSum::find()->all();
-    $model_sumall = \common\models\VProductSumAll::find()->orderby(['id'=>SORT_DESC])->all();
+   
+    $model = \common\models\VProductSumAll::find()->orderby(['id'=>SORT_ASC])->where(['like','product_code',$product])->andFilterWhere(['like','category_id',$product_group])->all(); // group by code
+    $model_wh = \common\models\VProductSum::find()->select(['warhouse_name'])->distinct()->where(['like','warehouse_id',$warehouse])->all(); // select distinct warehouse
+    $model2 = \common\models\VProductSum::find()->where(['like','product_code',$product])->andFilterWhere(['like','category_id',$product_group])->andFilterWhere(['like','warehouse_id',$warehouse])->all(); // sum all warehouse
+    $model_sumall = \common\models\VProductSumAll::find()->orderby(['id'=>SORT_DESC])->all(); // ยอดรวม
     //print_r($model);return;
-    return $this->render('_test',['model'=>$model,'model2'=>$model2,'model_wh'=>$model_wh,'model_sumall'=>$model_sumall]);
+    return $this->render('_test',
+                        [
+                        'model'=>$model,
+                        'model2'=>$model2,
+                        'model_wh'=>$model_wh,
+                        'model_sumall'=>$model_sumall,
+                        'group' => $product_group,
+                        'product' => $product,
+                        'warehouse' => $warehouse,
+                        ]);
        //  $from_date = '';
        //  $to_date = '';
 

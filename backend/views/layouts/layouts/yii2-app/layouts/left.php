@@ -145,7 +145,7 @@
                         'items' => [
                            
                              ['label' => 'สรุปรายรับ-จ่าย', 'icon' => 'line-chart', 'url' => ['/transsummary'],],
-                            // ['label' => 'รหัสสินค้า', 'icon' => 'cube', 'url' => ['/product'],],
+                             ['label' => 'รายงานสรุปมูลค่าสินค้า', 'icon' => 'cube', 'url' => ['/transsummary/showreport'],],
                            
                         ],
                     ],  

@@ -1,6 +1,42 @@
 <?php
+ use yii\helpers\Url;
  $this->title = "สรุปยอดสินค้าทั้งหมด";
+ $groupall = \backend\models\Category::find()->where(['!=','name',''])->all();
+ $whall = \backend\models\Warehouse::find()->where(['!=','name',''])->all();
  ?>
+ <div class="row">
+          <div class="col-lg-12">
+            <form id="search-form" action="<?=Url::to(['transsummary/showreport'],true)?>" method="post">
+                   <div class="form-inline">
+                <select class="form-control" id="product_group" name="product_group">
+                  <option value="">เลือกกลุ่มสินค้า</option>
+                  <?php foreach($groupall as $value):?>
+                  <?php $select = '';
+                    if($value->id == $group){
+                      $select = 'selected';
+                    }
+                  ?>
+                  <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
+                 <?php endforeach;?>
+                </select>
+                 <select class="form-control" id="warehouse" name="warehouse">
+                  <option value="">เลือกคลังสินค้า</option>
+                  <?php foreach($whall as $value):?>
+                  <?php $select = '';
+                    if($value->id == $warehouse){
+                      $select = 'selected';
+                    }
+                  ?>
+                  <option value="<?=$value->id?>" <?=$select?>><?=$value->name?></option>
+                 <?php endforeach;?>
+                </select>
+                 <input type="text" class="form-control" name="product" placeholder="รหัสสินค้า ,ชื่อสินค้า" value="<?=$product?>">
+                <input type="submit" class="btn btn-primary" value="ค้นหา">
+            </div>
+            </form>
+       
+          </div>
+        </div><br />
  <div class="row">
  	<div class="col-lg-12">
  		<div class="panel">
