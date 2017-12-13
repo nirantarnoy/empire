@@ -249,7 +249,7 @@ use yii\helpers\Url;
                   </tr>
                 </tfoot>
                </table>
-               <table class="table-tmp" style="display: none;">
+               
                </table>
         </div>    
     </div>
@@ -258,7 +258,7 @@ use yii\helpers\Url;
 
     
     <?php ActiveForm::end(); ?>
-
+<table class="table-tmp" style="display: none;">
 </div>
 <?php 
 $url_to_firm = Url::to(['sale/firmorder'],true);

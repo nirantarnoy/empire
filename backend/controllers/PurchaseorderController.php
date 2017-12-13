@@ -73,10 +73,11 @@ class PurchaseorderController extends Controller
         $model = new Purchaseorder();
 
         if ($model->load(Yii::$app->request->post())) {
-             $prodid = Yii::$app->request->post('product_id');
+            $prodid = Yii::$app->request->post('productid');
             $qty = Yii::$app->request->post('qty');
             $price = Yii::$app->request->post('price');
             $lineamt = Yii::$app->request->post('line_amount');
+
               $model->purchase_date = strtotime($model->purchase_date);
               $model->status = 1;
                $model->created_by = Yii::$app->user->identity->id;
@@ -153,6 +154,7 @@ class PurchaseorderController extends Controller
      */
     public function actionDelete($id)
     {
+        \backend\models\Purchaseorderline::deleteAll(['purchase_order_id'=>$id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

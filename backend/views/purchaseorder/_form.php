@@ -21,6 +21,7 @@ use yii\helpers\Url;
                 <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
             </div>
 
+
         </div>
     </div>
      <div class="box">
@@ -216,14 +217,14 @@ use yii\helpers\Url;
                   </tr>
                 </tfoot>
                </table>
-                <table class="table-tmp" style="display: none;">
+               
                </table>
         </div>
     </div>
     
    
     <?php ActiveForm::end(); ?>
-
+ <table class="table-tmp" style="display: none;">
     
 
 </div>

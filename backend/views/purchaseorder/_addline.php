@@ -5,7 +5,7 @@
   <td>1</td>
   <td>
   	<input type="text" class="form-control product_code" name="product_code[]" value="<?=$data["product_code"]?>" disabled="disabled" /> 
-  	<input type="hidden" class="form-control product_id" name="product_id[]" value="<?=$data["id"]?>" /> 
+  	<input type="hidden" class="form-control product_id" name="productid[]" value="<?=$data["id"]?>" /> 
   </td>
   <td>
   	<input type="text" class="form-control name" name="name[]" value="<?=$data["name"]?>" disabled="disabled" /> 

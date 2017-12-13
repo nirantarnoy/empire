@@ -77,7 +77,6 @@ class SaleController extends Controller
             $qty = Yii::$app->request->post('qty');
             $price = Yii::$app->request->post('price');
             $lineamt = Yii::$app->request->post('line_amount');
-
             $model->sale_date = strtotime($model->sale_date);
              $model->created_by = Yii::$app->user->identity->id;
             if( $model->save()){
@@ -169,6 +168,7 @@ class SaleController extends Controller
      */
     public function actionDelete($id)
     {
+      \backend\models\Saleline::deleteAll(['sale_id'=>$id]);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
