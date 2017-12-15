@@ -146,6 +146,8 @@
                            
                              ['label' => 'สรุปรายรับ-จ่าย', 'icon' => 'line-chart', 'url' => ['/transsummary'],],
                              ['label' => 'รายงานสรุปมูลค่าสินค้า', 'icon' => 'cube', 'url' => ['/transsummary/showreport'],],
+                             ['label' => 'สรุปรายวัน', 'icon' => 'cube', 'url' => ['/transsummary/showreport'],],
+                             ['label' => 'สรุปรายอาทิตย์', 'icon' => 'cube', 'url' => ['/transsummary/showreport'],],
                            
                         ],
                     ],  

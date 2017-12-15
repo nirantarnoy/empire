@@ -11,6 +11,7 @@ use toxor88\switchery\Switchery;
 /* @var $form yii\widgets\ActiveForm */
 $pos = backend\models\Position::find()->where(['status'=>1])->all();
 $user = backend\models\User::find()->where(['status'=>1])->all();
+$market = backend\models\Market::find()->where(['status'=>1])->all();
 $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
 ?>
 
@@ -97,6 +98,18 @@ $prefix = \backend\models\Prefixname::find()->where(['status'=>1])->all();
                                     [
                                      'data'=> ArrayHelper::map($user,'id','username'),
                                     'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'username'],
+                                    ]
+
+                                  )->label(false) ?>
+                                </div>
+                           </div>
+                           <div class="form-group">
+                                <label class="control-label col-sm-2" for="name" style="bottom: -5px;text-align: right;"><?=$model->getAttributeLabel('market_id')?></label>
+                                <div class="col-sm-10">
+                                 <?= $form->field($model, 'market_id')->widget(Select2::className(),
+                                    [
+                                     'data'=> ArrayHelper::map($market,'id','name'),
+                                    'options'=>['maxlength' => true,'class'=>'form-control form-inline','id'=>'market_id'],
                                     ]
 
                                   )->label(false) ?>

@@ -73,6 +73,7 @@ class IssuetableController extends Controller
             $model->status = 1;
             $model->request_by = Yii::$app->user->identity->id;
             $model->require_date = strtotime($model->require_date);
+            $data = [];
             if($model->save()){
                 if(count($prodid)>0){
                     for($i=0;$i<=count($prodid)-1;$i++){
@@ -86,6 +87,13 @@ class IssuetableController extends Controller
                         $modelline->save(false);
                     }
                 }
+                array_push($data,['product_id'=>'','qty'=>0,'warehouse'=>0]);
+                    $x = \backend\models\Trans::createTrans($data,10,$model->id); //บันทึกวันที่ทำรายการ
+                    if($x){
+                        // $session = Yii::$app->session;
+                        // $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                        // return $this->redirect(['index']);
+                    }
              return $this->redirect(['update', 'id' => $model->id]);               
             }
         }

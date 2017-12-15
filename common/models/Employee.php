@@ -38,7 +38,7 @@ class Employee extends \yii\db\ActiveRecord
     {
         return [
         [['first_name'],'required'],
-            [['position_id', 'user_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','prefix_name'], 'integer'],
+            [['position_id', 'user_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','prefix_name','market_id'], 'integer'],
             [['employee_code', 'first_name', 'last_name', 'phone', 'photo','email'], 'string', 'max' => 255],
         ];
     }
@@ -60,6 +60,7 @@ class Employee extends \yii\db\ActiveRecord
             'user_id' => 'ผู้ใช้งาน',
             'status' => 'สถานะ',
             'email' => 'Email',
+            'market_id' => 'ตลาด',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
