@@ -78,9 +78,9 @@ class PurchaseorderController extends Controller
             $price = Yii::$app->request->post('price');
             $lineamt = Yii::$app->request->post('line_amount');
 
-              $model->purchase_date = strtotime($model->purchase_date);
-              $model->status = 1;
-               $model->created_by = Yii::$app->user->identity->id;
+            $model->purchase_date = strtotime($model->purchase_date);
+            $model->status = 1;
+            $model->created_by = Yii::$app->user->identity->id;
             if($model->save()){
                 if(count($prodid)>0){
                     for($i=0;$i<=count($prodid)-1;$i++){

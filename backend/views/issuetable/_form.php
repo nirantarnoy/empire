@@ -215,8 +215,7 @@ use kartik\date\DatePicker;
                 </tbody>
                 
                </table>
-                <table class="table-tmp" style="display: none;">
-               </table>
+
                </div>
                 
                 </div>
@@ -224,11 +223,9 @@ use kartik\date\DatePicker;
                 </div>
                 </div>
                  </div>
-    
-
-    
+   
     <?php ActiveForm::end(); ?>
-
+    <table class="table-tmp" style="display: none;"></table>
 </div>
 <?php 
 $url_to_approve = Url::to(['issuetable/approve'],true);
