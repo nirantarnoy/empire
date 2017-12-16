@@ -25,21 +25,27 @@ class TranssummaryController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         if(Yii::$app->request->isGet){
-            // $Sdate = strtotime(Yii::$app->request->get('Startdate'));
-            // $Edate = strtotime(Yii::$app->request->get('Enddate'));
-            //$checkdate = strtotime(Yii::$app->request->get('Startdate'));
-
-            // echo date('d-m-Y',$Sdate)."<br/>";//return;
-            // echo $Sdate;//return;
-             $Sdate = date('d-m-Y',strtotime(Yii::$app->request->get('Startdate')));
-            $Edate = date('d-m-Y',strtotime(Yii::$app->request->get('Enddate')));
+            $Sdate = strtotime(Yii::$app->request->get('Startdate'));
+            $Edate = strtotime(Yii::$app->request->get('Enddate'));
+            // $checkdate = strtotime(Yii::$app->request->get('Startdate'));
+            // echo strtotime('16-12-2017');
+            // echo time();
+            // echo date('d-m-Y',1513378800);
+            // return;
+         
+            //  $Sdate = date('d-m-Y',strtotime(Yii::$app->request->get('Startdate')));
+            // $Edate = date('d-m-Y',strtotime(Yii::$app->request->get('Enddate')));
              $checkdate = date('Y',strtotime(Yii::$app->request->get('Startdate')));
  //echo date_format($Sdate2,'d-m-Y');return;
-
+               // echo date('d-m-Y',$Sdate)."<br/>";//return;
+            
           
             if(($Sdate != "" && $checkdate !='1970') || ($Edate != "" && $checkdate !='1970')){
+              
+              $newsdate = strtotime($Sdate);
+              echo $newsdate;
               // $dataProvider->query->where(['>=','unix_date',$Sdate])->andFilterWhere(['<=','unix_date',$Edate])->orderby(['unix_date'=>SORT_DESC]);
-               $dataProvider->query->where(['BETWEEN','DATE(created_at)',$Sdate,$Edate])->orderby(['unix_date'=>SORT_DESC]);
+               $dataProvider->query->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->orderby(['unix_date'=>SORT_DESC]);
                $income = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('sale_amount');
                $purch = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('purchase_amount');
                $expense = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount');
@@ -49,6 +55,9 @@ class TranssummaryController extends Controller
                $expense = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('expense_amount');
             }
         }
+
+        $Sdate = date('d-m-Y',$Sdate);
+        $Edate = date('d-m-Y',$Edate);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
