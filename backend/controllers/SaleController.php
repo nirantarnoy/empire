@@ -77,7 +77,7 @@ class SaleController extends Controller
             $qty = Yii::$app->request->post('qty');
             $price = Yii::$app->request->post('price');
             $lineamt = Yii::$app->request->post('line_amount');
-            $model->sale_date = $model->created_at;//strtotime($model->sale_date);
+            $model->sale_date = strtotime($model->sale_date);
             $model->created_by = Yii::$app->user->identity->id;
 
              $data = [];
