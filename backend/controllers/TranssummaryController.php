@@ -29,7 +29,7 @@ class TranssummaryController extends Controller
             $Edate = strtotime(Yii::$app->request->get('Enddate'));
             //$checkdate = strtotime(Yii::$app->request->get('Startdate'));
 
-            echo date('d-m-Y',$Sdate)."<br/">;//return;
+            echo date('d-m-Y',$Sdate)."<br/>";//return;
             echo $Sdate;//return;
             //  $Sdate = date('d-m-Y',strtotime(Yii::$app->request->get('Startdate')));
             // $Edate = date('d-m-Y',strtotime(Yii::$app->request->get('Enddate')));
