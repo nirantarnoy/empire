@@ -42,8 +42,8 @@ class TranssummaryController extends Controller
           
             if(($Sdate != "" && $checkdate !='1970') || ($Edate != "" && $checkdate !='1970')){
               
-              $newsdate = strtotime($Sdate);
-              echo $newsdate;
+             // $newsdate = strtotime($Sdate);
+              //echo $newsdate;
               // $dataProvider->query->where(['>=','unix_date',$Sdate])->andFilterWhere(['<=','unix_date',$Edate])->orderby(['unix_date'=>SORT_DESC]);
                $dataProvider->query->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->orderby(['unix_date'=>SORT_DESC]);
                $income = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('sale_amount');
