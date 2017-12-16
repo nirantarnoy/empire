@@ -73,12 +73,12 @@ class SaleController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $prodid = Yii::$app->request->post('product_id');
-             $wh = Yii::$app->request->post('warehouse');
+            $wh = Yii::$app->request->post('warehouse');
             $qty = Yii::$app->request->post('qty');
             $price = Yii::$app->request->post('price');
             $lineamt = Yii::$app->request->post('line_amount');
-            $model->sale_date = strtotime($model->sale_date);
-             $model->created_by = Yii::$app->user->identity->id;
+            $model->sale_date = $model->created_at;//strtotime($model->sale_date);
+            $model->created_by = Yii::$app->user->identity->id;
 
              $data = [];
             if( $model->save()){

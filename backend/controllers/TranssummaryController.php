@@ -13,6 +13,8 @@ class TranssummaryController extends Controller
   public $enableCsrfValidation = false;
 	public function actionIndex()
     {
+       // print strtotime('14-11-2017');
+       // print date('d-m-Y',strtotime('14-11-2017'));
         $checkdate = "";
         $Sdate = "";
         $Edate = "";
@@ -30,7 +32,7 @@ class TranssummaryController extends Controller
 
           
             if(($Sdate != "" && $checkdate !='1970') || ($Edate != "" && $checkdate !='1970')){
-               $dataProvider->query->where(['>=','created_at',$Sdate])->andFilterWhere(['<=','created_at',$Edate])->orderby(['created_at'=>SORT_DESC]);
+               $dataProvider->query->where(['>=','created_at',$Sdate])->andFilterWhere(['<=','created_at',$Edate])->orderby(['unix_date'=>SORT_DESC]);
                $income = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','created_at',$Sdate],['<=','created_at',$Edate]])->sum('sale_amount');
                $purch = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','created_at',$Sdate],['<=','created_at',$Edate]])->sum('purchase_amount');
                $expense = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','created_at',$Sdate],['<=','created_at',$Edate]])->sum('expense_amount');
