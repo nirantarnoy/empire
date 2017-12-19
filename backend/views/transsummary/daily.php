@@ -81,14 +81,14 @@ if($cdate !=''){
 						 ?>
 						<tr>
 							<td style="text-align: center;"><?=$value->first_name?></td>
-							<td style="text-align: center;"><?=$value->amount!=''?$value->amount:'0'?></td>
+							<td style="text-align: center;"><?=$value->amount!=''?number_format($value->amount):'0'?></td>
 							<td style="text-align: center;">0</td>
-							<td style="text-align: center;"><?=$value->amount!=''?$value->amount:'0'?></td>
-							<td style="text-align: center;"><?=$value->amount!=''?$value->amount - $value->expense_amount_1 - $value->expense_amount_2 - $value->expense_amount_3 - $value->expense_amount_4 :'0'?></td>
-							<td style="text-align: center;"><?=$value->expense_amount_1!=''?$value->expense_amount_1:'0'?></td>
-							<td style="text-align: center;"><?=$value->expense_amount_2!=''?$value->expense_amount_2:'0'?></td>
-							<td style="text-align: center;"><?=$value->expense_amount_3!=''?$value->expense_amount_3:'0'?></td>
-							<td style="text-align: center;"><?=$value->expense_amount_4!=''?$value->expense_amount_4:'0'?></td>
+							<td style="text-align: center;"><?=$value->amount!=''?number_format($value->amount):'0'?></td>
+							<td style="text-align: center;"><?=$value->amount!=''?number_format($value->amount - $value->expense_amount_1 - $value->expense_amount_2 - $value->expense_amount_3 - $value->expense_amount_4) :'0'?></td>
+							<td style="text-align: center;"><?=$value->expense_amount_1!=''?number_format($value->expense_amount_1):'0'?></td>
+							<td style="text-align: center;"><?=$value->expense_amount_2!=''?number_format($value->expense_amount_2):'0'?></td>
+							<td style="text-align: center;"><?=$value->expense_amount_3!=''?number_format($value->expense_amount_3):'0'?></td>
+							<td style="text-align: center;"><?=$value->expense_amount_4!=''?number_format($value->expense_amount_4):'0'?></td>
 							<td style="text-align: center;"><?=$value->market_name?></td>
 							<td style="text-align: center;">0</td>
 							<td style="text-align: center;">0</td>
@@ -96,10 +96,10 @@ if($cdate !=''){
 						<?php endforeach;?>
 						<tr style="background-color: #CCC">
 							<td style="text-align: center;"><b>รวม</b></td>
-							<td style="text-align: center;"><b><?=$sum1?></b></td>
+							<td style="text-align: center;"><b><?=number_format($sum1)?></b></td>
 							<td style="text-align: center;"><b>0</b></td>
-							<td style="text-align: center;"><b><?=$sum3?></b></td>
-							<td style="text-align: center;"><b><?=$sum4?></b></td>
+							<td style="text-align: center;"><b><?=number_format($sum3)?></b></td>
+							<td style="text-align: center;"><b><?=number_format($sum4)?></b></td>
 							<td style="text-align: center;"><b>0</b></td>
 							<td style="text-align: center;"><b>0</b></td>
 							<td style="text-align: center;"><b>0</b></td>
