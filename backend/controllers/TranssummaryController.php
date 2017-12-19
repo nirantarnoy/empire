@@ -130,5 +130,18 @@ class TranssummaryController extends Controller
        //      ]);
        //       return $pdf->render();
     }
+    public function actionDailyreport(){
+      $cdate = Yii::$app->request->post('Cdate');
+      if($cdate != ''){
+          $model = \common\models\VSumDayByEmp::find()->where(['transdate'=>$cdate])->all();
+      }else{
+          $model = \common\models\VSumDayByEmp::find()->all();
+      }
+    
+      return $this->render('daily',[
+          'model'=>$model,
+          'cdate'=>$cdate,
+        ]);
+    }
 	
 }
