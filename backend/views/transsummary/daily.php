@@ -45,15 +45,15 @@ if($cdate !=''){
 				<div class="table-responsive">
 					<table class="table table-bordered">
 						<tr style="background-color: #CCC">
-							<td style="text-align: center;"><b>พนักงาน</b></td>
+							<td rowspan="2" style="text-align: center;vertical-align: middle"><b>พนักงาน</b></td>
 							<td colspan="4" style="text-align: center;"><b>รายได้</b></td>
 							<td colspan="4" style="text-align: center;"><b>รายจ่ายอื่นๆ</b></td>
-							<td style="text-align: center;"><b>ตลาด</b></td>
-							<td style="text-align: center;"><b>ต้นทุน</b></td>
-							<td style="text-align: center;"><b>ยอดคิด%</b></td>
+							<td rowspan="2" style="text-align: center;vertical-align: middle"><b>ตลาด</b></td>
+							<td rowspan="2" style="text-align: center;vertical-align: middle"><b>ต้นทุน</b></td>
+							<td rowspan="2" style="text-align: center;vertical-align: middle"><b>ยอดคิด%</b></td>
 						</tr>
 						<tr style="background-color: #CCC">
-							<td style="text-align: center;"></td>
+							
 							<td style="text-align: center;">ยอดขายเต็ม</td>
 							<td style="text-align: center;">ทุนบุหรี่</td>
 							<td style="text-align: center;">รายได้</td>
@@ -62,9 +62,9 @@ if($cdate !=''){
 							<td style="text-align: center;">รถ</td>
 							<td style="text-align: center;">เด็ก</td>
 							<td style="text-align: center;">อื่นๆ</td>
+							<!-- <td style="text-align: center;"></td>
 							<td style="text-align: center;"></td>
-							<td style="text-align: center;"></td>
-							<td style="text-align: center;"></td>
+							<td style="text-align: center;"></td> -->
 						</tr>
 						<?php
 							$sum1 = 0;
