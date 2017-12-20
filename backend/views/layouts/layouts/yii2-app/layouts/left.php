@@ -110,6 +110,7 @@
                              ['label' => 'ลูกค้า', 'icon' => 'street-view', 'url' => ['/customer'],],
                              ['label' => 'ขายสินค้า', 'icon' => 'money', 'url' => ['/sale'],],
                              ['label' => 'ตลาด', 'icon' => 'map-pin', 'url' => ['/market'],],
+                            
                            
                         ],
                     ],  
@@ -123,6 +124,7 @@
                             ['label' => 'เติมสินค้า', 'icon' => 'refresh', 'url' => ['/issuetable'],],
                             ['label' => 'รายการอนุมัติเติมสินค้า', 'icon' => 'arrow-circle-up', 'url' => ['/issueapprove'],],
                             ['label' => 'สินค้าคงคลัง', 'icon' => 'cube', 'url' => ['/stockbalance'],],
+                            
                            
                         ],
                     ],  
@@ -134,7 +136,7 @@
                         'items' => [
                             ['label' => 'หัวข้อรายจ่าย', 'icon' => 'cubes', 'url' => ['/expense'],],
                             ['label' => 'บันทึกรายจ่าย', 'icon' => 'cube', 'url' => ['/transaction'],],
-                           
+                            ['label' => 'บันทึกรับเงิน', 'icon' => 'folder-open', 'url' => ['/income'],],
                         ],
                     ],  
                      [

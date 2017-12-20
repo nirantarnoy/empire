@@ -76,15 +76,15 @@ if($cdate !=''){
 						<?php
 							$sum1 += $value->amount;
 							$sum2 += 0;
-							$sum3 += $value->amount;
-							$sum4 += $value->amount;
+							$sum3 += $value->income_amount;
+							$sum4 += $value->income_amount!=''?$value->income_amount - $value->expense_amount_1 - $value->expense_amount_2 - $value->expense_amount_3 - $value->expense_amount_4:'0';
 						 ?>
 						<tr>
 							<td style="text-align: center;"><?=$value->first_name?></td>
 							<td style="text-align: center;"><?=$value->amount!=''?number_format($value->amount):'0'?></td>
 							<td style="text-align: center;">0</td>
-							<td style="text-align: center;"><?=$value->amount!=''?number_format($value->amount):'0'?></td>
-							<td style="text-align: center;"><?=$value->amount!=''?number_format($value->amount - $value->expense_amount_1 - $value->expense_amount_2 - $value->expense_amount_3 - $value->expense_amount_4) :'0'?></td>
+							<td style="text-align: center;"><?=$value->income_amount!=''?number_format($value->income_amount):'0'?></td>
+							<td style="text-align: center;"><?=$value->income_amount!=''?number_format($value->income_amount - $value->expense_amount_1 - $value->expense_amount_2 - $value->expense_amount_3 - $value->expense_amount_4) :'0'?></td>
 							<td style="text-align: center;"><?=$value->expense_amount_1!=''?number_format($value->expense_amount_1):'0'?></td>
 							<td style="text-align: center;"><?=$value->expense_amount_2!=''?number_format($value->expense_amount_2):'0'?></td>
 							<td style="text-align: center;"><?=$value->expense_amount_3!=''?number_format($value->expense_amount_3):'0'?></td>
