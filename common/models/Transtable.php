@@ -34,7 +34,7 @@ class Transtable extends \yii\db\ActiveRecord
     {
         return [
         [['transno'],'required'],
-            [['trans_type', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['trans_type', 'created_at', 'updated_at', 'created_by', 'updated_by','sale_ref','purchase_ref'], 'integer'],
             [['transno'], 'string', 'max' => 255],
             [[ 'transdate', 'status'],'safe']
         ];
@@ -51,6 +51,8 @@ class Transtable extends \yii\db\ActiveRecord
             'trans_type' => 'ประเภท',
             'transdate' => 'วันที่',
             'status' => 'สถานะ',
+            'sale_ref'=>'อ้างอิงใบขาย',
+            'purchase_ref'=>'อ้างอิงใบสั่งซื้อ',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',

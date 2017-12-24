@@ -64,6 +64,10 @@ class IncomeController extends Controller
      */
     public function actionCreate()
     {
+         $session = Yii::$app->session;
+         $sale_ref = $session['sale_id'];
+        
+        // echo $sale_ref;return;
         $model = new Transaction();
         $expendlist = \backend\models\Expense::find()->all();
 
@@ -74,6 +78,7 @@ class IncomeController extends Controller
              $model->created_by = Yii::$app->user->identity->id;
              $model->trans_type = 2; // รับเงิน
             $model->status = 1;
+            $model->sale_ref = $sale_ref;
             if($model->save()){ 
                 if(count($title_id)>0){
                     $data = [];
@@ -105,6 +110,7 @@ class IncomeController extends Controller
             'runno'=> $model->getLastNo(),
             'status' => \backend\helpers\TransactionStatus::getTypeById(1),
             'expendlist' => Json::encode($expendlist),
+            'sale_ref' => $sale_ref,
         ]);
     }
 

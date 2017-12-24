@@ -22,6 +22,7 @@ use yii\helpers\Url;
                 <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
                 <?php if(!$model->isNewRecord):?>
                 <div class="btn btn-primary btn-sale-confirm">ยืนยัน</div>
+                <div class="btn btn-info btn-sale-amount">บันทึกรับเงิน</div>
                 <input type="hidden" class="sale_id" value="<?=$model->id?>" />
               <?php endif;?>
             </div>
@@ -250,7 +251,6 @@ use yii\helpers\Url;
                 </tfoot>
                </table>
                
-               </table>
         </div>    
     </div>
 
@@ -258,13 +258,68 @@ use yii\helpers\Url;
 
     
     <?php ActiveForm::end(); ?>
-<table class="table-tmp" style="display: none;">
+<table class="table-tmp" style="display: none;"></table>
 </div>
+
+
+<div id="myModal_rec" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+              <h3><i class="fa fa-money"></i> บันทึกรับเงิน</h3>
+          </div>
+          <div class="modal-body">
+             <?php $form = ActiveForm::begin(['id'=>'form-receive','action'=>Url::to(['purchaseorder/receivepurchase'],true)]); ?>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <table class="table table-striped table-receive">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>วิธีรับเงิน</th>
+                            <th>จำนวน</th>
+                          </tr>
+                        </thead>
+                        <tbody class="receive-body">
+
+                        </tbody>
+                        
+                      </table>
+                    </div>
+                  </div>
+    <?php ActiveForm::end(); ?>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-save-receive" data-dismiss="modal">บันทึก</button>
+          </div>
+          </div>
+        </div>
+        </div>
+
+
 <?php 
 $url_to_firm = Url::to(['sale/firmorder'],true);
+$url_to_rec = Url::to(['sale/rec'],true);
 $url_to_check_onhand = Url::to(['sale/checkonhand'],true);
  $this->registerJs('
   $(function(){
+
+  $(".btn-sale-amount").click(function(){
+   // $("#myModal_rec").modal("show");
+    var ids = "'.$model->id.'";
+     $.ajax({
+       type:"post",
+       dataType:"html",
+       url: "'.$url_to_rec.'",
+       data:{id: ids},
+       success:function(data){
+
+       }
+     });
+  });
+ 
+
     sumall();
 
     $(window).keydown(function(event){ 

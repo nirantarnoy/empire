@@ -53,4 +53,8 @@ class Sale extends \common\models\Sale
     $m = Sale::find()->where(['MONTH(FROM_UNIXTIME(sale_date))' => $m])->andFilterWhere(['YEAR(FROM_UNIXTIME(sale_date))' => 2017])->sum('sale_amount');
     return $m;
   }
+  public function getSaleno($id){
+    $model = Sale::find()->where(['id'=>$id])->one();
+    return count($model)>0?$model->sale_no:'';
+  }
 }

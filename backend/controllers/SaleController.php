@@ -123,6 +123,7 @@ class SaleController extends Controller
     {
         $model = $this->findModel($id);
         $modelline = \backend\models\Saleline::find()->where(['sale_id'=>$id])->all();
+        //$modelsale_rec 
         if ($model->load(Yii::$app->request->post())) {
             $prodid = Yii::$app->request->post('product_id');
             $qty = Yii::$app->request->post('qty');
@@ -262,6 +263,17 @@ public function actionFirmorder(){
            }
         }else{
           return "Not found";
+        }
+      }
+    }
+    public function actionRec(){
+      if(Yii::$app->request->isAjax){
+        $id = Yii::$app->request->post('id');
+        if($id){
+            $session = Yii::$app->session;
+            $session['sale_id'] = $id;
+
+            return $this->redirect(['income/create']);
         }
       }
     }
