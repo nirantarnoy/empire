@@ -57,6 +57,7 @@ $data = \backend\helpers\IncomeType::asArrayObject();
                 </div>
                 <div class="row">
                   <div class="col-lg-3">
+                  <label>อ้างอิงใบขาย</label>
                   <input type="text" class="form-control" readonly="readonly" value=<?=$model->isNewRecord?\backend\models\Sale::getSaleno($sale_ref):\backend\models\Sale::getSaleno($model->sale_ref)?>>
                   <input type="hidden" name="sale_for_ref" value="<?=$model->isNewRecord?$sale_ref:$model->sale_ref;?>">
                   </div>
