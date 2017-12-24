@@ -136,7 +136,7 @@
                         'items' => [
                             ['label' => 'หัวข้อรายจ่าย', 'icon' => 'cubes', 'url' => ['/expense'],],
                             ['label' => 'บันทึกรายจ่าย', 'icon' => 'cube', 'url' => ['/transaction'],],
-                            ['label' => 'บันทึกรับเงิน', 'icon' => 'folder-open', 'url' => ['/income'],],
+                           // ['label' => 'บันทึกรับเงิน', 'icon' => 'folder-open', 'url' => ['/income'],],
                         ],
                     ],  
                      [
