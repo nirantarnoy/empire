@@ -133,7 +133,7 @@ class TranssummaryController extends Controller
     public function actionDailyreport(){
       $cdate = Yii::$app->request->post('Cdate');
       if($cdate != ''){
-          $model = \common\models\VSumDayByEmp::find()->where(['transdate'=>$cdate])->all();
+          $model = \common\models\VSumDayByEmp::find()->where(['created_at'=>$cdate])->all();
       }else{
           $model = \common\models\VSumDayByEmp::find()->all();
       }
