@@ -71,6 +71,10 @@ if($cdate !=''){
 							$sum2 = 0;
 							$sum3 = 0;
 							$sum4 = 0;
+							$expense1 = 0;
+							$expense2 = 0;
+							$expense3 = 0;
+							$expense4 = 0;
 						 ?>
 						<?php foreach($model as $value):?>
 						<?php
@@ -78,6 +82,11 @@ if($cdate !=''){
 							$sum2 += 0;
 							$sum3 += $value->income_amount;
 							$sum4 += $value->income_amount!=''?$value->income_amount - $value->expense_amount_1 - $value->expense_amount_2 - $value->expense_amount_3 - $value->expense_amount_4:'0';
+
+							$expense1 += $value->expense_amount_1;
+							$expense2 += $value->expense_amount_2;
+							$expense3 += $value->expense_amount_3;
+							$expense4 += $value->expense_amount_4;
 						 ?>
 						<tr>
 							<td style="text-align: center;"><?=$value->first_name?></td>
@@ -100,10 +109,10 @@ if($cdate !=''){
 							<td style="text-align: center;"><b>0</b></td>
 							<td style="text-align: center;"><b><?=number_format($sum3)?></b></td>
 							<td style="text-align: center;"><b><?=number_format($sum4)?></b></td>
-							<td style="text-align: center;"><b>0</b></td>
-							<td style="text-align: center;"><b>0</b></td>
-							<td style="text-align: center;"><b>0</b></td>
-							<td style="text-align: center;"><b>0</b></td>
+							<td style="text-align: center;"><b><?=number_format($expense1)?></b></td>
+							<td style="text-align: center;"><b><?=number_format($expense2)?></b></td>
+							<td style="text-align: center;"><b><?=number_format($expense3)?></b></td>
+							<td style="text-align: center;"><b><?=number_format($expense4)?></b></td>
 							<td style="text-align: center;"></td>
 							<td style="text-align: center;"><b>0</b></td>
 							<td style="text-align: center;"></td>
