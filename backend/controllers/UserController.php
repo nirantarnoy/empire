@@ -69,7 +69,9 @@ class UserController extends Controller
             $model->username = $model->username;
             $model->email = $model->email.'@deena.com';
             $model->setPassword($model->password); 
-            if($model->save()){
+
+           // print_r($model);return;
+            if($model->save(false)){
                 // return $this->redirect(['view', 'id' => $model->id]);
                 return $this->redirect(['index']);
             }
