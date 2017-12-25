@@ -21,7 +21,7 @@ class TranssummaryController extends Controller
         $income = 0;
         $expense = 0;
         $purch = 0;
-    	$searchModel = new SummarydaySearch();
+    	  $searchModel = new SummarydaySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         if(Yii::$app->request->isGet){

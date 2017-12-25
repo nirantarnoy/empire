@@ -270,10 +270,36 @@ public function actionFirmorder(){
       if(Yii::$app->request->isAjax){
         $id = Yii::$app->request->post('id');
         if($id){
-            $session = Yii::$app->session;
-            $session['sale_id'] = $id;
+            // $session = Yii::$app->session;
+            // $session['sale_id'] = $id;
 
-            return $this->redirect(['income/create']);
+            // return $this->redirect(['income/create']);
+            $model = Sale::find()->where(['id'=>$id])->one();
+            if($model){
+              // return 'niran';
+              $discount = $model->discount==''?0:$model->discount;
+              $sale_amt = $model->sale_amount - $discount;
+
+              $tran = new \backend\models\Transaction();
+              $tran->transno = $tran->getLastNo();
+              $tran->transdate = strtotime(date('d-m-Y'));
+              $tran->created_by = Yii::$app->user->identity->id;
+              $tran->sale_ref = $id;
+              $tran->trans_type = 2;
+              $tran->status = 1;
+              if($tran->save(false)){
+                 $modelline = new \backend\models\Transactionline();
+                        $modelline->trans_id = $tran->id;
+                        $modelline->title_id = 1;
+                        $modelline->amount = $sale_amt;
+                        if($modelline->save(false)){
+                             $session = Yii::$app->session;
+                             $session->setFlash('success','บันทักรายการรับเงินเรียบร้อย');
+                             return $this->redirect(['sale/index']);
+                        }
+              }
+              return $this->redirect(['sale/index']);
+            }
         }
       }
     }

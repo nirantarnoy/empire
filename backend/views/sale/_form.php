@@ -66,7 +66,7 @@ use yii\helpers\Url;
             </div>
             <div class="row">
                 <div class="col-lg-3">
-                     <?= $form->field($model, 'discount')->textInput(['maxlength' => true]) ?>
+                     <?= $form->field($model, 'discount')->textInput(['maxlength' => true,'id'=>'discount']) ?>
                 </div>
                 <div class="col-lg-3">
                      <?= $form->field($model, 'discount_per')->textInput() ?>
@@ -314,7 +314,7 @@ $url_to_check_onhand = Url::to(['sale/checkonhand'],true);
        url: "'.$url_to_rec.'",
        data:{id: ids},
        success:function(data){
-
+        alert(data);
        }
      });
   });
