@@ -27,6 +27,10 @@ public function rules(){
     $model = User::find()->where(['id'=>$id])->one();
     return count($model)>0?$model->username:'';
   }
+  public function findEmpid($id){
+    $model = \backend\models\Employee::find()->where(['user_id'=>$id])->one();
+    return count($model)>0?$model->id:0;
+  }
   public function findUserGroup($id){
     $model = User::find()->where(['id'=>$id])->one();
     if($model){

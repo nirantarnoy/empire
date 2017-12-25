@@ -65,11 +65,12 @@ $this->title = "โอนสินค้า";
 								</td>
 								<td>
 									<?php
+									    $sale_id = \backend\models\User::findEmpid(Yii::$app->user->identity->id);
 										echo Select2::widget([
 												'name'=>'towarehouse[]',
 												'model'=>$modelWarehouse,
 												'attribute'=>'name',
-												'data'=>ArrayHelper::map(\backend\models\Warehouse::find()->where(['sale_id'=>Yii::$app->user->identity->id])->all(),'id','name'),
+												'data'=>ArrayHelper::map(\backend\models\Warehouse::find()->where(['sale_id'=>$sale_id])->all(),'id','name'),
 												//'data'=>ArrayHelper::map(\backend\models\Warehouse::find()->all(),'id','name'),
 												'options'=>[//'placeholder'=>'เลือกคลังปลายทาง',
 													'onchange'=>'
