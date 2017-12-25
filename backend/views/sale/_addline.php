@@ -1,5 +1,6 @@
 <?php
- $wh = \backend\models\Warehouse::find()->all();
+ $sale_id = \backend\models\User::findEmpid(Yii::$app->user->identity->id);
+ $wh = \backend\models\Warehouse::find()->where(['sale_id'=>$sale_id])->all();
 ?>
 <tr class="saleline-id-">
   <td>1</td>
