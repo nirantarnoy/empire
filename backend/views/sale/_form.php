@@ -72,7 +72,7 @@ use yii\helpers\Url;
                      <?= $form->field($model, 'discount_per')->textInput() ?>
                 </div>
                 <div class="col-lg-3">
-                     <?= $form->field($model, 'sale_amount')->textInput(['readonly'=>'readonly']) ?>
+                     <?= $form->field($model, 'sale_amount')->textInput(['readonly'=>'readonly','id'=>'sale_amount']) ?>
                 </div>
                 <div class="col-lg-3">
                      <?= $form->field($model, 'payment_status')->textInput(['readonly'=>'readonly']) ?>
@@ -319,6 +319,14 @@ $url_to_check_onhand = Url::to(['sale/checkonhand'],true);
      });
   });
  
+ $("#discount").change(function(){
+    var samt = $("#sale_amount").val();
+    var limitper = (samt * 5) /100;
+    if($(this).val()>limitper){
+      alert("จำนวนส่วนลดเกิน 5% ของยอดขาย");
+      $(this).val(limitper);
+    }
+ });
 
     sumall();
 
