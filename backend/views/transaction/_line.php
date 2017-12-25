@@ -7,7 +7,7 @@ use yii\jui\AutoComplete;
   <td></td>
 	<td>
     <input type="text" placeholder="ค้นหารหัส..." class="form-control" name="expend_tite[]" id="prodid" value="">
-    <input type="hidden" name="expend_title_id[]" id="expend_title_id" value="">
+    <input type="hidden" name="expend_title_id[]" class="expend_title_id" value="">
 	</td>		
 	<td><input type="text" class="form-control name" value=""></td>		
 	<td><input type="text" class="form-control price" name="price[]" onkeydown="eventNumber($(this));"></td>		

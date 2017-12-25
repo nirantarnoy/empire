@@ -72,6 +72,7 @@ class TransactionController extends Controller
              $price = Yii::$app->request->post('price');
              $model->transdate = strtotime(date('d-m-Y'));
              $model->created_by = Yii::$app->user->identity->id;
+             //print_r($title_id);return;
             $model->status = 1;
             if($model->save()){ 
                 if(count($title_id)>0){
