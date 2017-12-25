@@ -1,5 +1,6 @@
 <?php
 namespace backend\models;
+use Yii;
 use yii\db\ActiveRecord;
 date_default_timezone_set('Asia/Bangkok');
 
@@ -28,6 +29,13 @@ class Stockbalance extends \common\models\Stockbalance
             ActiveRecord::EVENT_BEFORE_UPDATE=>'updated_at',
             ],
             'value'=> time(),
+        ],
+        'timestampby'=>[
+            'class'=> \yii\behaviors\AttributeBehavior::className(),
+            'attributes'=>[
+            ActiveRecord::EVENT_BEFORE_UPDATE=>'created_by',
+            ],
+            'value'=> Yii::$app->user->identity->id,
         ],
     ];
  }
