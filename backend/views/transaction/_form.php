@@ -142,7 +142,7 @@ use yii\helpers\Url;
 
                                 $(this).closest("tr").find(".name").val(ui.item.name);
                                 //$(this).closest("tr").find(".price").val(ui.item.price);
-                                $(this).closest("tr").find(".expend_title_id").val(ui.item.id);
+                                $(this).closest("tr").find(".expend_title_id").val(ui.item.value);
                          
                                 return false;
                               }
