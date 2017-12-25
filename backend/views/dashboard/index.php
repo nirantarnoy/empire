@@ -208,7 +208,7 @@ if ($Sdate === '' && $Edate === '') {
 							 $titlename = ['All', 'Closed',];
 						    if(count($model_best)>0){
 						    	foreach($model_best as $value){
-						    		array_push($data, [$value->product_code,$value->sale_qty]);
+						    		array_push($data, [$value->name,$value->sale_qty]);
 						    	}
 						    }
 			               // print_r($data);
