@@ -27,4 +27,14 @@ public function rules(){
     $model = User::find()->where(['id'=>$id])->one();
     return count($model)>0?$model->username:'';
   }
+  public function findUserGroup($id){
+    $model = User::find()->where(['id'=>$id])->one();
+    if($model){
+      $group = \backend\models\Usergroup::find()->where(['id'=>$id])->one();
+      return count($group)>0?$group->name:'';
+    }else{
+      return '';
+    }
+    
+  }
 }
