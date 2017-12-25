@@ -69,7 +69,8 @@ $this->title = "โอนสินค้า";
 												'name'=>'towarehouse[]',
 												'model'=>$modelWarehouse,
 												'attribute'=>'name',
-												'data'=>ArrayHelper::map(\backend\models\Warehouse::find()->where(['sale_id'=>$data->created_by])->all(),'id','name'),
+												'data'=>ArrayHelper::map(\backend\models\Warehouse::find()->where(['sale_id'=>Yii::$app->user->identity->id])->all(),'id','name'),
+												//'data'=>ArrayHelper::map(\backend\models\Warehouse::find()->all(),'id','name'),
 												'options'=>[//'placeholder'=>'เลือกคลังปลายทาง',
 													'onchange'=>'
 														

@@ -57,11 +57,11 @@ class IssueapproveController extends Controller
                     }
                     $x =Trans::createTrans($datalist,1,'TRANSFER');
 
-                    $datalist = []; // ปลายทาง
+                    $datalist2 = []; // ปลายทาง
                     if($data['qty'][$i] > 0){
-                         array_push($datalist,['product_id'=>$data['product_id'][$i],'qty'=>$data['qty'][$i],'warehouse'=>$data['towarehouse'][$i]]);
+                         array_push($datalist2,['product_id'=>$data['product_id'][$i],'qty'=>$data['qty'][$i],'warehouse'=>$data['towarehouse'][$i]]);
                     }
-                    $x =Trans::createTrans($datalist,0,'TRANSFER');
+                    $x =Trans::createTrans($datalist2,0,'TRANSFER');
 
                     $session = Yii::$app->session;
                     if($x){
