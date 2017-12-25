@@ -133,10 +133,18 @@ class TranssummaryController extends Controller
     public function actionDailyreport(){
       $cdate = Yii::$app->request->post('Cdate');
       if($cdate != ''){
+          if(\backend\models\User::findUserGroup(Yii::$app->user->identity->id) != 'Administrator'){
+            $model = \common\models\VSumDayByEmp::find()->where(['created_at'=>$cdate,'created_by'=>Yii::$app->user->identity->id])->all();
+          }else{
+            $model = \common\models\VSumDayByEmp::find()->where(['created_at'=>$cdate])->all();
+          }
           
-          $model = \common\models\VSumDayByEmp::find()->where(['created_at'=>$cdate])->all();
       }else{
+         if(\backend\models\User::findUserGroup(Yii::$app->user->identity->id) != 'Administrator'){
+          $model = \common\models\VSumDayByEmp::find()->where(['created_by'=>Yii::$app->user->identity->id])->all();
+        }else{
           $model = \common\models\VSumDayByEmp::find()->all();
+        }
       }
     
       return $this->render('daily',[

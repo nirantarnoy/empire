@@ -94,7 +94,7 @@ class UserController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->username = $model->username;
-            $model->email = $model->username.'@deena.com';
+            $model->email = $model->username.'@empire.com';
            // $model->setPassword($model->password); 
             if($model->save(false)){
                 return $this->redirect(['index']);
