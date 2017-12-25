@@ -64,7 +64,7 @@ class TransactionController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Transaction();
+        $model = new Transaction(); 
         $expendlist = \backend\models\Expense::find()->all();
 
         if ($model->load(Yii::$app->request->post())) {

@@ -39,6 +39,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'description',
             [
+              'attribute'=>'type_id',
+              'value'=> function($data){
+                return \backend\helpers\ExpenseType::getTypeById($data->type_id);
+              }
+            ],
+            [
                'attribute'=>'status',
                'format' => 'html',
                'value'=>function($data){
