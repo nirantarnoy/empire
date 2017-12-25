@@ -42,6 +42,10 @@ use yii\helpers\ArrayHelper;
                       ]
                   ]) ?>
 
+
+
+                  <?php echo $form->field($model, 'is_default')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
+                  
                   <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
 
                   <div class="form-group">

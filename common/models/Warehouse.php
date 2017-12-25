@@ -48,7 +48,7 @@ class Warehouse extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'ชื่อ',
             'description' => 'รายละเอียด',
-            'is_default' => 'ค่าเริ่มต้น',
+            'is_default' => 'คลังสินค้าหลัก',
             'sale_id' => 'พนักงานขาย',
             'status' => 'สถานะ',
             'market_id'=>'ตลาด',

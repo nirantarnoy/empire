@@ -40,6 +40,7 @@ class StockbalanceController extends Controller
        $perpage = Yii::$app->request->post('perpage');
         $searchModel = new StockbalanceSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andFilterWhere(['stockbalance.created_by'=>Yii::$app->user->identity->id]);
          if($perpage!=''){
           //echo $perpage;
           $dataProvider->pagination->pageSize = (int)$perpage;
