@@ -59,7 +59,7 @@ if ($Sdate=='01-01-1970') {
 
 			            <div class="info-box-content">
 			              <span class="info-box-text"><h4>รายจ่าย</h4></span>
-			              <span class="info-box-number"><?=number_format($expense + $purch + $expense2 + $expense3 + $expense4 + $emp_amount)?></span>
+			              <span class="info-box-number"><?=number_format($expense + $purch + $expense2 + $expense3 + $expense4 + $emp_amount + $headoffice_sum)?></span>
 			            </div>
 			            <!-- /.info-box-content -->
 			          </div>
@@ -73,7 +73,7 @@ if ($Sdate=='01-01-1970') {
 
                         <div class="info-box-content">
                           <span class="info-box-text"><h4>คงเหลือ</h4></span>
-                          <span class="info-box-number"><?=number_format($income - ($expense + $purch + $expense2 + $expense3 + $expense4 + $emp_amount))?></span>
+                          <span class="info-box-number"><?=number_format($income - ($expense + $purch + $expense2 + $expense3 + $expense4 + $emp_amount + $headoffice_sum))?></span>
                         </div>
                         <!-- /.info-box-content -->
                       </div>
@@ -173,7 +173,7 @@ if ($Sdate=='01-01-1970') {
                                             $emp_amount_line = $data->emp_amount;
                                         }
                                     }
-				            		return number_format($data->purchase_amount + $data->expense_amount_1 + $data->expense_amount_2 + $data->expense_amount_3 + $data->expense_amount_4  + $emp_amount_line);
+				            		return number_format($data->purchase_amount + $data->expense_amount_1 + $data->expense_amount_2 + $data->expense_amount_3 + $data->expense_amount_4  + $emp_amount_line + \backend\models\Transaction::getExpensecenter($data->created_at));
 				            	}
 				            ],
                               [
@@ -190,7 +190,7 @@ if ($Sdate=='01-01-1970') {
                                             $emp_amount_line = $data->emp_amount;
                                         }
                                     }
-                                    return number_format($data->income_amount - ($data->purchase_amount + $data->expense_amount_1 + $data->expense_amount_2 + $data->expense_amount_3 + $data->expense_amount_4  + $emp_amount_line));
+                                    return number_format($data->income_amount - ($data->purchase_amount + $data->expense_amount_1 + $data->expense_amount_2 + $data->expense_amount_3 + $data->expense_amount_4  + $emp_amount_line + \backend\models\Transaction::getExpensecenter($data->created_at)));
                                 }
                             ],
 				            //'description',

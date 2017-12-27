@@ -82,8 +82,10 @@ class TranssummaryController extends Controller
                    $expense2 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_2');
                    $expense3 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_3');
                    $expense4 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_4');
-                  
-                    $modelx = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->all();
+                   
+                   $headoffice_sum = \common\models\VSumExpenseCenter::find()->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('sum_amount');
+                   
+                   $modelx = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->all();
                    if($modelx){
                      foreach ($modelx as$value) {
                        if($value->emp_amount!=''){
@@ -93,9 +95,7 @@ class TranssummaryController extends Controller
                           $emp_amount += $value->emp_amount;
                         }
                        }
-                       if($value->created_by == Yii::$app->user->identity->id){
-                          $headoffice_sum += $value->expense_amount_4;
-                       }
+                      
                         
                      }
                    }
@@ -110,6 +110,7 @@ class TranssummaryController extends Controller
                    $expense2 = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('expense_amount_2');
                    $expense3 = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('expense_amount_3');
                    $expense4 = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('expense_amount_4');
+
 
                   $modelx = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->all();
                    if($modelx){
@@ -134,6 +135,8 @@ class TranssummaryController extends Controller
                    $expense3 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->sum('expense_amount_3');
                    $expense4 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->sum('expense_amount_4');
 
+                   $headoffice_sum = \common\models\VSumExpenseCenter::find()->sum('sum_amount');
+                   
                    $modelx = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->all();
                    if($modelx){
                      foreach ($modelx as$value) {
@@ -144,9 +147,7 @@ class TranssummaryController extends Controller
                           $emp_amount += $value->emp_amount;
                         }
                        }
-                         if($value->created_by == Yii::$app->user->identity->id){
-                          $headoffice_sum += $value->expense_amount_4;
-                       }
+                        
                      }
                    }
 
@@ -154,7 +155,7 @@ class TranssummaryController extends Controller
                  }
             }
         }
-
+       
         $Sdate = date('d-m-Y',$Sdate);
         $Edate = date('d-m-Y',$Edate);
 

@@ -53,5 +53,9 @@ public function getSum($id){
   $model = \backend\models\Transactionline::find()->where(['trans_id'=>$id])->sum('amount');
   return $model;
 }
+public function getExpensecenter($date){
+   $model = \common\models\VSumExpenseCenter::find()->where(['create_date'=>$date])->one();
+   return count($model)>0?$model->sum_amount:0;
+}
 
 }
