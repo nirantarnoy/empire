@@ -123,6 +123,7 @@ class TransactionController extends Controller
         if ($model->load(Yii::$app->request->post())) {
              $title_id = Yii::$app->request->post('expend_title_id');
              $price = Yii::$app->request->post('price');
+              $model->transdate = strtotime(date('d-m-Y'));
              $model->status = 1;
              if($model->save()){
                 \backend\models\Transactionline::deleteAll(['trans_id'=>$id]);
