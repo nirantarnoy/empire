@@ -26,6 +26,8 @@ class TranssummaryController extends Controller
         $expense4 = 0;
         $purch = 0;
         $emp_amount = 0;
+        $headoffice_sum = 0;
+
     	  $searchModel = new SumdaybyempSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -91,6 +93,9 @@ class TranssummaryController extends Controller
                           $emp_amount += $value->emp_amount;
                         }
                        }
+                       if($value->created_by == Yii::$app->user->identity->id){
+                          $headoffice_sum += $value->expense_amount_4;
+                       }
                         
                      }
                    }
@@ -139,7 +144,9 @@ class TranssummaryController extends Controller
                           $emp_amount += $value->emp_amount;
                         }
                        }
-                        
+                         if($value->created_by == Yii::$app->user->identity->id){
+                          $headoffice_sum += $value->expense_amount_4;
+                       }
                      }
                    }
 
@@ -163,6 +170,7 @@ class TranssummaryController extends Controller
             'expense4' => $expense4,
             'purch' => $purch,
             'emp_amount'=>$emp_amount,
+            'headoffice_sum'=>$headoffice_sum,
         ]);
 	}
   
