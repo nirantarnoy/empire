@@ -112,7 +112,7 @@ if($cdate !=''){
 							<td style="text-align: center;"><?=$value->amount!=''?number_format($value->amount):'0'?></td>
 							<td style="text-align: center;"><?=$value->cost!=''?number_format($value->cost):'0'?></td>
 							<td style="text-align: center;"><?=$value->income_amount!=''?number_format($value->income_amount):'0'?></td>
-							<td style="text-align: center;"><?=$value->income_amount!=''?number_format($value->income_amount - $value->expense_amount_1 - $value->expense_amount_2 - $emp_amount_line - $value->expense_amount_4 -$value->purchase_amount) :'0'?></td>
+							<td style="text-align: center;"><?=$value->income_amount!=''?number_format($value->income_amount - $value->expense_amount_1 - $value->expense_amount_2 - $emp_amount_line - $value->expense_amount_3 - $value->expense_amount_4 -$value->purchase_amount) :'0'?></td>
 							<td style="text-align: center;"><?=$value->expense_amount_1!=''?number_format($value->expense_amount_1):'0'?></td>
 							<td style="text-align: center;"><?=$value->expense_amount_2!=''?number_format($value->expense_amount_2):'0'?></td>
 							<td style="text-align: center;"><?=$value->expense_amount_3!=''?number_format($value->expense_amount_3):'0'?></td>
