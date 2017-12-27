@@ -53,7 +53,7 @@ class TranssummaryController extends Controller
               //echo $newsdate;
               // $dataProvider->query->where(['>=','unix_date',$Sdate])->andFilterWhere(['<=','unix_date',$Edate])->orderby(['unix_date'=>SORT_DESC]);
                if(\backend\models\User::findUserGroup(Yii::$app->user->identity->id) != 'Administrator'){
-                   $dataProvider->query->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->andFilterWhere(['created_by'=>Yii::$app->user->identity->id])->orderby(['unix_date'=>SORT_DESC]);
+                   $dataProvider->query->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->andFilterWhere(['created_by'=>Yii::$app->user->identity->id])->orderby(['unix_date'=>SORT_DESC]);
                    $income = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('income_amount');
                    $purch = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('purchase_amount');
                    $expense = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_1');
