@@ -40,7 +40,7 @@ class VSumDayByEmp extends \yii\db\ActiveRecord
     {
         return [
             [['created_by'], 'integer'],
-            [['amount', 'cost', 'expense_amount_1', 'expense_amount_2', 'expense_amount_3', 'expense_amount_4','emp_amount'], 'number'],
+            [['amount', 'cost', 'expense_amount_1', 'expense_amount_2', 'expense_amount_3', 'expense_amount_4','emp_amount','purchase_amount'], 'number'],
             [['transdate'], 'string', 'max' => 10],
             [['first_name', 'last_name', 'market_name', 'expense_name_1', 'expense_name_2', 'expense_name_3', 'expense_name_4'], 'string', 'max' => 255],
         ];

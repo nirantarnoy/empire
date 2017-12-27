@@ -49,7 +49,7 @@ if($cdate !=''){
 							<td colspan="4" style="text-align: center;"><b>รายได้</b></td>
 							<td colspan="4" style="text-align: center;"><b>รายจ่ายอื่นๆ</b></td>
 							<td rowspan="2" style="text-align: center;vertical-align: middle"><b>ตลาด</b></td>
-							<td rowspan="2" style="text-align: center;vertical-align: middle"><b>ต้นทุน</b></td>
+							<td rowspan="2" style="text-align: center;vertical-align: middle"><b>ค่าคอมฯ</b></td>
 							<td rowspan="2" style="text-align: center;vertical-align: middle"><b>ยอดคิด%</b></td>
 						</tr>
 						<tr style="background-color: #CCC">
@@ -76,21 +76,10 @@ if($cdate !=''){
 							$expense3 = 0;
 							$expense4 = 0;
 							$sum_empamount = 0;
+
 						 ?>
 						<?php foreach($model as $value):?>
 						<?php
-							$sum1 += $value->amount;
-							$sum2 += $value->cost;
-							$sum3 += $value->income_amount;
-							$sum4 += $value->income_amount!=''?$value->income_amount - $value->expense_amount_1 - $value->expense_amount_2 - $value->expense_amount_3 - $value->expense_amount_4:'0';
-
-							$expense1 += $value->expense_amount_1;
-							$expense2 += $value->expense_amount_2;
-							//$expense3 += $value->expense_amount_3;
-							$expense3 += $value->expense_amount_3;
-							$expense4 += $value->expense_amount_4;
-							
-
 
 							$emp_amount_line = 0;
 							if($value->emp_amount !=''){
@@ -102,20 +91,35 @@ if($cdate !=''){
 							}
 
 							$sum_empamount += $emp_amount_line;
+
+							$sum1 += $value->amount;
+							$sum2 += $value->cost;
+							$sum3 += $value->income_amount;
+							$sum4 += $value->income_amount!=''?$value->income_amount - $value->expense_amount_1 - $value->expense_amount_2 - $value->expense_amount_3 - $value->expense_amount_4 - $value->purchase_amount - $emp_amount_line:'0';
+
+							$expense1 += $value->expense_amount_1;
+							$expense2 += $value->expense_amount_2;
+							//$expense3 += $value->expense_amount_3;
+							$expense3 += $value->expense_amount_3;
+							$expense4 += $value->expense_amount_4;
+							
+
+
+							
 						 ?>
 						<tr>
 							<td style="text-align: center;"><?=$value->first_name?></td>
 							<td style="text-align: center;"><?=$value->amount!=''?number_format($value->amount):'0'?></td>
 							<td style="text-align: center;"><?=$value->cost!=''?number_format($value->cost):'0'?></td>
 							<td style="text-align: center;"><?=$value->income_amount!=''?number_format($value->income_amount):'0'?></td>
-							<td style="text-align: center;"><?=$value->income_amount!=''?number_format($value->income_amount - $value->expense_amount_1 - $value->expense_amount_2 - $value->expense_amount_3 - $value->expense_amount_4) :'0'?></td>
+							<td style="text-align: center;"><?=$value->income_amount!=''?number_format($value->income_amount - $value->expense_amount_1 - $value->expense_amount_2 - $emp_amount_line - $value->expense_amount_4 -$value->purchase_amount) :'0'?></td>
 							<td style="text-align: center;"><?=$value->expense_amount_1!=''?number_format($value->expense_amount_1):'0'?></td>
 							<td style="text-align: center;"><?=$value->expense_amount_2!=''?number_format($value->expense_amount_2):'0'?></td>
-							<td style="text-align: center;"><?=number_format($emp_amount_line) ?></td>
+							<td style="text-align: center;"><?=$value->expense_amount_3!=''?number_format($value->expense_amount_3):'0'?></td>
 							<td style="text-align: center;"><?=$value->expense_amount_4!=''?number_format($value->expense_amount_4):'0'?></td>
 							<td style="text-align: center;"><?=$value->market_name?></td>
-							<td style="text-align: center;"><?=$value->cost!=''?number_format($value->cost):'0'?></td>
-							<td style="text-align: center;"><?=(number_format($value->income_amount - $value->expense_amount_1 - $value->expense_amount_2 - $value->expense_amount_3 - $value->expense_amount_4)-number_format($value->amount))/100?></td>
+							<td style="text-align: center;"><?=number_format($emp_amount_line) ?></td>
+							<td style="text-align: center;"><?php //echo(number_format($value->income_amount - $value->expense_amount_1 - $value->expense_amount_2 - $value->expense_amount_3 - $value->expense_amount_4)-number_format($value->amount))/100?></td>
 						</tr>
 						<?php endforeach;?>
 						<tr style="background-color: #CCC">
@@ -126,10 +130,10 @@ if($cdate !=''){
 							<td style="text-align: center;"><b><?=number_format($sum4)?></b></td>
 							<td style="text-align: center;"><b><?=number_format($expense1)?></b></td>
 							<td style="text-align: center;"><b><?=number_format($expense2)?></b></td>
-							<td style="text-align: center;"><b><?=number_format($sum_empamount)?></b></td>
+							<td style="text-align: center;"><b><?=number_format($expense3)?></b></td>
 							<td style="text-align: center;"><b><?=number_format($expense4)?></b></td>
 							<td style="text-align: center;"></td>
-							<td style="text-align: center;"><b><?=number_format($sum2)?></b></td>
+							<td style="text-align: center;"><b><?=number_format($sum_empamount)?></td>
 							<td style="text-align: center;"></td>
 						</tr>
 					</table>

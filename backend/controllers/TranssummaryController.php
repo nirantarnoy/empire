@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 //use backend\models\TransactionsumSearch;
 use backend\models\SummarydaySearch;
+use backend\models\SumdaybyempSearch;
 use kartik\mpdf\Pdf;
 
 class TranssummaryController extends Controller
@@ -20,8 +21,12 @@ class TranssummaryController extends Controller
         $Edate = "";
         $income = 0;
         $expense = 0;
+        $expense2 = 0;
+        $expense3 = 0;
+        $expense4 = 0;
         $purch = 0;
-    	  $searchModel = new SummarydaySearch();
+        $emp_amount = 0;
+    	  $searchModel = new SumdaybyempSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         if(Yii::$app->request->isGet){
@@ -45,14 +50,101 @@ class TranssummaryController extends Controller
              // $newsdate = strtotime($Sdate);
               //echo $newsdate;
               // $dataProvider->query->where(['>=','unix_date',$Sdate])->andFilterWhere(['<=','unix_date',$Edate])->orderby(['unix_date'=>SORT_DESC]);
-               $dataProvider->query->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->orderby(['unix_date'=>SORT_DESC]);
-               $income = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('sale_amount');
-               $purch = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('purchase_amount');
-               $expense = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount');
+               if(\backend\models\User::findUserGroup(Yii::$app->user->identity->id) != 'Administrator'){
+                   $dataProvider->query->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->andFilterWhere(['created_by'=>Yii::$app->user->identity->id])->orderby(['unix_date'=>SORT_DESC]);
+                   $income = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('income_amount');
+                   $purch = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('purchase_amount');
+                   $expense = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_1');
+                   $expense2 = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_2');
+                   $expense3 = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_3');
+                   $expense4 = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_4');
+                    
+                   $modelx = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->all();
+                   if($modelx){
+                     foreach ($modelx as$value) {
+                       if($value->emp_amount!=''){
+                        if($value->emp_amount < 250){
+                          $emp_amount += 250;
+                        }else{
+                          $emp_amount += $value->emp_amount;
+                        }
+                       }
+                        
+                     }
+                   }
+               }else{
+                    $dataProvider->query->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->orderby(['unix_date'=>SORT_DESC]);
+                   $income = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('income_amount');
+                   $purch = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('purchase_amount');
+                   $expense = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_1');
+                   $expense2 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_2');
+                   $expense3 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_3');
+                   $expense4 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_4');
+                  
+                    $modelx = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->all();
+                   if($modelx){
+                     foreach ($modelx as$value) {
+                       if($value->emp_amount!=''){
+                        if($value->emp_amount < 250){
+                          $emp_amount += 250;
+                        }else{
+                          $emp_amount += $value->emp_amount;
+                        }
+                       }
+                        
+                     }
+                   }
+               }
+              
             }else{
-               $income = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('sale_amount');
-               $purch = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('purchase_amount');
-               $expense = \backend\models\SummarydaySearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('expense_amount');
+                  if(\backend\models\User::findUserGroup(Yii::$app->user->identity->id) != 'Administrator'){
+                   $dataProvider->query->andFilterWhere(['created_by'=>Yii::$app->user->identity->id])->orderby(['unix_date'=>SORT_DESC]);
+                   $income = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('income_amount');
+                   $purch = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('purchase_amount');
+                   $expense = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('expense_amount_1');
+                   $expense2 = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('expense_amount_2');
+                   $expense3 = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('expense_amount_3');
+                   $expense4 = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('expense_amount_4');
+
+                  $modelx = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->all();
+                   if($modelx){
+                     foreach ($modelx as$value) {
+                       if($value->emp_amount!=''){
+                        if($value->emp_amount < 250){
+                          $emp_amount += 250;
+                        }else{
+                          $emp_amount += $value->emp_amount;
+                        }
+                       }
+                        
+                     }
+                   }
+
+                 }else{
+                   $dataProvider->query->orderby(['unix_date'=>SORT_DESC]);
+                   $income = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->sum('income_amount');
+                   $purch = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->sum('purchase_amount');
+                   $expense = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->sum('expense_amount_1');
+                   $expense2 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->sum('expense_amount_2');
+                   $expense3 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->sum('expense_amount_3');
+                   $expense4 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->sum('expense_amount_4');
+
+                   $modelx = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->all();
+                   if($modelx){
+                     foreach ($modelx as$value) {
+                       if($value->emp_amount!=''){
+                        if($value->emp_amount < 250){
+                          $emp_amount += 250;
+                        }else{
+                          $emp_amount += $value->emp_amount;
+                        }
+                       }
+                        
+                     }
+                   }
+
+
+                 }
             }
         }
 
@@ -66,7 +158,11 @@ class TranssummaryController extends Controller
             'Edate' => $Edate,
             'income' => $income,
             'expense' => $expense,
+            'expense2' => $expense2,
+            'expense3' => $expense3,
+            'expense4' => $expense4,
             'purch' => $purch,
+            'emp_amount'=>$emp_amount,
         ]);
 	}
   

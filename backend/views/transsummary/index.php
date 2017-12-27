@@ -59,7 +59,7 @@ if ($Sdate=='01-01-1970') {
 
 			            <div class="info-box-content">
 			              <span class="info-box-text"><h4>รายจ่าย</h4></span>
-			              <span class="info-box-number"><?=number_format($expense + $purch)?></span>
+			              <span class="info-box-number"><?=number_format($expense + $purch + $expense2 + $expense3 + $expense4 + $emp_amount)?></span>
 			            </div>
 			            <!-- /.info-box-content -->
 			          </div>
@@ -73,7 +73,7 @@ if ($Sdate=='01-01-1970') {
 
                         <div class="info-box-content">
                           <span class="info-box-text"><h4>คงเหลือ</h4></span>
-                          <span class="info-box-number"><?=number_format($income - ($expense + $purch))?></span>
+                          <span class="info-box-number"><?=number_format($income - ($expense + $purch + $expense2 + $expense3 + $expense4 + $emp_amount))?></span>
                         </div>
                         <!-- /.info-box-content -->
                       </div>
@@ -156,7 +156,7 @@ if ($Sdate=='01-01-1970') {
                                 'contentOptions'=>['style'=>'text-align: right;'],
 				            	'label' => 'รายรับ',
 				            	'value' => function($data){
-				            		return number_format($data->sale_amount);
+				            		return number_format($data->income_amount);
 				            	}
 				            ],
 				             [
@@ -165,7 +165,15 @@ if ($Sdate=='01-01-1970') {
                                 'contentOptions'=>['style'=>'text-align: right;'],
 				            	'label' => 'รายจ่าย',
 				            	'value' => function($data){
-				            		return number_format($data->purchase_amount + $data->expense_amount);
+                                    $emp_amount_line = 0;
+                                    if($data->emp_amount !=''){
+                                        if($data->emp_amount < 250){
+                                            $emp_amount_line = 250;
+                                        }else{
+                                            $emp_amount_line = $data->emp_amount;
+                                        }
+                                    }
+				            		return number_format($data->purchase_amount + $data->expense_amount_1 + $data->expense_amount_2 + $data->expense_amount_3 + $data->expense_amount_4  + $emp_amount_line);
 				            	}
 				            ],
                               [
@@ -174,7 +182,15 @@ if ($Sdate=='01-01-1970') {
                                  'headerOptions'=>['style'=>'text-align: right;'],
                                 'contentOptions'=>['style'=>'text-align: right;'],
                                 'value' => function($data){
-                                    return number_format($data->sale_amount - ($data->purchase_amount + $data->expense_amount));
+                                    $emp_amount_line = 0;
+                                    if($data->emp_amount !=''){
+                                        if($data->emp_amount < 250){
+                                            $emp_amount_line = 250;
+                                        }else{
+                                            $emp_amount_line = $data->emp_amount;
+                                        }
+                                    }
+                                    return number_format($data->income_amount - ($data->purchase_amount + $data->expense_amount_1 + $data->expense_amount_2 + $data->expense_amount_3 + $data->expense_amount_4  + $emp_amount_line));
                                 }
                             ],
 				            //'description',
