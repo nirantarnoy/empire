@@ -42,7 +42,7 @@ if($cdate !=''){
 	<div class="col-lg-12">
 		<div class="panel">
 			<div class="panel-body">
-				<div class="table-responsive">
+				<div class="table">
 					<table class="table table-bordered">
 						<tr style="background-color: #CCC">
 							<td rowspan="2" style="text-align: center;vertical-align: middle"><b>พนักงาน</b></td>
@@ -77,6 +77,7 @@ if($cdate !=''){
 							$expense3 = 0;
 							$expense4 = 0;
 							$sum_empamount = 0;
+							$sum_center = 0;
 
 						 ?>
 						<?php foreach($model as $value):?>
@@ -146,6 +147,15 @@ if($cdate !=''){
 									<td>ชื่อรายจ่าย</td>
 									<td>จำนวนเงิน</td>
 								</tr>
+								<?php if(count($center_expense)>0):?>
+								    <?php foreach($center_expense as $value):?>
+								    <?php $sum_center += $value->sum_amount ?>
+								    <tr>
+								    	<td><?=$value->title_name;?></td>
+								    	<td><?=number_format($value->sum_amount);?></td>
+								    </tr>
+								    <?php endforeach;?>
+								<?php endif;?>
 							</table>
 						</div>
 						<div class="col-lg-3">
@@ -156,11 +166,11 @@ if($cdate !=''){
 								</tr>
 								<tr>
 									<td style="background-color: #ccc;text-align: right">ค่าใช้จ่าย</td>
-									<td style="text-align: right"><b>0</b></td>
+									<td style="text-align: right"><b><?=number_format($sum_center)?></b></td>
 								</tr>
 								<tr>
 									<td style="background-color: #ccc;text-align: right">รายได้สุทธิ</td>
-									<td style="text-align: right"><b><?=number_format($sum4)?></b></td>
+									<td style="text-align: right"><b><?=number_format($sum4 - $sum_center)?></b></td>
 								</tr>
 							</table>
 						</div>

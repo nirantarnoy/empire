@@ -237,11 +237,14 @@ class TranssummaryController extends Controller
     }
     public function actionDailyreport(){
       $cdate = Yii::$app->request->post('Cdate');
+      $center_expense = null;
       if($cdate != ''){
           if(\backend\models\User::findUserGroup(Yii::$app->user->identity->id) != 'Administrator'){
             $model = \common\models\VSumDayByEmp::find()->where(['created_at'=>$cdate,'created_by'=>Yii::$app->user->identity->id])->all();
+             $center_expense = \common\models\VSumExpenseCenter::find()->where(['create_date'=>$cdate])->all();
           }else{
             $model = \common\models\VSumDayByEmp::find()->where(['created_at'=>$cdate])->all();
+            $center_expense = \common\models\VSumExpenseCenter::find()->where(['create_date'=>$cdate])->all();
           }
           
       }else{
@@ -249,12 +252,14 @@ class TranssummaryController extends Controller
           $model = \common\models\VSumDayByEmp::find()->where(['created_by'=>Yii::$app->user->identity->id])->all();
         }else{
           $model = \common\models\VSumDayByEmp::find()->all();
+          $center_expense = \common\models\VSumExpenseCenter::find()->where(['create_date'=>$cdate])->all();
         }
       }
     
       return $this->render('daily',[
           'model'=>$model,
           'cdate'=>$cdate,
+          'center_expense' => $center_expense,
         ]);
     }
 	
