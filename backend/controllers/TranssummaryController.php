@@ -112,7 +112,7 @@ class TranssummaryController extends Controller
                    $expense4 = \backend\models\SumdaybyempSearch::find()->where(['created_by'=>Yii::$app->user->identity->id])->sum('expense_amount_4');
 
 
-                  $modelx = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->all();
+                  $modelx = \backend\models\SumdaybyempSearch::find()->all();
                    if($modelx){
                      foreach ($modelx as$value) {
                        if($value->emp_amount!=''){
