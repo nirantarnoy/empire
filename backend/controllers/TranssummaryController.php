@@ -8,7 +8,7 @@ use yii\web\Controller;
 use backend\models\SummarydaySearch;
 use backend\models\SumdaybyempSearch;
 use kartik\mpdf\Pdf;
-
+date_default_timezone_set('Asia/Bangkok');
 class TranssummaryController extends Controller
 {
   public $enableCsrfValidation = false;
