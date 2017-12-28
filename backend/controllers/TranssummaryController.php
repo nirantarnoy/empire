@@ -77,15 +77,15 @@ class TranssummaryController extends Controller
                }else{
                     $dataProvider->query->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->orderby(['unix_date'=>SORT_DESC]);
                    $income = \backend\models\SumdaybyempSearch::find()->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('income_amount');
-                   $purch = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('purchase_amount');
-                   $expense = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_1');
-                   $expense2 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_2');
-                   $expense3 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_3');
-                   $expense4 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_4');
+                   $purch = \backend\models\SumdaybyempSearch::find()->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('purchase_amount');
+                   $expense = \backend\models\SumdaybyempSearch::find()->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_1');
+                   $expense2 = \backend\models\SumdaybyempSearch::find()->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_2');
+                   $expense3 = \backend\models\SumdaybyempSearch::find()->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_3');
+                   $expense4 = \backend\models\SumdaybyempSearch::find()->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_4');
                    
                    $headoffice_sum = \common\models\VSumExpenseCenter::find()->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('sum_amount');
                    
-                   $modelx = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->all();
+                   $modelx = \backend\models\SumdaybyempSearch::find()->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->all();
                    if($modelx){
                      foreach ($modelx as$value) {
                        if($value->emp_amount!=''){
@@ -128,16 +128,16 @@ class TranssummaryController extends Controller
 
                  }else{
                    $dataProvider->query->orderby(['unix_date'=>SORT_DESC]);
-                   $income = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->sum('income_amount');
-                   $purch = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->sum('purchase_amount');
-                   $expense = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->sum('expense_amount_1');
-                   $expense2 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->sum('expense_amount_2');
-                   $expense3 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->sum('expense_amount_3');
-                   $expense4 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->sum('expense_amount_4');
+                   $income = \backend\models\SumdaybyempSearch::find()->sum('income_amount');
+                   $purch = \backend\models\SumdaybyempSearch::find()->sum('purchase_amount');
+                   $expense = \backend\models\SumdaybyempSearch::find()->sum('expense_amount_1');
+                   $expense2 = \backend\models\SumdaybyempSearch::find()->sum('expense_amount_2');
+                   $expense3 = \backend\models\SumdaybyempSearch::find()->sum('expense_amount_3');
+                   $expense4 = \backend\models\SumdaybyempSearch::find()->sum('expense_amount_4');
 
                    $headoffice_sum = \common\models\VSumExpenseCenter::find()->sum('sum_amount');
                    
-                   $modelx = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->all();
+                   $modelx = \backend\models\SumdaybyempSearch::find()->all();
                    if($modelx){
                      foreach ($modelx as$value) {
                        if($value->emp_amount!=''){
