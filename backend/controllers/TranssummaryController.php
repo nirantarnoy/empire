@@ -76,7 +76,7 @@ class TranssummaryController extends Controller
                    }
                }else{
                     $dataProvider->query->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->orderby(['unix_date'=>SORT_DESC]);
-                   $income = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('income_amount');
+                   $income = \backend\models\SumdaybyempSearch::find()->where(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('income_amount');
                    $purch = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('purchase_amount');
                    $expense = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_1');
                    $expense2 = \backend\models\SumdaybyempSearch::find()->where(['!=','created_by',''])->andFilterWhere(['and',['>=','unix_date',$Sdate],['<=','unix_date',$Edate]])->sum('expense_amount_2');
