@@ -138,6 +138,34 @@ if($cdate !=''){
 							<td style="text-align: center;"></td>
 						</tr>
 					</table>
+					<label>ค่าใช้จ่ายส่วนกลาง</label>
+					<div class="row">
+						<div class="col-lg-6">
+							<table class="table table-bordered">
+								<tr style="background-color: #ccc">
+									<td>ชื่อรายจ่าย</td>
+									<td>จำนวนเงิน</td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-lg-3">
+							<table class="table table-bordered">
+								<tr >
+									<td style="background-color: #ccc;text-align: right">เงินสดรับ</td>
+									<td style="text-align: right"><b><?=number_format($sum4)?></b></td>
+								</tr>
+								<tr>
+									<td style="background-color: #ccc;text-align: right">ค่าใช้จ่าย</td>
+									<td style="text-align: right"><b>0</b></td>
+								</tr>
+								<tr>
+									<td style="background-color: #ccc;text-align: right">รายได้สุทธิ</td>
+									<td style="text-align: right"><b><?=number_format($sum4)?></b></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					
 				</div>
 				
 			</div>
