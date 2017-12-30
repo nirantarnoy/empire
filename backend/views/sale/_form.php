@@ -320,7 +320,8 @@ $url_to_check_onhand = Url::to(['sale/checkonhand'],true);
   });
  
  $("#discount").change(function(){
-    var samt = $("#sale_amount").val();
+   // var samt = $("#sale_amount").val();
+    var samt = $(".total_all").val();
     var limitper = (samt * 5) /100;
     if($(this).val()>limitper){
       alert("จำนวนส่วนลดเกิน 5% ของยอดขาย");
