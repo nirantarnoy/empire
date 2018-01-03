@@ -153,7 +153,18 @@
                            
                         ],
                     ],  
-                    
+                     [
+
+                        'label' => 'บำรุงรักษาข้อมูล',
+                        'icon' => 'life-buoy',
+                        'url' => '#',
+                        'items' => [
+                           
+                             ['label' => 'ลบประวัติการทำงาน', 'icon' => 'life-buoy', 'url' => ['/transsummary/deletealltrans'],],
+                          
+                           
+                        ],
+                    ],  
                 ],
             ]
         ) ?>

@@ -261,5 +261,20 @@ class TranssummaryController extends Controller
           'center_expense' => $center_expense,
         ]);
     }
-	
+	 public function actionDeletealltrans(){
+       \backend\models\Purchaseorder::deleteAll();
+       \backend\models\Purchaseorderline::deleteAll();
+       \backend\models\Sale::deleteAll();
+       \backend\models\Saleline::deleteAll();
+       \backend\models\Transaction::deleteAll();
+       \backend\models\Transactionline::deleteAll();
+       \backend\models\Issuetable::deleteAll();
+       \backend\models\Issuedetail::deleteAll();
+       \backend\models\Journal::deleteAll();
+       \backend\models\Journaltrans::deleteAll();
+ 
+ 
+ 
+       return $this->redirect(['index']);
+   }
 }
