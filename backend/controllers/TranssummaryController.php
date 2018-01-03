@@ -72,7 +72,7 @@ class TranssummaryController extends Controller
                           $emp_amount += $value->emp_amount;
                         }
                        }
-                        
+  
                      }
                    }
                }else{
