@@ -69,7 +69,7 @@ class ProductController extends Controller
               $session['cat_search'] = $cat_search;
               $session['cost_start'] = $cost_start;
               $session['cost_end'] = $cost_end;
-              $session['perpage'] = 2;
+              $session['perpage'] = $perpage;
 
               $searchModel = new ProductSearch();
               $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
