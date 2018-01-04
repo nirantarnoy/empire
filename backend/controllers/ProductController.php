@@ -108,7 +108,7 @@ class ProductController extends Controller
                     
                     $dataProvider->query->andFilterWhere(['and',['>=','cost',$session['cost_start']],['<=','cost',$session['cost_end']]]);
 
-                $session->destroy();
+                //$session->destroy();
               }else{
                   $session['name_search'] = $name_search;
                   $session['cat_search'] = $cat_search;
