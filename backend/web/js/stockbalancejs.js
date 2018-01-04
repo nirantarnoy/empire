@@ -62,7 +62,9 @@ $(document).on('ready pjax:success', function() {
                         $(".btn-trasfer").removeClass("btn-default");
                         $(".btn-trasfer").addClass("btn-primary");
                         $(".remove_item").html("["+orderList.length+"]");
+                        $(".print_barcode").html("["+orderList.length+"]");
                         $(".btn-bulk-remove").attr('disabled',false);
+                        $(".btn-bulk-barcode").attr('disabled',false);
                         $(".btn-view").attr('disabled',false);
                         $(".btn-update").attr('disabled',false);
                         $(".listid").val(orderList);
@@ -73,7 +75,9 @@ $(document).on('ready pjax:success', function() {
                         $(".btn-trasfer").removeClass("btn-primary");
                         $(".btn-trasfer").addClass("btn-default");
                         $(".remove_item").html("["+orderList.length+"]");
+                         $(".print_barcode").html("["+orderList.length+"]");
                         $(".btn-bulk-remove").attr('disabled',true);
+                         $(".btn-bulk-barcode").attr('disabled',false);
                         $(".btn-view").attr('disabled',true);
                         $(".btn-update").attr('disabled',true);
                         $(".listid").val(orderList);
