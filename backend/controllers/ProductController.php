@@ -61,17 +61,32 @@ class ProductController extends Controller
           $session['cost_start'] = $cost_start;
           $session['cost_end'] = $cost_end;
           $session['perpage'] = $perpage;
+
+
+          $searchModel = new ProductSearch();
+          $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+          
+          $dataProvider->query->andFilterWhere(['or',['like','product_code',$session['name_search']],['like','name',$session['name_search']]]);
+          if($cat_search > 0){
+            $dataProvider->query->andFilterWhere(['=','category_id',$session['cat_search']]);
+          }
+          
+          $dataProvider->query->andFilterWhere(['and',['>=','cost',$session['cost_start']],['<=','cost',$session['cost_end']]]);
+
+
+        }else{
+          $searchModel = new ProductSearch();
+          $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+          
+          $dataProvider->query->andFilterWhere(['or',['like','product_code',$name_search],['like','name',$name_search]]);
+          if($cat_search > 0){
+            $dataProvider->query->andFilterWhere(['=','category_id',$cat_search]);
+          }
+          
+          $dataProvider->query->andFilterWhere(['and',['>=','cost',$cost_start],['<=','cost',$cost_end]]);
         }
         
-        $searchModel = new ProductSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
-        $dataProvider->query->andFilterWhere(['or',['like','product_code',$name_search],['like','name',$session['name_search']]]);
-        if($cat_search > 0){
-          $dataProvider->query->andFilterWhere(['=','category_id',$session['cat_search']]);
-        }
-        
-        $dataProvider->query->andFilterWhere(['and',['>=','cost',$session['cost_start']],['<=','cost',$session['cost_end']]]);
 
         
         if($session['perpage'] !=''){

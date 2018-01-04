@@ -126,7 +126,7 @@ $this->registerJsFile(
       </div>
       </div>
       <div class="panel-body">
-
+<div class="table-grid">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         //'filterModel' => $searchModel,
@@ -209,6 +209,7 @@ $this->registerJsFile(
                     ],
         ],
     ]); ?>
+    </div>
     </div>
   </div>
   </div>
