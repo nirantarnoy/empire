@@ -13,6 +13,7 @@ use backend\models\Modelfile;
 use backend\models\Productimage;
 use backend\models\StockbalanceSearch;
 use backend\models\ViewStockSearch;
+use kartik\mpdf\Pdf;
 /**
  * ProductController implements the CRUD actions for Product model.
  */
@@ -353,6 +354,28 @@ class ProductController extends Controller
     
         return $this->redirect(['index']);
     }
+    public function actionBulkreset()
+    {
+        if(Yii::$app->request->isAjax){
+            $id = explode(",",Yii::$app->request->post('id'));
+            if(count($id)>0){
+               for($i=0;$i<=count($id)-1;$i++){
+                 $model= Product::find()->where(['id'=>$id[$i]])->one();
+                  if($model){
+                    $model->qty = 0;
+                    $model->save(false);
+
+                    \backend\models\Journaltrans::deleteAll(['product_id'=>$id[$i]]);
+                  //  \backend\models\Transactionline::deleteAll(['product_id'=>$id[$i]]);
+
+                  }
+               }
+               
+            }
+        }
+    
+        return $this->redirect(['index']);
+    }
     /**
      * Finds the Product model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -415,6 +438,47 @@ class ProductController extends Controller
       if(Yii::$app->request->isAjax){
         return $this->renderPartial('_addline');
       }
+    }
+    public function actionPrintbarcode(){
+       $qty = 1;
+       $pcode = '';
+       $data = [];
+       if(Yii::$app->request->isPost){
+          $pcode = explode(',',Yii::$app->request->post('pcode'));
+          $qty = Yii::$app->request->post('qty');
+          
+          if(count($pcode)>0){
+            for($i=0;$i<=count($pcode)-1;$i++){
+            $model = Product::find()->where(['id'=>$pcode[$i]])->one();
+            if($model){
+              array_push($data, ['code'=>$model->product_code,'name'=>$model->name,'qty'=>$qty]);
+            }
+          }
+          }
+
+       }
+      $pdf = new Pdf([
+                'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
+                'format' => Pdf::FORMAT_A4, 
+                'orientation' => Pdf::ORIENT_LANDSCAPE,
+                'destination' => Pdf::DEST_BROWSER, 
+                'content' => $this->renderPartial('_print',[
+                    'bcode'=>$data,  
+                    // 'from_date'=> $from_date,
+                    // 'to_date' => $to_date,
+                    ]),
+                //'content' => "nira",
+                'cssFile' => '@backend/web/css/pdf.css',
+                'options' => [
+                    'title' => 'บาร์โค้ดรหัสินค้า',
+                    'subject' => ''
+                ],
+                'methods' => [
+                    'SetHeader' => ['บาร์โค้ดรหัสินค้า||Generated On: ' . date("r")],
+                    'SetFooter' => ['|Page {PAGENO}|'],
+                ]
+            ]);
+             return $pdf->render();
     }
 
 }

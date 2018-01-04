@@ -61,7 +61,9 @@ $(function(){
                         $(".btn-trasfer").removeClass("btn-default");
                         $(".btn-trasfer").addClass("btn-primary");
                         $(".remove_item").html("["+orderList.length+"]");
+                        $(".print_barcode").html("["+orderList.length+"]");
                         $(".btn-bulk-remove").attr('disabled',false);
+                        $(".btn-bulk-barcode").attr('disabled',false);
                         $(".listid").val(orderList);
                        // console.log("niran");
                       }else{
@@ -69,7 +71,9 @@ $(function(){
                         $(".btn-trasfer").removeClass("btn-primary");
                         $(".btn-trasfer").addClass("btn-default");
                         $(".remove_item").html("["+orderList.length+"]");
+                        $(".print_barcode").html("["+orderList.length+"]");
                         $(".btn-bulk-remove").attr('disabled',true);
+                        $(".btn-bulk-barcode").attr('disabled',false);
                         $(".listid").val(orderList);
                         //console.log("ddfdfdfd");
                       }

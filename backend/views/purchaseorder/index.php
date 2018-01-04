@@ -33,6 +33,7 @@ $this->registerJsFile(
            <div>
             <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างใบสั่งซื้อ', ['create'], ['class' => 'btn btn-success']) ?>
             <div class="btn btn-warning btn-bulk-remove" disabled>ลบ <span class="remove_item">[0]</span></div>
+         
             <div class="btn-group pull-right" style="bottom: 10px">
         <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
       </div>

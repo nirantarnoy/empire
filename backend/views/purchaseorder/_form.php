@@ -152,10 +152,11 @@ use yii\helpers\Url;
                                                 $(this).find('td:first-child').text(cnt);
                                               });
                                           }
-
+                                        $('#type_prod').typeahead('val','');
                                           
                                         }
                                       });
+                                       $('#type_prod').typeahead('val','');
                                     }
                                   }
                                 "
@@ -250,6 +251,11 @@ use yii\helpers\Url;
       }
     });
    sumall();
+
+   $("input#type_prod").change(function(){
+         $("input#type_prod").typeahead("val","");
+   });
+
   });
   function sumall(){
     var amount = 0;

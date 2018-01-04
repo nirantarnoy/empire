@@ -91,6 +91,8 @@ $this->registerJsFile(
             <?= Html::a('<i class="fa fa-plus-circle"></i> สร้างผลิตภัณฑ์', ['create'], ['class' => 'btn btn-success']) ?>
             <div class="btn btn-default btn-import" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload"></i> นำเข้าสินค้า</div>
             <div class="btn btn-warning btn-bulk-remove" disabled>ลบ <span class="remove_item">[0]</span></div>
+               <div class="btn btn-primary btn-bulk-barcode" disabled><i class="fa fa-barcode"> พิมพ์บาร์โค้ด </i> <span class="print_barcode">[0]</span></div>
+               <div class="btn btn-info btn-bulk-reset"> รีเซ็ตจำนวน</div>
             <div class="btn-group pull-right" style="bottom: 0px">
                  <?php  //echo $this->render('_search', ['model' => $searchModel]); ?>
                   <div class="label babel-default"><a href="#" class="show-adv"><i class="fa fa-caret-down i-icon"></i> ค้นหา</a></div>
@@ -278,8 +280,41 @@ $this->registerJsFile(
 
   </div>
 </div>
+<div id="modal_page" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-md">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><i class="fa fa-barcode"></i> กำหนดจำนวนพิมพ์บาร์โค้ด</h4>
+      </div>
+      <div class="modal-body">
+        <form target="_blank" method="post" action="<?=Url::to(['product/printbarcode'],true)?>">
+        <div class="row">
+            <div class="col-lg-12">
+              
+               <input type="hidden" name="pcode" value="" class="pcode">
+               <input type="number" class="form-control" name="qty" value="1">
+
+            </div>
+        </div><br>
+        <div class="row">
+          <div class="col-lg-12">
+             <input type="submit" value="ตกลง"  class="btn btn-primary btn-submit">
+          </div>
+        </div>
+         </form>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div> -->
+    </div>
+
+  </div>
+</div>
 <?php 
   $url_to_delete =  Url::to(['product/bulkdelete'],true);
+  $url_to_reset =  Url::to(['product/bulkreset'],true);
   $this->registerJs('
     $(function(){
       var use_advance = "'.$use_advance.'";
@@ -321,6 +356,34 @@ $this->registerJsFile(
                 });
               }
             }
+    });
+    $(".btn-bulk-reset").click(function(e){
+      //alert($(".listid").val());
+            if($(this).attr("disabled")){
+              return;
+            }
+            if(confirm("คุณต้องการรีเซ็ตจำนวนเป็น 0 ใช่หรือไม่")){
+              if($(".listid").length >0){
+                $.ajax({
+                  type: "post",
+                  dataType: "html",
+                  url: "'.$url_to_reset.'",
+                  data: {id: $(".listid").val()},
+                  success: function(data){
+
+                  }
+                });
+              }
+            }
+    });
+    $(".btn-bulk-barcode").click(function(){
+      if($(this).attr("disabled")){
+              return;
+            }
+      $("#modal_page").modal("show").find(".pcode").val($(".listid").val());
+    });
+    $(".btn-submit").click(function(){
+      $("#modal_page").modal("hide");
     });
       $("#perpage").change(function(){
           $("#form-perpage").submit();
