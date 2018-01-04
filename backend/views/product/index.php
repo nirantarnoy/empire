@@ -130,6 +130,7 @@ $this->registerJsFile(
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         //'filterModel' => $searchModel,
+        'id'=>'product-grid',
         'pjax' => true,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
