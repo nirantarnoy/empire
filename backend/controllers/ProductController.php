@@ -402,7 +402,7 @@ class ProductController extends Controller
                          $modelx->qty = 0;
                          $modelx->save(false);
 
-                         \backend\models\Journaltrans::deleteAll(['product_id'=>$value->id]);
+                         //\backend\models\Journaltrans::deleteAll(['product_id'=>$value->id]);
                       }
                       
                     }
