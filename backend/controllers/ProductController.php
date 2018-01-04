@@ -136,14 +136,14 @@ class ProductController extends Controller
         
 
         
-        if(isset($session['perpage']) && $session['perpage'] !=''){
-          $perpage = $session['perpage'];
-          $dataProvider->pagination->pageSize = (int)$session['perpage']; 
-          // echo $session['perpage'];
-        }else{
-           $dataProvider->pagination->pageSize = (int)$perpage; 
-        }
-        // $dataProvider->pagination->pageSize = 2; 
+        // if(isset($session['perpage']) && $session['perpage'] !=''){
+        //   $perpage = $session['perpage'];
+        //   $dataProvider->pagination->pageSize = (int)$session['perpage']; 
+        //   // echo $session['perpage'];
+        // }else{
+        //    $dataProvider->pagination->pageSize = (int)$perpage; 
+        // }
+         $dataProvider->pagination->pageSize = $perpage; 
 
         $modelfile = new Modelfile();
 
