@@ -32,6 +32,7 @@ class ProductController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST','GET'],
+                    'index' => ['POST','GET'],
                 ],
             ],
         ];
@@ -49,20 +50,20 @@ class ProductController extends Controller
         $cat_search = '';
         $cost_start = '';
         $cost_end = '';
-        $perpage = 50;
+        $perpage = 20;
         
       
-        if(Yii::$app->request->isPost){
+        if(Yii::$app->request->isGet){
           //echo "POST";
           //print_r(Yii::$app->request->post());return;
            // echo "NO";
-              $name_search = Yii::$app->request->post("name_search");
-              $cat_search = Yii::$app->request->post("cat_id");
-              $cost_start = Yii::$app->request->post("cost_start");
-              $cost_end = Yii::$app->request->post("cost_end");
-              $perpage = Yii::$app->request->post('perpage');
+              $name_search = Yii::$app->request->get("name_search");
+              $cat_search = Yii::$app->request->get("cat_id");
+              $cost_start = Yii::$app->request->get("cost_start");
+              $cost_end = Yii::$app->request->get("cost_end");
+              //$perpage = Yii::$app->request->get('perpage');
 
-              echo $cat_search;
+             // echo $cat_search;
              // echo $session['name_search'];
 
               if($name_search == '' && $cat_search =='' && $cost_start == '' && $cost_end == ''){
@@ -83,10 +84,15 @@ class ProductController extends Controller
 
              
           }
+           if(Yii::$app->request->isPost){
+             $perpage = Yii::$app->request->post('perpage');
+             $session['perpage'] = $perpage;
 
-          if(Yii::$app->request->isGet){
-            echo "GET";
-          }
+                $name_search = $session['name_search'];
+                $cat_search=$session['cat_search'];
+                $cost_start=$session['cost_start'];
+                $cost_end=$session['cost_end'];
+           }
 
               $searchModel = new ProductSearch();
               $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -204,6 +210,7 @@ class ProductController extends Controller
             'cost_end' => $cost_end,
         ]);
     }
+
     public function checkCat($name){
       $model = \backend\models\Category::find()->where(['name'=>$name])->one();
       if(count($model)>0){

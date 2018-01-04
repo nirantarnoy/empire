@@ -102,7 +102,12 @@ $this->registerJsFile(
       </div> <br />
       <div class="row advance-search" style="display: none">
         <div class="col-lg-12">
-          <form id="search-form" action="<?=Url::to(['product/index'],true);?>" method="post">
+          <!-- <form id="search-form" action="<?=Url::to(['index.php?r=product/index'])?>" method="get"> -->
+          <?php ActiveForm::begin([
+            'id'=>'myform',
+              'method' => 'get',
+              'action' => Url::to(['product/index']),
+          ]); ?>
           <div class="form-inline">
             <input type="text" placeholder="รหัสสินค้า , ชื่อสินค้า" name="name_search" class="form-control" value="<?=$name?>">
             <select name="cat_id" class="form-control">
@@ -119,10 +124,11 @@ $this->registerJsFile(
             </select>
            <input type="text" placeholder="ช่วงทุนเริ่ม" class="form-control" name="cost_start" value="<?=$cost_s?>">
             <input type="text" placeholder="ช่วงทุนสิ้นสุด" class="form-control" name="cost_end" value="<?=$cost_e?>">
-            <div class="btn btn-default btn-search-submit"> ค้นหา</div>
+           <!--  <div class="btn btn-default btn-search-submit"> ค้นหา</div> -->
+           <input type="submit" value="ตกลง" class="btn btn-default">
             <div class="btn btn-default btn-search-clear"> ล้างข้อมูล</div>
           </div>
-        </form>
+        <?php ActiveForm::end(); ?>
         </div>
       </div>
       </div>
