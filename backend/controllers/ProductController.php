@@ -72,7 +72,7 @@ class ProductController extends Controller
               $session['perpage'] = $perpage;
 
               $searchModel = new ProductSearch();
-             // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+              $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
               
               $dataProvider->query->andFilterWhere(['or',['like','product_code',$session['name_search']],['like','name',$session['name_search']]]);
               if($cat_search > 0){
@@ -99,7 +99,7 @@ class ProductController extends Controller
                // $perpage=$session['perpage'];
 
                 $searchModel = new ProductSearch();
-                   // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+                    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
                     
                     $dataProvider->query->andFilterWhere(['or',['like','product_code',$session['name_search']],['like','name',$session['name_search']]]);
                     if($cat_search > 0){
@@ -117,7 +117,7 @@ class ProductController extends Controller
                   $session['perpage'] = $perpage;
 
                     $searchModel = new ProductSearch();
-                   // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+                    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
                     
                     $dataProvider->query->andFilterWhere(['or',['like','product_code',$session['name_search']],['like','name',$session['name_search']]]);
                     if($cat_search > 0){
@@ -135,7 +135,7 @@ class ProductController extends Controller
         }else{
          //echo "NO POST";
           $searchModel = new ProductSearch();
-         // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+          $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
           
           $dataProvider->query->andFilterWhere(['or',['like','product_code',$name_search],['like','name',$name_search]]);
           if($cat_search > 0){
