@@ -104,7 +104,7 @@ class ProductController extends Controller
                   $session['cat_search'] = $cat_search;
                   $session['cost_start'] = $cost_start;
                   $session['cost_end'] = $cost_end;
-                  $session['perpage'] = 2;
+                  $session['perpage'] = $perpage;
               }
               
 
@@ -141,10 +141,10 @@ class ProductController extends Controller
           $dataProvider->pagination->pageSize = (int)$session['perpage']; 
           // echo $session['perpage'];
         }else{
-          $perpage = 2;
+          $perpage = 20;
            $dataProvider->pagination->pageSize = (int)$perpage; 
         }
-         $dataProvider->pagination->pageSize = 2; 
+        // $dataProvider->pagination->pageSize = 2; 
 
         $modelfile = new Modelfile();
 
