@@ -17,8 +17,10 @@ use kartik\mpdf\Pdf;
 /**
  * ProductController implements the CRUD actions for Product model.
  */
+
 class ProductController extends Controller
 {
+
  public $enableCsrfValidation = false;
     /**
      * @inheritdoc
@@ -41,40 +43,74 @@ class ProductController extends Controller
      */
     public function actionIndex()
     {
+      $session = new Yii::$app->session();
+$session->open();
         $name_search = '';
         $cat_search = '';
         $cost_start = '';
         $cost_end = '';
         $perpage = 20;
         
-        $session = Yii::$app->session;
+      
         if(Yii::$app->request->isPost){
           //echo "POST";
-          $name_search = Yii::$app->request->post("name_search");
-          $cat_search = Yii::$app->request->post("cat_id");
-          $cost_start = Yii::$app->request->post("cost_start");
-          $cost_end = Yii::$app->request->post("cost_end");
-          $perpage = Yii::$app->request->post('perpage');
-
-          $session['name_search'] = $name_search;
-          $session['cat_search'] = $cat_search;
-          $session['cost_start'] = $cost_start;
-          $session['cost_end'] = $cost_end;
-          $session['perpage'] = $perpage;
-
-
-          $searchModel = new ProductSearch();
-          $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
           
-          $dataProvider->query->andFilterWhere(['or',['like','product_code',$session['name_search']],['like','name',$session['name_search']]]);
-          if($cat_search > 0){
-            $dataProvider->query->andFilterWhere(['=','category_id',$session['cat_search']]);
+          if(!isset($session['name_search'])){
+           // echo "NO";
+              $name_search = Yii::$app->request->post("name_search");
+              $cat_search = Yii::$app->request->post("cat_id");
+              $cost_start = Yii::$app->request->post("cost_start");
+              $cost_end = Yii::$app->request->post("cost_end");
+              $perpage = Yii::$app->request->post('perpage');
+
+             // echo $session['name_search'];
+
+              $session['name_search'] = $name_search;
+              $session['cat_search'] = $cat_search;
+              $session['cost_start'] = $cost_start;
+              $session['cost_end'] = $cost_end;
+              $session['perpage'] = $perpage;
+
+              $searchModel = new ProductSearch();
+              $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+              
+              $dataProvider->query->andFilterWhere(['or',['like','product_code',$session['name_search']],['like','name',$session['name_search']]]);
+              if($cat_search > 0){
+                $dataProvider->query->andFilterWhere(['=','category_id',$session['cat_search']]);
+              }
+              
+              $dataProvider->query->andFilterWhere(['and',['>=','cost',$session['cost_start']],['<=','cost',$session['cost_end']]]);
+
+          }else{
+           // echo "Niran";
+              // $name_search = Yii::$app->request->post("name_search");
+              // $cat_search = Yii::$app->request->post("cat_id");
+              // $cost_start = Yii::$app->request->post("cost_start");
+              // $cost_end = Yii::$app->request->post("cost_end");
+               $perpage = Yii::$app->request->post('perpage');
+
+
+              $name_search = $session['name_search'];
+              $cat_search=$session['cat_search'];
+              $cost_start=$session['cost_start'];
+              $cost_end=$session['cost_end'];
+              //$perpage=$session['perpage'];
+              $session['perpage'] = $perpage;
+
+              $searchModel = new ProductSearch();
+              $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+              
+              $dataProvider->query->andFilterWhere(['or',['like','product_code',$session['name_search']],['like','name',$session['name_search']]]);
+              if($cat_search > 0){
+                $dataProvider->query->andFilterWhere(['=','category_id',$session['cat_search']]);
+              }
+              
+              $dataProvider->query->andFilterWhere(['and',['>=','cost',$session['cost_start']],['<=','cost',$session['cost_end']]]);
           }
-          
-          $dataProvider->query->andFilterWhere(['and',['>=','cost',$session['cost_start']],['<=','cost',$session['cost_end']]]);
-
+         
 
         }else{
+         //echo "NO POST";
           $searchModel = new ProductSearch();
           $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
           
@@ -94,7 +130,7 @@ class ProductController extends Controller
           $dataProvider->pagination->pageSize = (int)$session['perpage']; 
           // echo $session['perpage'];
         }else{
-          //$perpage = 20;
+          $perpage = 20;
         }
 
         $modelfile = new Modelfile();
