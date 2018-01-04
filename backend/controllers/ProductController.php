@@ -84,6 +84,10 @@ class ProductController extends Controller
              
           }
 
+          if(Yii::$app->request->isGet){
+            echo "GET";
+          }
+
               $searchModel = new ProductSearch();
               $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
               $dataProvider->query->andFilterWhere(['or',['like','product_code',$session['name_search']],['like','name',$session['name_search']]]);
