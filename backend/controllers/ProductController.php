@@ -44,17 +44,17 @@ class ProductController extends Controller
     public function actionIndex()
     {
       $session = new Yii::$app->session();
-$session->open();
+        $session->open();
         $name_search = '';
         $cat_search = '';
         $cost_start = '';
         $cost_end = '';
-        $perpage = 20;
+        $perpage = 2;
         
       
         if(Yii::$app->request->isPost){
           //echo "POST";
-          
+          //print_r(Yii::$app->request->post());return;
           if(!isset($session['name_search'])){
            // echo "NO";
               $name_search = Yii::$app->request->post("name_search");
@@ -69,7 +69,7 @@ $session->open();
               $session['cat_search'] = $cat_search;
               $session['cost_start'] = $cost_start;
               $session['cost_end'] = $cost_end;
-              $session['perpage'] = $perpage;
+              $session['perpage'] = 2;
 
               $searchModel = new ProductSearch();
               $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -83,19 +83,30 @@ $session->open();
 
           }else{
            // echo "Niran";
-              // $name_search = Yii::$app->request->post("name_search");
-              // $cat_search = Yii::$app->request->post("cat_id");
-              // $cost_start = Yii::$app->request->post("cost_start");
-              // $cost_end = Yii::$app->request->post("cost_end");
-               $perpage = Yii::$app->request->post('perpage');
+              $name_search = Yii::$app->request->post("name_search");
+              $cat_search = Yii::$app->request->post("cat_id");
+              $cost_start = Yii::$app->request->post("cost_start");
+              $cost_end = Yii::$app->request->post("cost_end");
+              $perpage = Yii::$app->request->post('perpage');
+           
 
 
-              $name_search = $session['name_search'];
-              $cat_search=$session['cat_search'];
-              $cost_start=$session['cost_start'];
-              $cost_end=$session['cost_end'];
-              //$perpage=$session['perpage'];
-              $session['perpage'] = $perpage;
+              if($name_search == '' && $cat_search =='' && $cost_start == '' && $cost_end == ''){
+                $name_search = $session['name_search'];
+                $cat_search=$session['cat_search'];
+                $cost_start=$session['cost_start'];
+                $cost_end=$session['cost_end'];
+                $perpage=$session['perpage'];
+
+                $session->destroy();
+              }else{
+                  $session['name_search'] = $name_search;
+                  $session['cat_search'] = $cat_search;
+                  $session['cost_start'] = $cost_start;
+                  $session['cost_end'] = $cost_end;
+                  $session['perpage'] = 2;
+              }
+              
 
               $searchModel = new ProductSearch();
               $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -125,13 +136,15 @@ $session->open();
         
 
         
-        if($session['perpage'] !=''){
+        if(isset($session['perpage']) && $session['perpage'] !=''){
           $perpage = $session['perpage'];
           $dataProvider->pagination->pageSize = (int)$session['perpage']; 
           // echo $session['perpage'];
         }else{
-          $perpage = 20;
+          $perpage = 2;
+           $dataProvider->pagination->pageSize = (int)$perpage; 
         }
+         $dataProvider->pagination->pageSize = 2; 
 
         $modelfile = new Modelfile();
 
