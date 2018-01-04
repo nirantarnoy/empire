@@ -55,7 +55,6 @@ class ProductController extends Controller
         if(Yii::$app->request->isPost){
           //echo "POST";
           //print_r(Yii::$app->request->post());return;
-          if(!isset($session['name_search'])){
            // echo "NO";
               $name_search = Yii::$app->request->post("name_search");
               $cat_search = Yii::$app->request->post("cat_id");
@@ -71,6 +70,11 @@ class ProductController extends Controller
               $session['cost_end'] = $cost_end;
               $session['perpage'] = $perpage;
 
+             
+
+             
+          }
+
               $searchModel = new ProductSearch();
               $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
               
@@ -80,72 +84,6 @@ class ProductController extends Controller
               }
               
               $dataProvider->query->andFilterWhere(['and',['>=','cost',$session['cost_start']],['<=','cost',$session['cost_end']]]);
-
-          }else{
-           // echo "Niran";
-              $name_search = Yii::$app->request->post("name_search");
-              $cat_search = Yii::$app->request->post("cat_id");
-              $cost_start = Yii::$app->request->post("cost_start");
-              $cost_end = Yii::$app->request->post("cost_end");
-              $perpage = Yii::$app->request->post('perpage');
-           
-
-
-              if($name_search == '' && $cat_search =='' && $cost_start == '' && $cost_end == ''){
-                $name_search = $session['name_search'];
-                $cat_search=$session['cat_search'];
-                $cost_start=$session['cost_start'];
-                $cost_end=$session['cost_end'];
-               // $perpage=$session['perpage'];
-
-                $searchModel = new ProductSearch();
-                    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-                    
-                    $dataProvider->query->andFilterWhere(['or',['like','product_code',$session['name_search']],['like','name',$session['name_search']]]);
-                    if($cat_search > 0){
-                      $dataProvider->query->andFilterWhere(['=','category_id',$session['cat_search']]);
-                    }
-                    
-                    $dataProvider->query->andFilterWhere(['and',['>=','cost',$session['cost_start']],['<=','cost',$session['cost_end']]]);
-
-                //$session->destroy();
-              }else{
-                  $session['name_search'] = $name_search;
-                  $session['cat_search'] = $cat_search;
-                  $session['cost_start'] = $cost_start;
-                  $session['cost_end'] = $cost_end;
-                  $session['perpage'] = $perpage;
-
-                    $searchModel = new ProductSearch();
-                    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-                    
-                    $dataProvider->query->andFilterWhere(['or',['like','product_code',$session['name_search']],['like','name',$session['name_search']]]);
-                    if($cat_search > 0){
-                      $dataProvider->query->andFilterWhere(['=','category_id',$session['cat_search']]);
-                    }
-                    
-                    $dataProvider->query->andFilterWhere(['and',['>=','cost',$session['cost_start']],['<=','cost',$session['cost_end']]]);
-              }
-              
-
-             
-          }
-         
-
-        }else{
-         //echo "NO POST";
-          $searchModel = new ProductSearch();
-          $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-          
-          $dataProvider->query->andFilterWhere(['or',['like','product_code',$name_search],['like','name',$name_search]]);
-          if($cat_search > 0){
-            $dataProvider->query->andFilterWhere(['=','category_id',$cat_search]);
-          }
-          
-          $dataProvider->query->andFilterWhere(['and',['>=','cost',$cost_start],['<=','cost',$cost_end]]);
-        }
-        
-        
 
         
         // if(isset($session['perpage']) && $session['perpage'] !=''){
