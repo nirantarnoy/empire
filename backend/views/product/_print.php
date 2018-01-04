@@ -7,7 +7,7 @@
 					<td style="text-align: center;">
 						<strong><?=$bcode[$i]['code']?></strong><small><?=$bcode[$i]['name']?></small>
 						<br />
-						<barcode code="<?=$bcode[$i]['code']?>" type="c93" size="0.8" height="2.0"/><br />
+						<barcode code="<?=$bcode[$i]['code']?>" type="c39" size="0.8" height="2.0"/><br />
 					</td>
 				<?php endfor;?>
 			</tr>

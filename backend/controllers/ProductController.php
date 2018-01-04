@@ -357,21 +357,37 @@ class ProductController extends Controller
     public function actionBulkreset()
     {
         if(Yii::$app->request->isAjax){
-            $id = explode(",",Yii::$app->request->post('id'));
-            if(count($id)>0){
-               for($i=0;$i<=count($id)-1;$i++){
-                 $model= Product::find()->where(['id'=>$id[$i]])->one();
+                  $model= Product::find()->all();
                   if($model){
-                    $model->qty = 0;
-                    $model->save(false);
+                    foreach ($model as $value) {
+                      $modelx = Product::find()->where(['id'=>$value->id])->one();
+                      if($modelx){
+                         $modelx->qty = 0;
+                         $modelx->save(false);
 
-                    \backend\models\Journaltrans::deleteAll(['product_id'=>$id[$i]]);
+                         \backend\models\Journaltrans::deleteAll(['product_id'=>$value->id]);
+                      }
+                      
+                    }
+                    
                   //  \backend\models\Transactionline::deleteAll(['product_id'=>$id[$i]]);
 
                   }
-               }
+           // $id = explode(",",Yii::$app->request->post('id'));
+            // if(count($id)>0){
+            //    for($i=0;$i<=count($id)-1;$i++){
+            //      $model= Product::find()->where(['id'=>$id[$i]])->one();
+            //       if($model){
+            //         $model->qty = 0;
+            //         $model->save(false);
+
+            //         \backend\models\Journaltrans::deleteAll(['product_id'=>$id[$i]]);
+            //       //  \backend\models\Transactionline::deleteAll(['product_id'=>$id[$i]]);
+
+            //       }
+            //    }
                
-            }
+            // }
         }
     
         return $this->redirect(['index']);
