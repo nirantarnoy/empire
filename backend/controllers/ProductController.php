@@ -45,27 +45,41 @@ class ProductController extends Controller
         $cat_search = '';
         $cost_start = '';
         $cost_end = '';
+        $perpage = 20;
         
-        $name_search = Yii::$app->request->post("name_search");
-        $cat_search = Yii::$app->request->post("cat_id");
-        $cost_start = Yii::$app->request->post("cost_start");
-        $cost_end = Yii::$app->request->post("cost_end");
+        $session = Yii::$app->session;
+        if(Yii::$app->request->isPost){
+          //echo "POST";
+          $name_search = Yii::$app->request->post("name_search");
+          $cat_search = Yii::$app->request->post("cat_id");
+          $cost_start = Yii::$app->request->post("cost_start");
+          $cost_end = Yii::$app->request->post("cost_end");
+          $perpage = Yii::$app->request->post('perpage');
 
-        $perpage = Yii::$app->request->post('perpage');
+          $session['name_search'] = $name_search;
+          $session['cat_search'] = $cat_search;
+          $session['cost_start'] = $cost_start;
+          $session['cost_end'] = $cost_end;
+          $session['perpage'] = $perpage;
+        }
+        
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
-        $dataProvider->query->andFilterWhere(['or',['like','product_code',$name_search],['like','name',$name_search]]);
+        $dataProvider->query->andFilterWhere(['or',['like','product_code',$name_search],['like','name',$session['name_search']]]);
         if($cat_search > 0){
-          $dataProvider->query->andFilterWhere(['=','category_id',$cat_search]);
+          $dataProvider->query->andFilterWhere(['=','category_id',$session['cat_search']]);
         }
         
-        $dataProvider->query->andFilterWhere(['and',['>=','cost',$cost_start],['<=','cost',$cost_end]]);
+        $dataProvider->query->andFilterWhere(['and',['>=','cost',$session['cost_start']],['<=','cost',$session['cost_end']]]);
 
-
-        if($perpage!=''){
-          //echo $perpage;
-          $dataProvider->pagination->pageSize = (int)$perpage;
+        
+        if($session['perpage'] !=''){
+          $perpage = $session['perpage'];
+          $dataProvider->pagination->pageSize = (int)$session['perpage']; 
+          // echo $session['perpage'];
+        }else{
+          //$perpage = 20;
         }
 
         $modelfile = new Modelfile();
