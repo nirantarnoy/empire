@@ -96,7 +96,7 @@ class ProductController extends Controller
                 $cat_search=$session['cat_search'];
                 $cost_start=$session['cost_start'];
                 $cost_end=$session['cost_end'];
-                $perpage=$session['perpage'];
+               // $perpage=$session['perpage'];
 
                 $session->destroy();
               }else{
