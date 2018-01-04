@@ -49,7 +49,7 @@ class ProductController extends Controller
         $cat_search = '';
         $cost_start = '';
         $cost_end = '';
-        $perpage = 2;
+        $perpage = 20;
         
       
         if(Yii::$app->request->isPost){
@@ -141,7 +141,6 @@ class ProductController extends Controller
           $dataProvider->pagination->pageSize = (int)$session['perpage']; 
           // echo $session['perpage'];
         }else{
-          $perpage = 20;
            $dataProvider->pagination->pageSize = (int)$perpage; 
         }
         // $dataProvider->pagination->pageSize = 2; 
