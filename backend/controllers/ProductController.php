@@ -62,7 +62,7 @@ class ProductController extends Controller
               $cost_end = Yii::$app->request->post("cost_end");
               $perpage = Yii::$app->request->post('perpage');
 
-             // echo $perpage;
+              echo $cat_search;
              // echo $session['name_search'];
 
               if($name_search == '' && $cat_search =='' && $cost_start == '' && $cost_end == ''){
