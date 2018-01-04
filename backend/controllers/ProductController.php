@@ -64,6 +64,14 @@ class ProductController extends Controller
 
              // echo $session['name_search'];
 
+              if($name_search == '' && $cat_search =='' && $cost_start == '' && $cost_end == ''){
+                $name_search = $session['name_search'];
+                $cat_search=$session['cat_search'];
+                $cost_start=$session['cost_start'];
+                $cost_end=$session['cost_end'];
+                $perpage=$session['perpage'];
+             }
+
               $session['name_search'] = $name_search;
               $session['cat_search'] = $cat_search;
               $session['cost_start'] = $cost_start;
@@ -71,28 +79,17 @@ class ProductController extends Controller
               $session['perpage'] = $perpage;
 
              
-
-             
           }
 
               $searchModel = new ProductSearch();
               $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-              
               $dataProvider->query->andFilterWhere(['or',['like','product_code',$session['name_search']],['like','name',$session['name_search']]]);
               if($cat_search > 0){
                 $dataProvider->query->andFilterWhere(['=','category_id',$session['cat_search']]);
               }
-              
               $dataProvider->query->andFilterWhere(['and',['>=','cost',$session['cost_start']],['<=','cost',$session['cost_end']]]);
 
         
-        // if(isset($session['perpage']) && $session['perpage'] !=''){
-        //   $perpage = $session['perpage'];
-        //   $dataProvider->pagination->pageSize = (int)$session['perpage']; 
-        //   // echo $session['perpage'];
-        // }else{
-        //    $dataProvider->pagination->pageSize = (int)$perpage; 
-        // }
          $dataProvider->pagination->pageSize = $perpage; 
 
         $modelfile = new Modelfile();
