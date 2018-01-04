@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //   echo \yii2fullcalendar\yii2fullcalendar::widget(array(
 //       'events'=> $events,
 //   ));
+//echo $perpage;
 
 $cat = \backend\models\Category::find()->all();
 $name = $name_search;

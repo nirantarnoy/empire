@@ -49,7 +49,7 @@ class ProductController extends Controller
         $cat_search = '';
         $cost_start = '';
         $cost_end = '';
-        $perpage = 20;
+        $perpage = 50;
         
       
         if(Yii::$app->request->isPost){
@@ -62,6 +62,7 @@ class ProductController extends Controller
               $cost_end = Yii::$app->request->post("cost_end");
               $perpage = Yii::$app->request->post('perpage');
 
+             // echo $perpage;
              // echo $session['name_search'];
 
               if($name_search == '' && $cat_search =='' && $cost_start == '' && $cost_end == ''){
@@ -69,7 +70,9 @@ class ProductController extends Controller
                 $cat_search=$session['cat_search'];
                 $cost_start=$session['cost_start'];
                 $cost_end=$session['cost_end'];
-                $perpage=$session['perpage'];
+                //$perpage=$session['perpage'];
+
+
              }
 
               $session['name_search'] = $name_search;
@@ -89,7 +92,6 @@ class ProductController extends Controller
               }
               $dataProvider->query->andFilterWhere(['and',['>=','cost',$session['cost_start']],['<=','cost',$session['cost_end']]]);
 
-        
          $dataProvider->pagination->pageSize = $perpage; 
 
         $modelfile = new Modelfile();
