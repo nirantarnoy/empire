@@ -61,7 +61,7 @@ class ProductController extends Controller
               $cat_search = Yii::$app->request->get("cat_id");
               $cost_start = Yii::$app->request->get("cost_start");
               $cost_end = Yii::$app->request->get("cost_end");
-              $perpage = Yii::$app->request->get('perpage');
+              $perpage = Yii::$app->request->get('per-page');
 
              // echo $cat_search;
              // echo $session['name_search'];
