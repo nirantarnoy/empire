@@ -125,6 +125,7 @@ $this->registerJsFile(
            <input type="text" placeholder="ช่วงทุนเริ่ม" class="form-control" name="cost_start" value="<?=$cost_s?>">
             <input type="text" placeholder="ช่วงทุนสิ้นสุด" class="form-control" name="cost_end" value="<?=$cost_e?>">
            <!--  <div class="btn btn-default btn-search-submit"> ค้นหา</div> -->
+           <input type="hidden" name="perpage" value="<?=$perpage?>">
            <input type="submit" value="ตกลง" class="btn btn-default">
             <div class="btn btn-default btn-search-clear"> ล้างข้อมูล</div>
           </div>
