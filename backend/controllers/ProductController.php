@@ -52,9 +52,8 @@ class ProductController extends Controller
         $cost_end = '';
         $perpage = 20;
         
-      
         if(Yii::$app->request->isGet){
-          //echo "POST";
+             //echo "POST";
           //print_r(Yii::$app->request->post());return;
            // echo "NO";
               $name_search = Yii::$app->request->get("name_search");

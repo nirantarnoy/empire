@@ -12,6 +12,7 @@ use common\models\LoginForm;
  */
 class SiteController extends Controller
 {
+    public $successUrl = 'Success';
     /**
      * @inheritdoc
      */
@@ -22,7 +23,8 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        //'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error','auth'],
                         'allow' => true,
                     ],
                     [
@@ -50,8 +52,26 @@ class SiteController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+            'auth'=>[
+                'class'=> 'yii\authclient\AuthAction',
+                'successCallback'=>[$this,'successCallback']
+            ],
         ];
     }
+
+     public function successCallback($client){
+        $attributes = $client->getUserAttributes();
+        //die(print_r($attributes));
+        $user = \common\modules\auth\models\User::find()->where(['email'=>$attributes['email']])->one();
+        if(!empty($user)){
+            Yii::$app->user->login($user);
+        }else{
+            $session = Yii::$app->session;
+            $session['attributes'] = $attributes;
+            $this->successUrl = \yii\helpers\Url::to(['signup']);
+        }
+    }
+
 
     /**
      * Displays homepage.

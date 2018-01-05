@@ -44,6 +44,17 @@ return [
             ],
         ],
         */
+        'authClientCollection'=>[
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'facebook'=>[
+                    'class'=>'yii\authclient\clients\Facebook',
+                    'authUrl'=>'https://www.facebook.com/dialog/oauth?display=popup',
+                    'clientId' => '828260794001696',
+                    'clientSecret'=>'521d404ede1614a805b02731d459c17f',
+                ]
+            ]
+        ],
     ],
     'params' => $params,
 ];
