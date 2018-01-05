@@ -62,7 +62,7 @@ class SiteController extends Controller
      public function successCallback($client){
         $attributes = $client->getUserAttributes();
         //die(print_r($attributes));
-        $user = \common\modules\auth\models\User::find()->where(['email'=>$attributes['email']])->one();
+        $user = \common\models\User::find()->where(['email'=>$attributes['email']])->one();
         if(!empty($user)){
             Yii::$app->user->login($user);
         }else{
