@@ -26,7 +26,7 @@ if ($Sdate === '' && $Edate === '') {
     $Sdate = date('Y-m-d');
     $Edate = date('Y-m-d');
 }
-$session = new Session();
+$session = Yii::$app->session;
 $session->open();
 print_r($session['attributes']['picture']);
 
