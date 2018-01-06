@@ -26,6 +26,8 @@ if ($Sdate === '' && $Edate === '') {
     $Sdate = date('Y-m-d');
     $Edate = date('Y-m-d');
 }
+$session = Yii::$app->session;
+echo $session['attributes']['email'];
 
 ?>
 <div class="row">
