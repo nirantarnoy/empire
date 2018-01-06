@@ -61,6 +61,7 @@ class SiteController extends Controller
 
      public function successCallback($client){
         $attributes = $client->getUserAttributes();
+         $session['attributes'] = $attributes;
         //die(print_r($attributes));
         $user = \common\models\User::find()->where(['email'=>$attributes['email']])->one();
         if(!empty($user)){
