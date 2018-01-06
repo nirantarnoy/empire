@@ -28,7 +28,10 @@ if ($Sdate === '' && $Edate === '') {
 }
 $session = Yii::$app->session;
 $session->open();
-print_r($session['attributes']['picture']);
+if(isset($session['attributes']['picture'])){
+	print_r($session['attributes']['picture']);
+}
+
 
 ?>
 <div class="row">
