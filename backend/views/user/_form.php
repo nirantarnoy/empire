@@ -23,11 +23,13 @@ use kartik\select2\Select2;
                   <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
                   <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+
+                  <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
  				  
- 				  <?= $form->field($model, 'group_id')->widget(Select2::className(),[
- 				  		'data'=> ArrayHelper::map(\backend\models\Usergroup::find()->all(),'id','name'),
- 				  		'options'=>['placeholder'=>'เลือกกลุ่ม'],
- 				  ]) ?>
+           				  <?= $form->field($model, 'group_id')->widget(Select2::className(),[
+           				  		'data'=> ArrayHelper::map(\backend\models\Usergroup::find()->all(),'id','name'),
+           				  		'options'=>['placeholder'=>'เลือกกลุ่ม'],
+           				  ]) ?>
 
                   <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
 
