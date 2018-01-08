@@ -80,7 +80,7 @@
 			 			    <td><?=$value->name?></td>
 			 			    <td style="text-align: right;"><?=$value->total_qty?></td>
 			 			    <td style="text-align: right;"><?=number_format($value->cost,0)?></td>
-			 			    <td style="text-align: right;"><?=number_format($value->total_amount,0)?></td>
+			 			    <td style="text-align: right;"><?=number_format($value->cost * $value->total_qty,0)?></td>
 			 				<?php foreach($model2 as $value2):?>
 			 				    <?php if($value2->product_code == $value->product_code):?>
 			 						 <td>

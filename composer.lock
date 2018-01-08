@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "82a4d79d6bd117b18977619324e772aa",
+    "content-hash": "f011c9590f2645ce6c9739d86116e589",
     "packages": [
         {
             "name": "2amigos/yii2-ckeditor-widget",
@@ -734,6 +734,65 @@
                 "html"
             ],
             "time": "2017-06-03T02:28:16+00:00"
+        },
+        {
+            "name": "facebook/php-sdk-v4",
+            "version": "5.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/facebook/php-graph-sdk.git",
+                "reference": "6eb970d5906dc61a96324b92ee673f177a83cf20"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/6eb970d5906dc61a96324b92ee673f177a83cf20",
+                "reference": "6eb970d5906dc61a96324b92ee673f177a83cf20",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.4|^7.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "~5.0",
+                "mockery/mockery": "~0.8",
+                "phpunit/phpunit": "~4.0"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client",
+                "paragonie/random_compat": "Provides a better CSPRNG option in PHP 5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Facebook\\": "src/Facebook/"
+                },
+                "files": [
+                    "src/Facebook/polyfills.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Facebook Platform"
+            ],
+            "authors": [
+                {
+                    "name": "Facebook",
+                    "homepage": "https://github.com/facebook/php-graph-sdk/contributors"
+                }
+            ],
+            "description": "Facebook SDK for PHP",
+            "homepage": "https://github.com/facebook/php-graph-sdk",
+            "keywords": [
+                "facebook",
+                "sdk"
+            ],
+            "abandoned": "facebook/graph-sdk",
+            "time": "2017-12-06T20:21:26+00:00"
         },
         {
             "name": "fortawesome/font-awesome",
@@ -2132,12 +2191,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "6593a5d8cd75050a595a0bff8fb7d1b3c183eb0b"
+                "reference": "fd191628dbd873aadd8d28a2e1f02adee3183660"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/6593a5d8cd75050a595a0bff8fb7d1b3c183eb0b",
-                "reference": "6593a5d8cd75050a595a0bff8fb7d1b3c183eb0b",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/fd191628dbd873aadd8d28a2e1f02adee3183660",
+                "reference": "fd191628dbd873aadd8d28a2e1f02adee3183660",
                 "shasum": ""
             },
             "require": {
@@ -2224,7 +2283,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2018-01-03T13:46:15+00:00"
+            "time": "2018-01-06T08:40:09+00:00"
         },
         {
             "name": "yiisoft/yii2-authclient",

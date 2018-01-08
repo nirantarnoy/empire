@@ -12,6 +12,7 @@ use yii\web\UploadedFile;
 use backend\models\Modelfile;
 use backend\models\Productimage;
 use backend\models\StockbalanceSearch;
+use backend\models\Stockbalance;
 use backend\models\ViewStockSearch;
 use kartik\mpdf\Pdf;
 /**
@@ -140,7 +141,7 @@ class ProductController extends Controller
                   }
                           $modelprod = \backend\models\Product::find()->where(['name'=>$rowData[0][1]])->one();
                           if(count($modelprod)>0){
-                              $checkBalance = $this->checkBal($modelprod->id,$warehouseid);
+                              $checkBalance = $this->checkBal($modelprod->id,$warehouseid,$rowData[0][8]);
                               if($checkBalance == 1){
                                   //$data_all +=1;
                                  // array_push($data_fail,['name'=>$rowData[0][1]]);
@@ -236,8 +237,12 @@ class ProductController extends Controller
         }
       }
     }
-  public function checkBal($prodid,$whid){
+  public function checkBal($prodid,$whid,$newqty){
     $model = \backend\models\Stockbalance::find()->where(['product_id'=>$prodid,'warehouse_id'=>$whid])->one();
+    if($model){
+      $model->qty = $newqty;
+      $model->save(false);
+    }
     return count($model)>0?1:0;
   }
 
@@ -399,7 +404,19 @@ class ProductController extends Controller
                       $modelx = Product::find()->where(['id'=>$value->id])->one();
                       if($modelx){
                          $modelx->qty = 0;
-                         $modelx->save(false);
+                         if($modelx->save(false)){
+                          $modelstock = Stockbalance::find()->where(['product_id'=>$value->id])->all();
+                          if($modelstock){
+                            foreach($modelstock as $data){
+                               $modelupdate = Stockbalance::find()->where(['id'=>$data->id])->one();
+                               if($modelupdate){
+                                  $modelupdate->qty = 0;
+                                  $modelupdate->save(false);
+                               }
+                            }
+                            
+                          }
+                         }
 
                          //\backend\models\Journaltrans::deleteAll(['product_id'=>$value->id]);
                       }
