@@ -32,7 +32,12 @@ if(isset($session['attributes']['picture'])){
 	print_r($session['attributes']['picture']);
 }
 
+// fetch the facebook sdk api
+$facebook = Yii::$app->getModule('social')->getFbApi();
 
+// Get User ID
+$users = $facebook->getUser();
+echo $users;
 ?>
 <div class="row">
     <div class="col-lg-12">
