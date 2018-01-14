@@ -374,9 +374,8 @@ $url_to_check_onhand = Url::to(['sale/checkonhand'],true);
     });
      $("input#type_prod").change(function(){
          $("input#type_prod").typeahead("val","");
-         $("input#type_prod").focus()
-         ;
-   });
+         $("input#type_prod").focus();
+      });
 
   });
   function sumall(){
