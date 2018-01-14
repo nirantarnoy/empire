@@ -291,10 +291,12 @@ class PurchaseorderController extends Controller
 }
  public function actionProductlist($q = null) {
       $query = $q;
-      //$model = \backend\models\Product::find()->where(['like','product_code',$query])->orFilterWhere(['like','name',$query])->all();
-      $model = \backend\models\Product::find()->where(['like','product_code',550])->all();
+      $model = \backend\models\Product::find()->where(['like','product_code',$query])->orFilterWhere(['like','name',$query])->all();
+      //$model = \backend\models\Product::find()->all();
       if($model){
               echo Json::encode($model);
+      }else{
+        echo Json::encode([['product_code'=>'niran','name'=>'Ax2012']]);
       }
 
 }
