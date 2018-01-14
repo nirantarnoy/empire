@@ -270,6 +270,12 @@ $this->registerJs('
       }
     });
 
+     $("input#type_prod").change(function(){
+         $("input#type_prod").typeahead("val","");
+         $("input#type_prod").focus()
+         ;
+   });
+
   });
   function sumall(){
     var amount = 0;

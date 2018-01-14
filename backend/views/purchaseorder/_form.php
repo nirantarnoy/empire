@@ -254,6 +254,8 @@ use yii\helpers\Url;
 
    $("input#type_prod").change(function(){
          $("input#type_prod").typeahead("val","");
+         $("input#type_prod").focus()
+         ;
    });
 
   });
