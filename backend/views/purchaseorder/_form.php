@@ -88,7 +88,7 @@ use yii\helpers\Url;
                                   ],
                                   //'prefetch' => '/samples/countries.json',
                                   'remote' => [
-                                      'url' => 'index.php?r=sale%2Fproductlist'.'&q=%QUERY',
+                                      'url' => 'index.php?r=purchaseorder%2Fproductlist'.'&q=%QUERY',
                                       'wildcard' => '%QUERY'
                                   ]
                               ]
