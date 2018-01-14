@@ -239,24 +239,24 @@ use yii\helpers\Url;
           }
       }
     });
-    // $("#type_prod ,.typeahead").keypress(function(e){
-    //   if(e.keyCode == 13){
-    //     e.preventDefault();
-    //     $(".tt-suggestion:first-child").trigger("click");
-    //     $("#sale-form").on("submit",function(){
-    //         return false;
-    //     });
-    //     //return false;
+    $("#type_prod ,.typeahead").keypress(function(e){
+      if(e.keyCode == 13){
+        e.preventDefault();
+        $(".tt-suggestion:first-child").trigger("click");
+        $("#sale-form").on("submit",function(){
+            return false;
+        });
+        //return false;
 
-    //   }
-    // });
+      }
+    });
    sumall();
 
-   // $("input#type_prod").change(function(){
-   //       $("input#type_prod").typeahead("val","");
-   //       $("input#type_prod").focus()
-   //       ;
-   // });
+   $("input#type_prod").change(function(){
+         $("input#type_prod").typeahead("val","");
+         $("input#type_prod").focus()
+         ;
+   });
 
   });
   function sumall(){
