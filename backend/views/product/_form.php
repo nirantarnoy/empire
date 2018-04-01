@@ -595,10 +595,13 @@ $this->registerJs('
   function editagent(e){
     var line_price = e.closest("tr").find(".line_price").val();
     var line_ids = e.closest("tr").find(".agentid").val().split(",");
+    agent_type = e.closest("tr").find(".agent_type").val();
+
     $(".price_sale").val(line_price);
     if(agent_type== 1){
       $("#agent-select").prop("disabled","disabled");
     }else if(agent_type ==2){
+
       $("#agent-group-select").prop("disabled","disabled");
       $("#agent-select").val(line_ids).change();
     }
