@@ -16,19 +16,25 @@ $cat = \backend\models\Category::find()->where(['status'=>1])->all();
 $sub_cat = \backend\models\Subcategory::find()->where(['status'=>1])->all();
 $unit = \backend\models\Unit::find()->where(['status'=>1])->all();
 $wh = \backend\models\Warehouse::find()->all();
+$agentgroupall = \backend\models\AgentGroup::find()->all();
+$agentall = \backend\models\Agent::find()->all();
 ?>
 
 <div class="product-form">
 
     <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
 
-
+     <div class="form-group">
+          <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+     </div>
 <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab">ข้อมูลสินค้า</a></li>
               <li><a href="#tab_3" data-toggle="tab">กำหนดขั้นต่ำตามคลังสินค้า</a></li>
+              
               <?php if(!$model->isNewRecord):?>
               <li><a href="#tab_2" data-toggle="tab">สินค้าคงคลังและความเคลื่อนไหว</a></li>
+              <li><a href="#tab_4" data-toggle="tab">กำหนดราคาขายตัวแทน</a></li>
             <?php endif;?>
             </ul>
 
@@ -130,9 +136,7 @@ $wh = \backend\models\Warehouse::find()->all();
                                      <br />
                                    <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'']]) ?>
 
-                                  <div class="form-group">
-                                      <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-                                  </div>
+                                
                                 </div>
                                 </div>
 
@@ -401,6 +405,96 @@ $wh = \backend\models\Warehouse::find()->all();
                   </div>
                 </div>
               </div>
+              <div class="tab-pane" id="tab_4">
+                <div class="row">
+                  <div class="col-lg-12">
+                    
+                        <table class="table" width="100%">
+                          <tr>
+                            <td style="width: 20%">ราคาขาย</td>
+                            <td style="width: 80%">
+                              <input type="text" class="form-control price_sale" style="width: 30%" name="price_sale" value="">
+                            </td>
+                          </tr>
+                           <tr>
+                            <td style="width: 20%">กลุ่มตัวแทน</td>
+                            <td style="width: 80%">
+                              <?php
+                                  echo Select2::widget([
+                                    'name'=>'agent_group' ,
+                                     'data'=> ArrayHelper::map($agentgroupall,'id','name'),
+                                     'options' => ['multiple' => true,'id'=>'agent-group-select',
+                                      //'maintainOrder' => true,
+                                     'onchange'=>'
+                                        if($(this).val().length >0){
+                                          $("#agent-select").prop("disabled","disabled");
+                                          agent_type = 1;
+                                        }else{
+                                          $("#agent-select").prop("disabled","");
+                                          agent_type = "";
+                                        }
+                                     '
+                                     ],
+                                     'pluginOptions' => [
+                                         'tags'=>true,
+                                         'allowClear' => true,
+                                         'multiple' => true,
+                                       ],
+                                  ]);
+                              ?>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="width: 20%">รายชื่อตัวแทน</td>
+                            <td style="width: 80%">
+                              <?php
+                                  echo Select2::widget([
+                                    'name'=>'agent' ,
+                                     'data'=> ArrayHelper::map($agentall,'id','name'),
+                                     'options' => ['multiple' => true,'id'=>'agent-select',
+                                      //'maintainOrder' => true,
+                                     'onchange'=>'
+                                        if($(this).val().length >0){
+                                          $("#agent-group-select").prop("disabled","disabled");
+                                          agent_type = 2;
+                                        }else{
+                                          $("#agent-group-select").prop("disabled","");
+                                          agent_type = "";
+                                        }
+                                     '
+                                     ],
+                                     'pluginOptions' => [
+                                         'tags'=>true,
+                                         'allowClear' => true,
+                                         'multiple' => true,
+                                       ],
+                                  ]);
+                              ?>
+                            </td>
+                          </tr>
+                        </table>
+                        <div class="btn btn-primary" id="add-agent"><i class="fa fa-plus"></i></div>
+                      </div>
+                     </div>
+                     <div class="row">
+                      <div class="col-lg-12">
+                          <table id="agent-list" class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th style="width: 5%">#</th>
+                                <th style="width: 20%">ราคาขาย</th>
+                                <th style="width: 60%">รายชื่อตัวแทน</th>
+                                <th style="width: 15%"></th>
+                              </tr>
+                            </thead>
+                            <tbody id="agent-body">
+                             
+                            </tbody>
+                          </table>
+                      </div>
+                     </div>
+                  
+              </div>
             </div>
 </div>
 
@@ -414,7 +508,9 @@ $wh = \backend\models\Warehouse::find()->all();
 </div>
 <?php
 $url_to_addline = Url::to(['product/addminline'],true);
+$url_to_addagent = Url::to(['product/addagent'],true);
 $this->registerJs('
+  var agent_type = "";
   $(function(){
     $("#addline").click(function(){
       $.ajax({
@@ -428,12 +524,89 @@ $this->registerJs('
       });
     });
 
+    $("#add-agent").click(function(){
+        var  listx = $("#agent-select").val();
+        var  price = $(".price_sale").val();
+
+        var dup = 0;
+       
+        $("table#agent-list tbody tr").each(function(){
+           var hasprice = $(this).closest("tr").find(".line_price").val();
+           if(hasprice == price){
+            //alert("ราคาขายมีในระบบแล้ว");
+             dup = 1;
+           }
+        });
+
+        if(dup == 1){
+
+          if(confirm("ราคาขายมีในระบบแล้ว คุณต้องการแก้ไขรายการนี้ใช่หรือไม่")){
+           $("table#agent-list tbody tr").each(function(){
+               var hasprice = $(this).closest("tr").find(".line_price").val();
+               if(hasprice == price){
+                  $(this).remove();
+               }
+            });
+   
+
+            $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "'.$url_to_addagent.'",
+            data: {list: listx,price: price,agent_type: agent_type},
+            success: function(data){
+               //alert(data);
+               $("#agent-body").append(data);
+               $(".price_sale").val("0");
+               $("#agent-group-select").prop("disabled","");
+               $("#agent-select").prop("disabled","");
+               $("#agent-select").val("").trigger("change");
+            }
+           });
+          }
+
+        }else{
+            $.ajax({
+            type: "post",
+            dataType: "html",
+            url: "'.$url_to_addagent.'",
+            data: {list: listx,price: price,agent_type: agent_type},
+            success: function(data){
+               //alert(data);
+               $("#agent-body").append(data);
+               $(".price_sale").val("0");
+               $("#agent-group-select").prop("disabled","");
+               $("#agent-select").prop("disabled","");
+               $("#agent-select").val("").trigger("change");
+            }
+          });
+        }
+
+    });
+
+
   });
  function removeline(e){
     if(confirm("ต้องการลบรายการนี้ใช่หรือไม่")){
       e.parent().parent().remove();
     }
     
+  }
+  function editagent(e){
+    var line_price = e.closest("tr").find(".line_price").val();
+    var line_ids = e.closest("tr").find(".agentid").val().split(",");
+    $(".price_sale").val(line_price);
+    if(agent_type== 1){
+      $("#agent-select").prop("disabled","disabled");
+    }else if(agent_type ==2){
+      $("#agent-group-select").prop("disabled","disabled");
+      $("#agent-select").val(line_ids).change();
+    }
+  }
+   function deleteagent(e){
+    if(confirm("คุณต้องการลบรายการนี้ใช่หรือไม่")){
+      e.parent().parent().remove();
+    }
   }
   ',static::POS_END);
  ?>

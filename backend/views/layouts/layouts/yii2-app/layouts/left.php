@@ -71,6 +71,9 @@
                            
                             ['label' => 'ตำแหน่ง', 'icon' => 'file-code-o', 'url' => ['/position'],],
                             ['label' => 'พนักงาน', 'icon' => 'user', 'url' => ['/employee'],],
+                            ['label' => 'กลุ่มตัวแทน', 'icon' => 'group', 'url' => ['/agentgroup'],],
+                            ['label' => 'ตัวแทน', 'icon' => 'share-alt-square', 'url' => ['/agent'],],
+                            ['label' => 'ราคาตัวแทน', 'icon' => 'money', 'url' => ['/agentprice'],],
                            
                         ],
                     ],  
@@ -110,6 +113,7 @@
                              ['label' => 'ลูกค้า', 'icon' => 'street-view', 'url' => ['/customer'],],
                              ['label' => 'ขายสินค้า', 'icon' => 'money', 'url' => ['/sale'],],
                              ['label' => 'ตลาด', 'icon' => 'map-pin', 'url' => ['/market'],],
+                             ['label' => 'ส่งสินค้า', 'icon' => 'truck', 'url' => ['/shipment'],],
                             
                            
                         ],

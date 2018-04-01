@@ -508,6 +508,35 @@ class ProductController extends Controller
         return $this->renderPartial('_addline');
       }
     }
+    public function actionAddagent(){
+      if(Yii::$app->request->isAjax){
+       $list = Yii::$app->request->post('list');
+       $price = Yii::$app->request->post('price');
+       $agent_type = Yii::$app->request->post('agent_type');
+       if(count($list)>0){
+       // return $price;
+        $listid = '';
+        $listname = '';
+        for($i=0;$i<=count($list)-1;$i++){
+              if($i<count($list)-1){
+                $listid.=$list[$i].",";
+                $listname.=$this->findAgentname($list[$i]).",";
+              }else{
+                $listid.=$list[$i];
+                $listname.=$this->findAgentname($list[$i]);
+              }
+              
+           
+        }
+        return $this->renderPartial('_addagent',['price'=>$price,'agent_id'=>$listid,'agent_name'=>$listname,'agent_type'=>$agent_type],true);
+       }       
+      }
+    }
+
+    public function findAgentname($id){
+      $model = \backend\models\Agent::find()->where(['id'=>$id])->one();
+      return count($model)>0?$model->name:'';
+    }
     public function actionPrintbarcode(){
        $qty = 1;
        $pcode = '';
