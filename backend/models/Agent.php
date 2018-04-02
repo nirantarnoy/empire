@@ -31,5 +31,8 @@ class Agent extends \common\models\Agent
         ],
     ];
  }
-
+  public function getAgentname($id){
+     $model = Agent::find()->where(['id'=>$id])->one();
+      return count($model)>0?$model->name:'';
+  }
 }

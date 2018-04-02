@@ -488,7 +488,30 @@ $agentall = \backend\models\Agent::find()->all();
                               </tr>
                             </thead>
                             <tbody id="agent-body">
-                             
+                               <?php if(!$model->isNewRecord):?>
+                                 <?php foreach($modelagentprice as $data):?>
+                                    <?php
+                                       $name = '';
+                                       $aid = explode(",",$data->agent_id_list);
+                                       for($x=0;$x<=count($aid)-1;$x++){
+                                         $name.= \backend\models\Agent::getAgentname($aid[$x]).",";
+                                       }
+                                     ?>
+                                  <tr>
+                                    <td></td>
+                                    <td>
+                                      <?php echo $data->price;?>
+                                          <input type="hidden" class="line_price" name="line_price[]" value="<?=$data->price?>">     
+                                          <input type="hidden" class="agent_type" name="agent_type[]" value="<?=$data->agent_type?>">     
+                                      </td>
+                                    <td>
+                                      <?php echo $name;?>
+                                        <input type="hidden" class="agentid" name="agentid[]" value="<?=$data->agent_id_list?>">   
+                                      </td>
+                                    <td><div class="btn btn-success btn-edit-agent" onclick="editagent($(this));">แก้ไข</div> <div class="btn btn-danger btn-delete-agent" onclick="deleteagent($(this));">ลบ</div></td>
+                                  </tr>
+                                <?php endforeach;?>
+                               <?php endif;?>
                             </tbody>
                           </table>
                       </div>

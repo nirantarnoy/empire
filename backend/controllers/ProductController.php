@@ -311,6 +311,7 @@ class ProductController extends Controller
 
         $model_trans = \common\models\ViewTrans::find()->where(['product_id'=>$id])->all();
         $minline = \backend\models\Productmin::find()->where(['product_id'=>$id])->all();
+        $modelagentprice = \common\models\AgentPrice::find()->where(['product_id'=>$id])->all();
 
         $imagelist = Productimage::find()->where(['product_id'=>$id])->all();
          $modelfile = new Modelfile();
@@ -318,6 +319,10 @@ class ProductController extends Controller
            // $oldlogo = Yii::$app->request->post('old_photo');
             $warehouseid = Yii::$app->request->post('warehouse');
             $minqty = Yii::$app->request->post('min_qty');
+
+            $lineprice = Yii::$app->request->post('line_price');
+            $agentid = Yii::$app->request->post('agentid');
+            $agenttype = Yii::$app->request->post('agent_type');
 
 
             $uploaded = UploadedFile::getInstances($modelfile, 'file');
@@ -331,7 +336,7 @@ class ProductController extends Controller
             // }else{
             //      $model->photo = $oldlogo;
             // }
-            if($model->save()){
+            if($model->save(false)){
                 if(!empty($uploaded)){
                   foreach($uploaded as $file){
                       //  $upfiles = time() . "." . $file->getExtension();                        
@@ -357,6 +362,19 @@ class ProductController extends Controller
                     $min->save(false);
                   }
                 }
+
+                \backend\models\AgentPrice::deleteAll(['product_id'=>$id]);
+                if(count($lineprice)>0){
+                  for($i=0;$i<=count($lineprice)-1;$i++){
+                    $agentprice = new \backend\models\AgentPrice();
+                    $agentprice->product_id = $model->id;
+                    $agentprice->price = $lineprice[$i];
+                    $agentprice->agent_id_list = $agentid[$i];
+                    $agentprice->agent_type = $agenttype[$i];
+                    $agentprice->save(false);
+                  }
+                }
+
                 return $this->redirect(['update', 'id' => $model->id]);
             }
         } else {
@@ -368,6 +386,7 @@ class ProductController extends Controller
                 'dataProvider2' => $dataProvider2,
                 'model_trans' => $model_trans,
                 'minline' => $minline,
+                'modelagentprice' => $modelagentprice,
             ]);
         }
     }

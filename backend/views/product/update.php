@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = 'Update';
          'dataProvider2' => $dataProvider2,
                 'model_trans' => $model_trans,
                 'minline' => $minline,
+                'modelagentprice'=>$modelagentprice
     ]) ?>
 
 </div>

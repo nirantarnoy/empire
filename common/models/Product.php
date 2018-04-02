@@ -39,9 +39,9 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['name','category_id','product_code'],'required'],
-            [['category_id', 'unit_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','parent_id','brand_id','model_id'], 'integer'],
+            [['category_id', 'unit_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by','parent_id','brand_id','model_id','agent_type'], 'integer'],
             [['weight', 'price','cost','sale_price_1','sale_price_2','qty','min_qty','max_qty'], 'number'],
-            [['product_code', 'name', 'description', 'photo'], 'string', 'max' => 255],
+            [['product_code', 'name', 'description', 'photo','agent_id_list'], 'string', 'max' => 255],
         ];
     }
 
