@@ -22,7 +22,8 @@ $this->params['breadcrumbs'][] = 'Update';
          'searchModel3'=>$searchModel3 ,
                 'model_trans' => $model_trans,
                 'minline' => $minline,
-                'modelagentprice'=>$modelagentprice
+                'modelagentprice'=>$modelagentprice,
+                'bundleline' =>$bundleline,
     ]) ?>
 
 </div>

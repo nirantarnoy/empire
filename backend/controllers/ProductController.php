@@ -316,6 +316,7 @@ class ProductController extends Controller
         $model_trans = \common\models\ViewTrans::find()->where(['product_id'=>$id])->all();
         $minline = \backend\models\Productmin::find()->where(['product_id'=>$id])->all();
         $modelagentprice = \common\models\AgentPrice::find()->where(['product_id'=>$id])->all();
+        $bundleline = \common\models\Bomline::find()->where(['parent_id'=>$id])->all();
 
         $imagelist = Productimage::find()->where(['product_id'=>$id])->all();
          $modelfile = new Modelfile();
@@ -327,6 +328,10 @@ class ProductController extends Controller
             $lineprice = Yii::$app->request->post('line_price');
             $agentid = Yii::$app->request->post('agentid');
             $agenttype = Yii::$app->request->post('agent_type');
+
+            $bundle_id = Yii::$app->request->post('bundle_id');
+            $bundle_qty = Yii::$app->request->post('bundle_qty');
+            $bundle_price = Yii::$app->request->post('bundle_price');
 
 
             $uploaded = UploadedFile::getInstances($modelfile, 'file');
@@ -355,8 +360,9 @@ class ProductController extends Controller
                 }else{
                     //$model->photo = $oldlogo;
                 }
-                \backend\models\Productmin::deleteAll(['product_id'=>$id]);
+               
                 if(count($warehouseid)>0){
+                   \backend\models\Productmin::deleteAll(['product_id'=>$id]);
                   for($i=0;$i<=count($warehouseid)-1;$i++){
                     $min = new \backend\models\Productmin();
                     $min->product_id = $model->id;
@@ -365,10 +371,13 @@ class ProductController extends Controller
                     $min->status = 1;
                     $min->save(false);
                   }
+                }else{
+                   \backend\models\Productmin::deleteAll(['product_id'=>$id]);
                 }
 
-                \backend\models\AgentPrice::deleteAll(['product_id'=>$id]);
+                
                 if(count($lineprice)>0){
+                  \backend\models\AgentPrice::deleteAll(['product_id'=>$id]);
                   for($i=0;$i<=count($lineprice)-1;$i++){
                     $agentprice = new \backend\models\AgentPrice();
                     $agentprice->product_id = $model->id;
@@ -377,6 +386,22 @@ class ProductController extends Controller
                     $agentprice->agent_type = $agenttype[$i];
                     $agentprice->save(false);
                   }
+                }else{
+                  \backend\models\AgentPrice::deleteAll(['product_id'=>$id]);
+                }
+
+                if(count($bundle_id)>0){
+                  \backend\models\BomLine::deleteAll(['parent_id'=>$id]);
+                  for($i=0;$i<=count($bundle_id)-1;$i++){
+                    $bundle = new \backend\models\Bomline();
+                    $bundle->parent_id = $model->id;
+                    $bundle->product_id = $bundle_id[$i];
+                    $bundle->price = $bundle_price[$i];
+                    $bundle->qty = $bundle_qty[$i];
+                    $bundle->save(false);
+                  }
+                }else{
+                  \backend\models\BomLine::deleteAll(['parent_id'=>$id]);
                 }
 
                 return $this->redirect(['update', 'id' => $model->id]);
@@ -393,6 +418,7 @@ class ProductController extends Controller
                 'model_trans' => $model_trans,
                 'minline' => $minline,
                 'modelagentprice' => $modelagentprice,
+                'bundleline' =>$bundleline,
             ]);
         }
     }

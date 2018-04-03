@@ -555,29 +555,20 @@ $agentall = \backend\models\Agent::find()->all();
                           <tbody id="bundle-body">
                             <?php 
                               if(!$model->isNewRecord):?>
-                               <?php foreach($minline as $value):?>
+                               <?php foreach($bundleline as $value):?>
                                 <tr>
-                                    <td>
-                                      <input type="hidden" name="product_id[]" value="<?=$value->product_id?>">
-                                    <select id="whid" class="form-control" name="warehouse[]">
-                                        <?php foreach($wh as $data):?>
-                                         <?php 
-                                             $select = '';
-                                             if($value->warehouse_id == $data->id){
-                                              $select = 'selected';
-                                             }
-                                        ?>
-                                        <option value="<?=$data->id?>" <?=$select?>>
-                                          <?=$data->name?>
-                                        </option>
-                                      <?php endforeach;?>
-                                      </select>
+                                    <td><?=\backend\models\Product::getProdcode($value->product_id)?>
+                                      <input type="hidden" name="bundle_id[]" value="<?=$value->product_id?>">
+                                    </td>
+                                    <td><?=\backend\models\Product::getProdname($value->product_id)?></td>
+                                    <td><?=$value->qty?>
+                                      <input type="hidden" class="bundle_qty" name="bundle_qty[]" value="<?=$value->qty?>">
+                                    </td>
+                                    <td><?=number_format($value->price)?>
+                                      <input type="hidden" class="bundle_price" name="bundle_price[]" value="<?=number_format($value->price)?>">
                                     </td>
                                     <td>
-                                      <input type="text" name="min_qty[]" class="form-control" value="<?=$value->minstock?>">
-                                    </td>
-                                    <td>
-                                      <div class="btn btn-warning line_remove" onclick="removeline($(this));"><i class="fa fa-minus"></i></div>
+                                      <div class="btn btn-warning bundle_line_remove" onclick="removebundleline($(this));"><i class="fa fa-minus"></i></div>
                                     </td>
                                   </tr>
                                 <?php endforeach;?>
@@ -677,6 +668,7 @@ $url_to_addagent = Url::to(['product/addagent'],true);
 $this->registerJs('
   var agent_type = "";
   $(function(){
+    calBundle();
     $("#addline").click(function(){
       $.ajax({
         type: "post",
@@ -763,7 +755,7 @@ $this->registerJs('
                     alert("คุณยังไม่เลือกรายการใดๆ");
                     return;
                 }else{
-                    alert(recid.length);
+                    //alert(recid.length);
                     for(var i=0;i<=recid.length -1;i++){
                       $.ajax({
                       type: "post",
@@ -792,8 +784,8 @@ $this->registerJs('
   function calBundle(){
     var total = 0;
     $("#table-bundle tbody tr").each(function(){
-        var qty = $(this).closest("tr").find(".qty").val();
-        var price = $(this).closest("tr").find(".price").val();
+        var qty = $(this).closest("tr").find(".bundle_qty").val();
+        var price = $(this).closest("tr").find(".bundle_price").val();
         total = total + (qty * price);
     });
     $(".bundle_total").text(total);
