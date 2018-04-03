@@ -12,23 +12,26 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'product_id')->textInput() ?>
+    <div class="panel">
+    
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-6">
+                <?= $form->field($model, 'product_id')->textInput() ?>
 
-    <?= $form->field($model, 'bom_name')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'bom_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-lg-6">
+                <?= $form->field($model, 'cost')->textInput(['disabled'=>'disabled']) ?>
+            </div>
+        </div>
+   
+        </div>
+    </div>
 
-    <?= $form->field($model, 'cost')->textInput() ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?>
+    
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

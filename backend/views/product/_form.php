@@ -6,8 +6,10 @@ use toxor88\switchery\Switchery;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use kartik\file\FileInput;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\helpers\Url;
+use yii\bootstrap\Modal;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Product */
@@ -35,6 +37,7 @@ $agentall = \backend\models\Agent::find()->all();
               <?php if(!$model->isNewRecord):?>
               <li><a href="#tab_2" data-toggle="tab">สินค้าคงคลังและความเคลื่อนไหว</a></li>
               <li><a href="#tab_4" data-toggle="tab">กำหนดราคาขายตัวแทน</a></li>
+              <li><a href="#tab_5" data-toggle="tab">สินค้าจัดชุด</a></li>
             <?php endif;?>
             </ul>
 
@@ -518,6 +521,72 @@ $agentall = \backend\models\Agent::find()->all();
                      </div>
                   
               </div>
+              <div class="tab-pane" id="tab_5">
+                <div class="row">
+                      <div class="col-lg-12">
+                        <div class="btn btn-primary" id="add_bom_line"><i class="fa fa-plus"></i></div>
+                        <div class="total pull-right">
+                          <h3><small>ราคารวม</small> <b><span class="bundle_total">0</span></b></h3>
+                        </div>
+                      </div>
+                     </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                     <table id="table-bundle" class="table table-striped table-hover">
+                          <thead>
+                            <tr>
+                              <th style="width: 20%">
+                                รหัสสินค้า
+                              </th>
+                                <th style="width: 40%">
+                                ชื่อสินค้า
+                              </th>
+                               <th style="width: 20%">
+                                จำนวน
+                              </th>
+                               <th style="width: 20%">
+                                ราคา
+                              </th>
+                               <th>
+                                
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody id="bundle-body">
+                            <?php 
+                              if(!$model->isNewRecord):?>
+                               <?php foreach($minline as $value):?>
+                                <tr>
+                                    <td>
+                                      <input type="hidden" name="product_id[]" value="<?=$value->product_id?>">
+                                    <select id="whid" class="form-control" name="warehouse[]">
+                                        <?php foreach($wh as $data):?>
+                                         <?php 
+                                             $select = '';
+                                             if($value->warehouse_id == $data->id){
+                                              $select = 'selected';
+                                             }
+                                        ?>
+                                        <option value="<?=$data->id?>" <?=$select?>>
+                                          <?=$data->name?>
+                                        </option>
+                                      <?php endforeach;?>
+                                      </select>
+                                    </td>
+                                    <td>
+                                      <input type="text" name="min_qty[]" class="form-control" value="<?=$value->minstock?>">
+                                    </td>
+                                    <td>
+                                      <div class="btn btn-warning line_remove" onclick="removeline($(this));"><i class="fa fa-minus"></i></div>
+                                    </td>
+                                  </tr>
+                                <?php endforeach;?>
+                              <?php endif;?>
+                          </tbody>
+                        </table>
+                  </div>
+                </div>  
+              </div>
             </div>
 </div>
 
@@ -530,7 +599,80 @@ $agentall = \backend\models\Agent::find()->all();
 
 </div>
 <?php
+Modal::begin([
+    'header' => '<h4>Sales Quotation</h4>',
+    'id' => 'modal',
+    // 'data-backdrop'=>false,
+    'size' => 'modal-lg',
+    'options' => ['data-backdrop' => 'static',
+    ],
+    'footer' => '<a href="#" class="btn btn-danger" data-dismiss="modal">ยกเลิก</a>',
+]);
+echo "<div id='showmodal'></div>";
+?> 
+
+<?php Modal::end() ?>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><i class="fa  fa-hand-pointer-o"></i> เลือกรหัสสินค้า</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <?= GridView::widget([
+                    'dataProvider' => $dataProvider3,
+                    'filterModel' => $searchModel3,
+                    'id'=>'search-grid',
+                    'pjax' => true,
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        ['class' => 'yii\grid\CheckboxColumn'],
+                        //'id',
+                        'product_code',
+                        'name',
+                       // 'description',
+                        //'photo',
+                          [
+                           'attribute'=>'category_id',
+                           'filter'=>ArrayHelper::map(\backend\models\Category::find()->all(),'id','name'),
+                           'format' => 'html',
+                           'value'=>function($data){
+                             return $data->category_id !== Null ? \backend\models\Category::getCategorycode($data->category_id):'';
+                           }
+                         ],
+                       
+                          [
+                           'attribute'=>'price',
+                           'format' => 'html',
+                           'value'=>function($data){
+                             return number_format($data->price);
+                           }
+                         ],
+                      
+                    ],
+                ]); ?>
+            </div>
+           
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-submit-product" data-dismiss="modal2">เลือก</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<?php
 $url_to_addline = Url::to(['product/addminline'],true);
+$url_to_addbundleline = Url::to(['product/addbundleline'],true);
 $url_to_addagent = Url::to(['product/addagent'],true);
 $this->registerJs('
   var agent_type = "";
@@ -606,7 +748,39 @@ $this->registerJs('
         }
 
     });
+ 
+    $("#add_bom_line").click(function(){
+        var xurl = "' . \yii::$app->getUrlManager()->createUrl('product/findproduct') . '";
+        $("#myModal").modal("show");
+                   // .find("#showmodal")
+                   // .load(xurl);
+    });
 
+    $(".btn-submit-product").click(function(){
+        var recid = $("#search-grid").yiiGridView("getSelectedRows");
+
+                if(recid < 1){
+                    alert("คุณยังไม่เลือกรายการใดๆ");
+                    return;
+                }else{
+                    alert(recid.length);
+                    for(var i=0;i<=recid.length -1;i++){
+                      $.ajax({
+                      type: "post",
+                      dataType: "html",
+                      url: "'.$url_to_addbundleline.'",
+                      data: {prodid: recid[i]},
+                      success: function(data){
+                       // alert(data);
+                         $("#bundle-body").append(data);
+                         calBundle();
+                         $("#myModal").modal("hide");
+                      }
+                     });
+                    }
+                     
+                }
+    });
 
   });
  function removeline(e){
@@ -614,6 +788,15 @@ $this->registerJs('
       e.parent().parent().remove();
     }
     
+  }
+  function calBundle(){
+    var total = 0;
+    $("#table-bundle tbody tr").each(function(){
+        var qty = $(this).closest("tr").find(".qty").val();
+        var price = $(this).closest("tr").find(".price").val();
+        total = total + (qty * price);
+    });
+    $(".bundle_total").text(total);
   }
   function editagent(e){
     var line_price = e.closest("tr").find(".line_price").val();
@@ -632,6 +815,12 @@ $this->registerJs('
    function deleteagent(e){
     if(confirm("คุณต้องการลบรายการนี้ใช่หรือไม่")){
       e.parent().parent().remove();
+    }
+  }
+  function removebundleline(e){
+     if(confirm("คุณต้องการลบรายการนี้ใช่หรือไม่")){
+      e.parent().parent().remove();
+      calBundle();
     }
   }
   ',static::POS_END);

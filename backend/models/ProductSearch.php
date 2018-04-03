@@ -20,7 +20,7 @@ class ProductSearch extends Product
     {
         return [
             [['id', 'category_id', 'unit_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['product_code', 'name', 'description', 'photo'], 'safe'],
+            [['product_code', 'name', 'photo'], 'safe'],
             [['weight', 'price'], 'number'],
             [['globalSearch'],'string'],
         ];
@@ -63,6 +63,8 @@ class ProductSearch extends Product
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'product_code' => $this->product_code,
+             'name' => $this->name,
             'category_id' => $this->category_id,
             'weight' => $this->weight,
             'unit_id' => $this->unit_id,

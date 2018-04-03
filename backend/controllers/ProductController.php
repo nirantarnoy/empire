@@ -305,6 +305,10 @@ class ProductController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->where(['product_id'=>$id]);
 
+        $searchModel3 = new ProductSearch();
+        $dataProvider3 = $searchModel3->search(Yii::$app->request->queryParams);
+        //$dataProvider3->query->where(['!=','product.id',$id])->orderby(['product.id'=>SORT_DESC]);
+
         $searchModel2 = new ViewStockSearch();
         $dataProvider2 = $searchModel2->search(Yii::$app->request->queryParams);
         $dataProvider2->query->where(['product_id'=>$id])->orderby(['created_at'=>SORT_DESC]);
@@ -384,6 +388,8 @@ class ProductController extends Controller
                 'imagelist' => $imagelist,
                 'dataProvider' => $dataProvider,
                 'dataProvider2' => $dataProvider2,
+                'dataProvider3' => $dataProvider3,
+                'searchModel3'=>$searchModel3 ,
                 'model_trans' => $model_trans,
                 'minline' => $minline,
                 'modelagentprice' => $modelagentprice,
@@ -527,6 +533,19 @@ class ProductController extends Controller
         return $this->renderPartial('_addline');
       }
     }
+    public function actionAddbundleline(){
+      if(Yii::$app->request->isAjax){
+        $id = Yii::$app->request->post('prodid');
+        if($id){
+          $model = Product::find()->where(['id'=>$id])->one();
+          if($model){
+              return $this->renderPartial('_addlinebundle',['product_id'=>$id,'product_code'=>$model->product_code,'product_name'=>$model->name,'qty'=>1,'price'=>$model->price]);
+          }
+
+        }
+        
+      }
+    }
     public function actionAddagent(){
       if(Yii::$app->request->isAjax){
        $list = Yii::$app->request->post('list');
@@ -596,6 +615,12 @@ class ProductController extends Controller
                 ]
             ]);
              return $pdf->render();
+    }
+
+    public function actionFindproduct(){
+       $searchModel = new ProductSearch();
+       $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+       return $this->renderAjax('_find',['dataProvider'=>$dataProvider]);
     }
 
 }
