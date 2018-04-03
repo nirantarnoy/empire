@@ -87,7 +87,7 @@
                             ['label' => 'ยี่ห้อ', 'icon' => 'cube', 'url' => ['/brand'],],
                             ['label' => 'รุ่น', 'icon' => 'cube', 'url' => ['/productmodel'],],
                             ['label' => 'รหัสสินค้า', 'icon' => 'cube', 'url' => ['/product'],],
-                            ['label' => 'จัดชุดสินค้า', 'icon' => 'cubes', 'url' => ['/bom'],],
+                          //  ['label' => 'จัดชุดสินค้า', 'icon' => 'cubes', 'url' => ['/bom'],],
                             ['label' => 'หน่วยนับ', 'icon' => 'magnet', 'url' => ['/unit'],],
                            
                         ],
