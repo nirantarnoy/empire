@@ -267,10 +267,14 @@ class ProductController extends Controller
     {
         $model = new Product();
         $modelfile = new Modelfile();
+
+        $searchModel3 = new ProductSearch();
+        $dataProvider3 = $searchModel3->search(Yii::$app->request->queryParams);
+
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
              $uploaded = UploadedFile::getInstances($modelfile, 'file');
              
-            if($model->save()){
+            if($model->save(false)){
                 if(!empty($uploaded)){
                   foreach($uploaded as $file){
                         $upfiles = time() . "." . $file->getExtension();                        
@@ -288,6 +292,8 @@ class ProductController extends Controller
             return $this->render('create', [
                 'model' => $model,
                 'modelfile' => $modelfile,
+                'dataProvider3'=>$dataProvider3,
+                'searchModel3'=>$searchModel3,
             ]);
         }
     }

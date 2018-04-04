@@ -6,7 +6,7 @@
     	<td>
     		<?php echo $price;?>
             <input type="hidden" class="line_price" name="line_price[]" value="<?=$price?>">     
-            <input type="hidden" class="agent_type" name="agent_type[]" value="<?=$agent_type?>">     
+            <input type="hidden" class="agent_type" name="agent_type2[]" value="<?=$agent_type?>">     
     		</td>
     	<td>
     		<?php echo $agent_name;?>
